@@ -50,7 +50,7 @@ const createEvent = async (req, res) => {
 		if (!req.auth) {
 			throw {
 				code: 400,
-				errorMessage: 'You must be logged in to create events.',
+				errorMessage: 'You mustt be logged in to create events.',
 				for: 'adminId',
 				message: 'Custom error',
 			};
