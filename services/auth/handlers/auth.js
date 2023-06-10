@@ -15,8 +15,8 @@ const handleErrors = (err) => {
 		firstname: '',
 		lastname: '',
 	};
-	// unique error handle
 
+	// unique error handle
 	if (err.code === 11000) {
 		errors.email = 'Email already in use.';
 	}
@@ -58,11 +58,13 @@ const signIn = async (req, res) => {
 			lastname: newAccount.lastname,
 			accountType: newAccount.accountType,
 			id: newAccount._id,
-			exp: new Date().getTime() / 1000 + 7 * 24 * 60 * 60,
 		};
-		const token = jwt.sign(payload, config.get('security').jwt_secret);
+		const token = jwt.sign(payload, config.get('security').jwt_secret, {
+			expiresIn: '2d',
+		});
 		res.status(201).send({ token });
 	} catch (err) {
+		console.log(err);
 		const errors = handleErrors(err);
 		res.status(400).json({ errors });
 	}

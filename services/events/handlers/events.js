@@ -11,7 +11,6 @@ const handleErrors = (err) => {
 		tickets: '',
 		adminId: '',
 	};
-	console.log(err.errors, 'OVOJ');
 	if (err.message.includes('Event validation failed')) {
 		Object.values(err.errors).forEach(({ properties }) => {
 			errors[properties.path] = properties.message;
@@ -37,8 +36,14 @@ const getAllEvents = async (req, res) => {
 const getEventsByCategory = async (req, res) => {
 	try {
 		let evetnsByCat = await Events.find({ category: req.params.category });
+		if (!evetnsByCat.length) {
+			return res
+				.status(200)
+				.send({ message: 'There are no events in this category.' });
+		}
 		return res.status(200).send(evetnsByCat);
 	} catch (err) {
+		console.log(err);
 		return res.status(500).send('Internal server error.');
 	}
 };
@@ -69,8 +74,13 @@ const createEvent = async (req, res) => {
 
 const updateEvent = async (req, res) => {
 	try {
-		const upE = await Events.update(req.params.id, req.body);
-		updateOne({ _id: id, author_id: uid }, data);
+		const upE = await Events.updateOne(
+			{ _id: req.params.id, adminId: req.auth.id },
+			{ ...req.body }
+		);
+		console.log(upE);
+		// const upE = await Events.update(req.params.id, req.body);
+		// updateOne({ _id: id, author_id: uid }, data);
 		if (!upE.matchedCount)
 			return res.status(404).send({ message: 'No such event was found.' });
 
@@ -87,13 +97,20 @@ const updateEvent = async (req, res) => {
 
 const removeEvent = async (req, res) => {
 	try {
-		const rmE = await Events.remove(req.params.id);
-		if (!rmE.deletedCount)
-			return res.status(404).send({ message: 'No such event was found.' });
+		const rmE = await Events.deleteOne({ _id: req.params.id });
+		if (!rmE.deletedCount) {
+			throw {
+				code: 400,
+				errorMessage: 'Event does not exist.',
+				for: 'eventName',
+				message: 'Custom error',
+			};
+		}
 
 		return res.status(200).send({ message: 'Event successfully deleted' });
 	} catch (err) {
-		res.status(500).send('Internal server error.');
+		const errors = handleErrors(err);
+		res.status(500).json({ errors });
 	}
 };
 

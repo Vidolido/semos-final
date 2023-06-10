@@ -39,7 +39,7 @@ api.use((err, req, res, next) => {
 	if (err.name === 'UnauthorizedError') {
 		return res.status(403).send({
 			success: false,
-			message: 'You need to be logged in.',
+			message: 'You need to be logged in to make changes.',
 		});
 	}
 });
