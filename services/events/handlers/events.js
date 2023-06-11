@@ -74,13 +74,12 @@ const createEvent = async (req, res) => {
 
 const updateEvent = async (req, res) => {
 	try {
+		// На овој начин само Account-от што го креирал Event-от, може да прави промени.
+		// Да направам по accountType: admin, за да може само админ да прави промени.
 		const upE = await Events.updateOne(
 			{ _id: req.params.id, adminId: req.auth.id },
-			{ ...req.body }
+			req.body
 		);
-		console.log(upE);
-		// const upE = await Events.update(req.params.id, req.body);
-		// updateOne({ _id: id, author_id: uid }, data);
 		if (!upE.matchedCount)
 			return res.status(404).send({ message: 'No such event was found.' });
 
@@ -91,6 +90,7 @@ const updateEvent = async (req, res) => {
 
 		return res.status(200).send({ message: 'Update Successful' });
 	} catch (err) {
+		console.log(err);
 		res.status(500).send('Internal server error.');
 	}
 };
