@@ -2,7 +2,7 @@ import { useEffect } from 'react';
 import { useEventsContext } from '../hooks/useEventsContext';
 // import { useAuthContext } from '../hooks/useAuthContext';
 
-import { GET_EVENTS } from '../misc/actionTypes';
+import { SET_EVENTS } from '../misc/actionTypes';
 
 const Home = () => {
 	const { events, dispatch } = useEventsContext();
@@ -13,7 +13,7 @@ const Home = () => {
 			const jsonRes = await res.json();
 
 			if (res.ok) {
-				dispatch({ type: GET_EVENTS, payload: jsonRes });
+				dispatch({ type: SET_EVENTS, payload: jsonRes });
 			}
 		};
 		getEvents();

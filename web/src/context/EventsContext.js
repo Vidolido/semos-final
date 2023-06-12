@@ -1,11 +1,11 @@
 import { createContext, useReducer } from 'react';
-import { GET_EVENTS, CREATE_EVENT, DELETE_EVENT } from '../misc/actionTypes';
+import { SET_EVENTS, CREATE_EVENT, DELETE_EVENT } from '../misc/actionTypes';
 
 export const EventsContext = createContext();
 
 export const eventsReducer = (state, action) => {
 	switch (action.type) {
-		case GET_EVENTS:
+		case SET_EVENTS:
 			return {
 				events: action.payload,
 			};
