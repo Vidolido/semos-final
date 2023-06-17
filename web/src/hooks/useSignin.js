@@ -9,14 +9,14 @@ export const useSignin = () => {
 	const [isLoading, setIsLoading] = useState(null);
 	const { dispatch } = useAuthContext();
 
-	const signin = async (email, password) => {
+	const signin = async (fullName, email, password, confirmPassword) => {
 		setIsLoading(true);
 		setError(null);
 
-		const res = await fetch('/api/v1/auth/login', {
+		const res = await fetch('/api/v1/auth/sign-in', {
 			method: 'POST',
 			headers: { 'Content-Type': 'application/json' },
-			body: JSON.stringify({ email, password }),
+			body: JSON.stringify({ fullName, email, password, confirmPassword }),
 		});
 		const jsonRes = await res.json();
 		// console.log(jsonRes.errors);

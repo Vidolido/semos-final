@@ -12,8 +12,7 @@ const handleErrors = (err) => {
 	let errors = {
 		email: '',
 		password: '',
-		firstname: '',
-		lastname: '',
+		fullName: '',
 	};
 
 	// unique error handle
@@ -34,10 +33,11 @@ const handleErrors = (err) => {
 };
 
 const signIn = async (req, res) => {
-	const { email, password, confirmPassword, firstname, lastname } = req.body;
+	const { fullName, email, password, confirmPassword } = req.body;
 	let collectionLength = await Account.count();
 	try {
 		if (password !== confirmPassword) {
+			console.log(password, confirmPassword);
 			throw {
 				code: 400,
 				errorMessage: 'Passwords do not match',
@@ -46,16 +46,14 @@ const signIn = async (req, res) => {
 			};
 		}
 		let newAccount = await Account.create({
+			fullName,
 			email,
 			password,
-			firstname,
-			lastname,
 			accountType: collectionLength > 0 ? 'customer' : 'admin',
 		});
 		const payload = {
+			fullName: newAccount.fullName,
 			email: newAccount.email,
-			firstname: newAccount.firstname,
-			lastname: newAccount.lastname,
 			accountType: newAccount.accountType,
 			id: newAccount._id,
 		};
@@ -71,8 +69,8 @@ const signIn = async (req, res) => {
 };
 
 const login = async (req, res) => {
-	const { email, password } = req.body;
 	try {
+		const { email, password } = req.body; // tuka napraviv promena ^
 		const acc = await Account.findOne({ email });
 		if (!acc) {
 			throw {
