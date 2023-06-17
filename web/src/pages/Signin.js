@@ -60,9 +60,9 @@ const Signin = () => {
 					)}
 				</div>
 				<div className='formBottom'>
-					<Link to='/'>Forgot Password?</Link>
-					<input type='submit' value='Log in' disabled={isLoading} />
+					<input type='submit' value='Create Account' disabled={isLoading} />
 				</div>
+				<Link to='/login'>Already have an account?</Link>
 			</form>
 		</div>
 	);

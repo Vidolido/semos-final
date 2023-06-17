@@ -1,7 +1,14 @@
-import React from 'react';
 import { Link } from 'react-router-dom';
+import { useLogout } from '../../hooks/useLogout';
+// import { useAuthContext } from '../../hooks/useAuthContext';
 
 const Navbar = () => {
+	const { logout } = useLogout();
+	// const { user } = useAuthContext();
+
+	const handleClick = () => {
+		logout();
+	};
 	return (
 		<nav className='navbar'>
 			<div className='navbarLeft'>
@@ -20,8 +27,12 @@ const Navbar = () => {
 					<input type='text' placeholder='Search' />
 				</div>
 				<div className='userMenu'>
+					{/* TODO: Тука да направам услов, корисникот е логиран или не */}
+					{/* Не логиран корисник */}
 					<Link to='/login'>Log in</Link>
-					<Link to='/signup'>Create Account</Link>
+					<Link to='/signin'>Create Account</Link>
+					{/* Логиран корисник */}
+					<button onClick={handleClick}>Log out</button>
 				</div>
 			</div>
 		</nav>
