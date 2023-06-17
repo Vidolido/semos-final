@@ -20,13 +20,6 @@ const Signin = () => {
 	return (
 		<div>
 			<h1>Login</h1>
-			{/* {error && (
-				<div className='error'>
-					{Object.entries(error).map((e, i) =>
-						e[1] ? <span key={i}>{e[1]}</span> : ''
-					)}
-				</div>
-			)} */}
 			<form className='form' onSubmit={handleSubmit}>
 				<div>
 					<label>Full Name</label>

@@ -18,7 +18,7 @@ export const AuthContextProvider = ({ children }) => {
 	const [state, dispatch] = useReducer(authReducer, { user: null });
 
 	useEffect(() => {
-		const user = JSON.parse(localStorage.getItem('user')); // Да го крстам ова поле типично за оваа апликација.
+		const user = JSON.parse(localStorage.getItem('TicketBlasterUser')); // Проверуваме дали корисникот е веќе логиран.
 
 		if (user) {
 			dispatch({ type: LOGIN, payload: user });
