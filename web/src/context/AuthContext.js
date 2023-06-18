@@ -18,6 +18,7 @@ export const AuthContextProvider = ({ children }) => {
 	const [state, dispatch] = useReducer(authReducer, { user: null });
 
 	useEffect(() => {
+		// Работи без разлика дали е добар токенот или не, доколку се поклопува името user-от е логиран. Да го поминам преку /validate рутата.
 		const user = JSON.parse(localStorage.getItem('TicketBlasterUser')); // Проверуваме дали корисникот е веќе логиран.
 
 		if (user) {
