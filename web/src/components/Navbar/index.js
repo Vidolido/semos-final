@@ -1,14 +1,10 @@
 import { Link } from 'react-router-dom';
-import { useLogout } from '../../hooks/useLogout';
-// import { useAuthContext } from '../../hooks/useAuthContext';
+import { Fragment } from 'react';
+import { useAuthContext } from '../../hooks/useAuthContext';
 
 const Navbar = () => {
-	const { logout } = useLogout();
-	// const { user } = useAuthContext();
+	const { user } = useAuthContext();
 
-	const handleClick = () => {
-		logout();
-	};
 	return (
 		<nav className='navbar'>
 			<div className='navbarLeft'>
@@ -29,10 +25,20 @@ const Navbar = () => {
 				<div className='userMenu'>
 					{/* TODO: Тука да направам услов, корисникот е логиран или не */}
 					{/* Не логиран корисник */}
-					<Link to='/login'>Log in</Link>
-					<Link to='/signin'>Create Account</Link>
+					{!user && (
+						<Fragment>
+							<Link to='/login'>Log in</Link>
+							<Link to='/signin'>Create Account</Link>
+						</Fragment>
+					)}
 					{/* Логиран корисник */}
-					<button onClick={handleClick}>Log out</button>
+					{user && (
+						<Fragment>
+							<Link to='/user/cart'>Cart</Link>
+							<Link to='/user/ticket-history'>Account</Link>
+						</Fragment>
+					)}
+					{/* да го ставам ова копче во user details */}
 				</div>
 			</div>
 		</nav>
