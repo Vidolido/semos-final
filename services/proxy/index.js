@@ -35,6 +35,16 @@ api.use(
 );
 
 api.use(
+	'/api/v1/storage',
+	proxy(`http://127.0.0.1:${config.get('services').storage.port}`, {
+		proxyReqPathResolver: (req) =>
+			`http://127.0.0.1:${config.get('services').storage.port}/api/v1/storage${
+				req.url
+			}`,
+	})
+);
+
+api.use(
 	'/api/v1',
 	proxy(`http://127.0.0.1:${config.get('services').proxy.port}`, {
 		proxyReqPathResolver: (req) =>

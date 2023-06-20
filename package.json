@@ -5,6 +5,7 @@
 	"main": "index.js",
 	"scripts": {
 		"proxy": "nodemon ./services/proxy/",
+		"storage": "nodemon ./services/storage",
 		"eventServer": "nodemon ./services/events",
 		"authServer": "nodemon ./services/auth",
 		"ticketServer": "nodemon ./services/tickets"

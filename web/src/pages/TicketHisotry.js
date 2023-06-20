@@ -6,7 +6,7 @@ const TicketHisotry = () => {
 
 	useEffect(() => {
 		const getTickets = async () => {
-			const res = await fetch('/api/v1/tickets/');
+			const res = await fetch('/api/v1/tickets');
 			const jsonRes = await res.json();
 			console.log(jsonRes);
 
