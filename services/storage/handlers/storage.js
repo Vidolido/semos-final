@@ -1,4 +1,5 @@
 // req.files.slika -- да пробам .slika да биде на некој начин динамично.
+// во request-от да праќам некакво ID за да ја разликува сликата доколку има повеќе event-и со исто име.
 // ако не постои патека /uploads не ја креира, треба со fs на windows
 const upload = async (req, res) => {
 	let eventId = req.eventId || 'testIme';
