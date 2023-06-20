@@ -6,7 +6,8 @@
 	"scripts": {
 		"proxy": "nodemon ./services/proxy/",
 		"eventServer": "nodemon ./services/events",
-		"authServer": "nodemon ./services/auth"
+		"authServer": "nodemon ./services/auth",
+		"ticketServer": "nodemon ./services/tickets"
 	},
 	"author": "",
 	"license": "ISC",

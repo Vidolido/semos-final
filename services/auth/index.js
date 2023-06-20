@@ -5,7 +5,6 @@ const { expressjwt: jwt } = require('express-jwt');
 // config and custom
 const config = require('../../pkg/config');
 const auth = require('./handlers/auth');
-const tickets = require('./handlers/tickets');
 const db = require('../../pkg/db');
 
 db.init();
@@ -33,9 +32,6 @@ api.post('/api/v1/auth/sign-in', auth.signIn);
 api.post('/api/v1/auth/login', auth.login);
 
 api.post('/api/v1/auth/validate', auth.validate);
-
-api.get('/api/v1/auth/tickets', tickets.userTickets);
-api.post('/api/v1/auth/buy-tickets', tickets.userTickets);
 
 api.use((err, req, res, next) => {
 	if (err.name === 'UnauthorizedError') {

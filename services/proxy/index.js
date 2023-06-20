@@ -25,6 +25,16 @@ api.use(
 );
 
 api.use(
+	'/api/v1/tickets',
+	proxy(`http://127.0.0.1:${config.get('services').tickets.port}`, {
+		proxyReqPathResolver: (req) =>
+			`http://127.0.0.1:${config.get('services').tickets.port}/api/v1/tickets${
+				req.url
+			}`,
+	})
+);
+
+api.use(
 	'/api/v1',
 	proxy(`http://127.0.0.1:${config.get('services').proxy.port}`, {
 		proxyReqPathResolver: (req) =>

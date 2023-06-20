@@ -1,5 +1,7 @@
 const Tickets = require('../../../pkg/tickets');
 
+// TODO: Try/Catch
+
 const userTickets = async (req, res) => {
 	const userTickets = await Tickets.find({
 		accountId: req.accountId,
