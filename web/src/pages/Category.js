@@ -8,7 +8,7 @@ const Category = () => {
 	return (
 		<div>
 			<h1>{category && category}</h1>
-			{category && <Events cat={category.toString()} />}
+			{category && <Events cat={category} />}
 		</div>
 	);
 };

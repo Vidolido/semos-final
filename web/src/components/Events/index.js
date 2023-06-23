@@ -22,6 +22,10 @@ const Events = ({ cat }) => {
 		};
 		getEvents();
 	}, [cat, actionType, dispatch]);
+
+	const handleClick = (id) => {
+		console.log(id);
+	};
 	return (
 		<div>
 			<h1>{cat}</h1>
@@ -31,6 +35,12 @@ const Events = ({ cat }) => {
 						<div key={event._id}>
 							<h3>{event.eventName}</h3>
 							<span>{event.category}</span>
+							<button
+								onClick={() => {
+									handleClick(event._id);
+								}}>
+								Get Tickets
+							</button>
 						</div>
 					);
 				})}

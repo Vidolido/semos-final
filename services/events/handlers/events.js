@@ -33,6 +33,21 @@ const getAllEvents = async (req, res) => {
 	}
 };
 
+const getSingleEvent = async (req, res, next) => {
+	try {
+		console.log(req);
+		let singleEvent = req.params.id
+			? await Events.find({ _id: req.params.id })
+			: null;
+		if (!singleEvent) next();
+
+		return res.status(200).send(singleEvent);
+	} catch (err) {
+		console.log(err);
+		return res.status(500).send('Internal server error.');
+	}
+};
+
 const getEventsByCategory = async (req, res) => {
 	try {
 		let evetnsByCat = await Events.find({ category: req.params.category });
@@ -117,6 +132,7 @@ const removeEvent = async (req, res) => {
 
 module.exports = {
 	getAllEvents,
+	getSingleEvent,
 	getEventsByCategory,
 	createEvent,
 	updateEvent,

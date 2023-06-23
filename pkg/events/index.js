@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
 const validator = require('validator');
+// TODO: Да најдам соодветни функции во валидаторот за моделот.
 
 const eventSchema = mongoose.Schema({
 	eventName: {
@@ -18,7 +19,7 @@ const eventSchema = mongoose.Schema({
 	},
 	location: {
 		type: String,
-		required: true,
+		required: [true, 'Please enter a location for the event.'],
 	},
 	details: {
 		type: String,
