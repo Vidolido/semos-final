@@ -14,7 +14,7 @@ const Events = ({ cat }) => {
 
 	useEffect(() => {
 		const getEvents = async () => {
-			const res = await fetch(`api/v1/events/${cat}`);
+			const res = await fetch(`/api/v1/events/${cat}`);
 			const jsonRes = await res.json();
 			if (res.ok) {
 				dispatch({ type: actionType, payload: jsonRes });
@@ -24,7 +24,6 @@ const Events = ({ cat }) => {
 	}, [cat, actionType, dispatch]);
 	return (
 		<div>
-			{console.log(category, 'ovija se')}
 			<h1>{cat}</h1>
 			{category &&
 				category[cat].map((event) => {

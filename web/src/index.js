@@ -8,6 +8,7 @@ import { EventsContextProvider } from './context/EventsContext';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 // TODO: Да ги сместам сите contextProvider-и во еден како во документацијата.
+// Прави два пати рендер поради React.StrictMode
 root.render(
 	<React.StrictMode>
 		<AuthContextProvider>
