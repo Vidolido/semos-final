@@ -16,6 +16,10 @@ const eventSchema = mongoose.Schema({
 		required: [true, 'Set a date for the event.'],
 		validate: [validator.isDate, 'Please enter a valid date.'],
 	},
+	location: {
+		type: String,
+		required: true,
+	},
 	details: {
 		type: String,
 		minLength: [10, 'Explain in more detail about the event.'],

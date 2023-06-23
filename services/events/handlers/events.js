@@ -36,6 +36,7 @@ const getAllEvents = async (req, res) => {
 const getEventsByCategory = async (req, res) => {
 	try {
 		let evetnsByCat = await Events.find({ category: req.params.category });
+		// console.log(evetnsByCat);
 		if (!evetnsByCat.length) {
 			return res
 				.status(200)
