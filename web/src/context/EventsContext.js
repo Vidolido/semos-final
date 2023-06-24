@@ -4,6 +4,7 @@ import {
 	SET_COMEDY_EVENTS,
 	SET_MUSIC_EVENTS,
 	SET_SINGLE_EVENT,
+	CLEAR_STATE,
 	CREATE_EVENT,
 	DELETE_EVENT,
 } from '../misc/actionTypes';
@@ -23,6 +24,7 @@ export const eventsReducer = (state, action) => {
 	switch (action.type) {
 		case SET_EVENTS:
 			return {
+				...state,
 				events: action.payload,
 			};
 		case SET_COMEDY_EVENTS:
@@ -43,6 +45,7 @@ export const eventsReducer = (state, action) => {
 			};
 		case SET_SINGLE_EVENT:
 			return {
+				...state,
 				event: action.payload,
 			};
 		case CREATE_EVENT:
@@ -55,7 +58,8 @@ export const eventsReducer = (state, action) => {
 					(event) => event._id !== action.payload._id
 				),
 			};
-		case 'CLEAR_STATE':
+		case CLEAR_STATE:
+			//TODO: Да чистам од state само тоа што треба.
 			return {
 				initialState,
 			};

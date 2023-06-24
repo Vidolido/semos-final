@@ -5,7 +5,7 @@ const UserDetails = () => {
 		<div className='userDetails'>
 			<UserNav title='User Details' />
 
-			<form>
+			<form className='form'>
 				<div className='avatar'>
 					<div className='imgContainer'>
 						<image src='' alt='Avatar image' />

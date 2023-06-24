@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom';
 import { Fragment } from 'react';
 import { useAuthContext } from '../../hooks/useAuthContext';
+import { ReactComponent as Logo } from './logo.svg';
 
 const Navbar = () => {
 	const { user } = useAuthContext();
@@ -10,7 +11,7 @@ const Navbar = () => {
 			<div className='navbarLeft'>
 				<div className='logoContainer'>
 					<Link to='/'>
-						<h1>TicketBlaster</h1>
+						<Logo />
 					</Link>
 				</div>
 				<div className='menuContainer'>

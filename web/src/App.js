@@ -19,7 +19,6 @@ function App() {
 	return (
 		<BrowserRouter>
 			<Navbar />
-			<h1>Hello From TicketBlaster</h1>
 			<div className='pages'>
 				<Routes>
 					<Route path='/' element={<Home />} />

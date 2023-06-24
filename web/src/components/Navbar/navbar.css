@@ -1,0 +1,87 @@
+.navbar,
+.navbarLeft,
+.navbarRight {
+	display: flex;
+}
+
+.navbar {
+	color: white;
+	background-color: black;
+	justify-content: space-between;
+	padding: 0 12%;
+	height: 70px;
+}
+
+/* .navbarLeft,
+.navbarRight {
+	width: 50%;
+} */
+
+/* navbarLeft */
+.navbarLeft {
+	justify-content: flex-start;
+	align-items: center;
+}
+
+.logoContainer a {
+	margin-right: 30px;
+}
+.menuContainer a {
+	margin-right: 20px;
+	color: white;
+	font-size: 0.9em;
+	font-family: 'Lato', sans-serif;
+	letter-spacing: -1px;
+	text-decoration: none;
+	transition: all 0.2s ease;
+}
+
+.menuContainer a:hover {
+	color: #ff48ab;
+}
+
+/* navbarRight */
+.navbarRight {
+	justify-content: flex-end;
+	align-items: center;
+}
+
+.searchBar input {
+	min-width: 200px;
+	border: none;
+	padding: 6px 20px;
+	border-radius: 40px;
+	font-size: 0.9em;
+	font-family: 'Lato', sans-serif;
+	font-weight: 400;
+	letter-spacing: -1px;
+	color: black;
+}
+
+.searchBar input:placeholder {
+	font-family: 'Lato', sans-serif;
+	font-weight: 400;
+	letter-spacing: -1px;
+	color: black;
+	opacity: 1;
+}
+
+.userMenu a {
+	font-size: 0.9em;
+	font-family: 'Lato', sans-serif;
+	font-weight: 700;
+	letter-spacing: -1px;
+	padding: 6px 20px;
+	margin-left: 10px;
+	color: black;
+	background-color: #ff48ab;
+	border: 1px solid #ff48ab;
+	border-radius: 40px;
+	text-decoration: none;
+	transition: all 0.2s ease;
+}
+
+.userMenu a:hover {
+	color: white;
+	background-color: transparent;
+}

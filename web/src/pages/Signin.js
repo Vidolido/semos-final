@@ -19,7 +19,7 @@ const Signin = () => {
 	};
 	return (
 		<div>
-			<h1>Sign in</h1>
+			<h1 className='heading'>Create account</h1>
 			<form className='form' onSubmit={handleSubmit}>
 				<div>
 					<label>Full Name</label>
@@ -28,7 +28,9 @@ const Signin = () => {
 						onChange={(e) => setFullName(e.target.value)}
 						value={fullName}
 					/>
-					{error && error['fullName'] && <span>{error['fullName']}</span>}
+					{error && error['fullName'] && (
+						<span className='error'>{error['fullName']}</span>
+					)}
 				</div>
 				<div>
 					<label>Email</label>
@@ -37,7 +39,9 @@ const Signin = () => {
 						onChange={(e) => setEmail(e.target.value)}
 						value={email}
 					/>
-					{error && error['email'] && <span>{error['email']}</span>}
+					{error && error['email'] && (
+						<span className='error'>{error['email']}</span>
+					)}
 				</div>
 				<div>
 					<label>Password</label>
@@ -46,7 +50,9 @@ const Signin = () => {
 						onChange={(e) => setPassword(e.target.value)}
 						value={password}
 					/>
-					{error && error['password'] && <span>{error['password']}</span>}
+					{error && error['password'] && (
+						<span className='error'>{error['password']}</span>
+					)}
 				</div>
 				<div>
 					<label>Re-type Password</label>
@@ -56,7 +62,7 @@ const Signin = () => {
 						value={confirmPassword}
 					/>
 					{error && error['password'].includes('do not match') && (
-						<span>{error['password']}</span>
+						<span className='error'>{error['password']}</span>
 					)}
 				</div>
 				<div className='formBottom'>

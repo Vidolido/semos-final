@@ -26,6 +26,9 @@ const eventSchema = mongoose.Schema({
 		required: true,
 		minLength: [10, 'Explain in more detail about the event.'],
 	},
+	imageUrl: {
+		type: String,
+	},
 	tickets: {
 		type: Number,
 		min: [0, 'There are no more tickets for this event.'],
