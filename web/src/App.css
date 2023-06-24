@@ -3,9 +3,11 @@
 	margin: 0;
 	padding: 0;
 	box-sizing: border-box;
+	font-family: 'Lato', sans-serif;
 }
 
 @import url('./components/Navbar/navbar.css');
+@import url('./components/UserNav/usernav.css');
 
 .pages {
 	padding: 35px 12%;
@@ -13,6 +15,7 @@
 
 .heading {
 	font-family: 'Lato', sans-serif;
+	font-size: 25px;
 	font-weight: 700;
 	letter-spacing: -1.5px;
 }
@@ -26,8 +29,8 @@
 }
 
 .form input {
-	min-width: 200px;
-	width: 25%;
+	/* min-width: 200px; */
+	width: 260px;
 	border: 1px solid black;
 	padding: 6px 20px;
 	border-radius: 40px;
@@ -39,6 +42,7 @@
 }
 
 .form input[type='submit'] {
+	width: 100px;
 	border: 1px solid #ff48ab;
 	background-color: #ff48ab;
 	margin: 15px 0;
@@ -57,7 +61,7 @@
 	text-align: center;
 	text-decoration: none;
 	min-width: 200px;
-	width: 25%;
+	width: 260px;
 	border: 1px solid #ff48ab;
 	border-radius: 40px;
 	background-color: white;
@@ -73,6 +77,24 @@
 	text-decoration: underline;
 }
 
+.formBottom .forgotPass {
+	display: inline;
+	border: none;
+	text-decoration: underline;
+	margin-right: 34px;
+	padding: 0;
+}
+
+.formBottom input[type='submit'] {
+	width: 260px;
+}
+
+.formLink {
+	width: 200px;
+}
+.formBottom .login {
+	width: 100px !important;
+}
 .form .error {
 	display: inline-block;
 	margin-left: 10px;

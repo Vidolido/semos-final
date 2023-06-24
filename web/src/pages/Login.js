@@ -15,7 +15,7 @@ const Login = () => {
 	};
 	return (
 		<div>
-			<h1>Login</h1>
+			<h1>Log In</h1>
 			{error && (
 				<div className='error'>
 					{Object.entries(error).map((e, i) =>
@@ -41,10 +41,19 @@ const Login = () => {
 					/>
 				</div>
 				<div className='formBottom'>
-					<Link to='/'>Forgot Password?</Link>
-					<input type='submit' value='Log in' disabled={isLoading} />
+					<Link className='forgotPass' to='/'>
+						Forgot Password?
+					</Link>
+					<input
+						className='login'
+						type='submit'
+						value='Log in'
+						disabled={isLoading}
+					/>
 				</div>
-				<Link to='/signin'>Don't have an account?</Link>
+				<Link className='formLink' to='/signin'>
+					Don't have an account?
+				</Link>
 			</form>
 		</div>
 	);

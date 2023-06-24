@@ -9,7 +9,7 @@ const UserNav = ({ title }) => {
 	};
 	return (
 		<div className='userNav'>
-			<h2>{title}</h2>
+			<h1 className='heading'>{title}</h1>
 			<nav>
 				<Link to='/user/ticket-history'>Ticket History</Link>
 				<Link to='/user/details'>User Details</Link>
