@@ -15,22 +15,67 @@
 
 .heading {
 	font-family: 'Lato', sans-serif;
-	font-size: 25px;
+	font-size: 2em;
 	font-weight: 700;
 	letter-spacing: -1.5px;
 }
 
+.headings {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	width: 230px;
+}
+
+.btn-purpleToWhite {
+	display: block;
+	text-align: center;
+	text-decoration: none;
+	/* min-width: 200px;
+	width: 260px; */
+	border: 1px solid #ff48ab;
+	border-radius: 40px;
+	background-color: #ff48ab;
+	padding: 6px 20px;
+
+	font-size: 0.9em;
+	font-family: 'Lato', sans-serif;
+	font-weight: 700;
+	letter-spacing: -1px;
+
+	color: white;
+	cursor: pointer;
+	transition: all 0.2s ease;
+}
+
+.btn-purpleToWhite:hover {
+	background-color: transparent;
+	color: black;
+}
+
+/* napraj mesto */
+
+.form {
+	width: 260px;
+}
+
+.form div {
+	width: 100%;
+}
+
 .form label {
 	display: block;
+	width: 100%;
 	font-size: 0.8em;
 	letter-spacing: -1px;
 	font-weight: 700;
 	margin: 10px 0 5px 0;
 }
 
-.form input {
+.form input,
+.form select {
 	/* min-width: 200px; */
-	width: 260px;
+	width: 100%;
 	border: 1px solid black;
 	padding: 6px 20px;
 	border-radius: 40px;
@@ -40,9 +85,16 @@
 	letter-spacing: -1px;
 	color: black;
 }
+.form select {
+	background-color: transparent;
+}
+
+.form select * {
+	background-color: transparent;
+}
 
 .form input[type='submit'] {
-	width: 100px;
+	/* width: 100px; */
 	border: 1px solid #ff48ab;
 	background-color: #ff48ab;
 	margin: 15px 0;
@@ -60,13 +112,18 @@
 	display: block;
 	text-align: center;
 	text-decoration: none;
-	min-width: 200px;
-	width: 260px;
+	/* min-width: 200px;
+	width: 260px; */
 	border: 1px solid #ff48ab;
 	border-radius: 40px;
 	background-color: white;
 	margin: 15px 0;
 	padding: 6px 20px;
+
+	font-size: 0.9em;
+	font-family: 'Lato', sans-serif;
+	font-weight: 400;
+	letter-spacing: -1px;
 
 	color: black;
 	cursor: pointer;
@@ -76,22 +133,20 @@
 .form a:hover {
 	text-decoration: underline;
 }
+.formBottom {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+}
 
 .formBottom .forgotPass {
-	display: inline;
+	display: inline-block;
 	border: none;
 	text-decoration: underline;
-	margin-right: 34px;
 	padding: 0;
 }
 
-.formBottom input[type='submit'] {
-	width: 260px;
-}
-
-.formLink {
-	width: 200px;
-}
+/* Ова да го сменам */
 .formBottom .login {
 	width: 100px !important;
 }
@@ -100,4 +155,18 @@
 	margin-left: 10px;
 	font-size: 0.7em;
 	color: red;
+}
+
+/* Events form */
+
+.form .eventInputs {
+	display: flex;
+}
+
+.inputContainer:nth-child(2) {
+	margin: 0 50px;
+}
+
+.full-width {
+	width: 100%;
 }

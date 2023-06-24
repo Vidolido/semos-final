@@ -5,7 +5,7 @@ const Category = () => {
 	let { cat } = useParams();
 	return (
 		<div>
-			<h1>{cat && cat}</h1>
+			{/* <h1>{cat && cat}</h1> */}
 			{cat && <Events cat={cat} />}
 		</div>
 	);

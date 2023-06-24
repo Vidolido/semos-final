@@ -51,9 +51,7 @@ const Login = () => {
 						disabled={isLoading}
 					/>
 				</div>
-				<Link className='formLink' to='/signin'>
-					Don't have an account?
-				</Link>
+				<Link to='/signin'>Don't have an account?</Link>
 			</form>
 		</div>
 	);

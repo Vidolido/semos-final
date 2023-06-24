@@ -1,13 +1,16 @@
 import { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { useEventsContext } from '../../hooks/useEventsContext';
-import noImage from './no-event-image.jpg';
+// import noImage from './no-event-image.jpg';
 
 import {
 	// SET_EVENTS_BY_CATEGORY,
 	SET_COMEDY_EVENTS,
 	SET_MUSIC_EVENTS,
 } from '../../misc/actionTypes';
+
+// components
+import EventCard from '../EventCard';
 
 const Events = ({ cat }) => {
 	const { category, dispatch } = useEventsContext();
@@ -27,31 +30,11 @@ const Events = ({ cat }) => {
 
 	return (
 		<div>
-			<h1>{cat}</h1>
-			{console.log(noImage)}
+			<h1>{cat === 'comedy' ? 'Stand-up Comedy' : 'Musical Concerts'}</h1>
 			{category &&
 				category[cat] &&
 				category[cat].map((event) => {
-					return (
-						<div key={event._id}>
-							{!event.imageUrl ? (
-								<img
-									className='eventImage'
-									src={noImage}
-									alt='Tickets for events'
-								/>
-							) : (
-								<img
-									className='eventImage'
-									src={event.imageUrl}
-									alt='Tickets for events'
-								/>
-							)}
-							<h3>{event.eventName}</h3>
-							<span>{event.category}</span>
-							<Link to={`/events/about/${event._id}`}>Get Tickets</Link>
-						</div>
-					);
+					return <EventCard key={event._id} event={event} />;
 				})}
 		</div>
 	);

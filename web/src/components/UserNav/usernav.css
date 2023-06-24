@@ -2,3 +2,27 @@
 	display: flex;
 	justify-content: space-between;
 }
+
+.userNav nav {
+	display: flex;
+	align-items: center;
+}
+.userNav nav a,
+.userNav nav button {
+	text-decoration: none;
+	margin-left: 15px;
+	color: black;
+	font-weight: bold;
+	font-size: 1em;
+}
+
+.userNav nav button {
+	border: none;
+	background-color: transparent;
+	cursor: pointer;
+}
+
+.userNav nav a:hover,
+.userNav nav button:hover {
+	color: #ff48ab;
+}
