@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import UserNav from '../components/UserNav';
 
+// TODO: Да го префрлам useEffect во Ticket компонента.
 const TicketHisotry = () => {
 	const [tickets, setTickets] = useState(null);
 

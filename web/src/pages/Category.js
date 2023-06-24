@@ -1,14 +1,12 @@
-import { useLocation } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import Events from '../components/Events';
 
 const Category = () => {
-	const location = useLocation().pathname.split('/');
-	let category = location.at(-1);
-	console.log(console.log(typeof category));
+	let { cat } = useParams();
 	return (
 		<div>
-			<h1>{category && category}</h1>
-			{category && <Events cat={category} />}
+			<h1>{cat && cat}</h1>
+			{cat && <Events cat={cat} />}
 		</div>
 	);
 };

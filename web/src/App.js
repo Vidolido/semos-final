@@ -12,7 +12,7 @@ import Signin from './pages/Signin';
 import TicketHisotry from './pages/TicketHisotry';
 import UserDetails from './pages/UserDetails';
 import Category from './pages/Category';
-import SingleEvent from './pages/SingleEvent';
+import About from './pages/About';
 
 function App() {
 	const { user } = useAuthContext();
@@ -31,7 +31,7 @@ function App() {
 						path='/signin'
 						element={!user ? <Signin /> : <Navigate to='/' />}
 					/>
-					<Route path='/event/:id' element={<SingleEvent />} />
+					<Route path='/events/about/:id' element={<About />} />
 					<Route path='/category/:cat' element={<Category />} />
 					<Route
 						path='/user/cart'

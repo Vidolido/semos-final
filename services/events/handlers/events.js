@@ -33,15 +33,12 @@ const getAllEvents = async (req, res) => {
 	}
 };
 
-const getSingleEvent = async (req, res, next) => {
+const getSingleEvent = async (req, res) => {
 	try {
-		console.log(req);
-		let singleEvent = req.params.id
-			? await Events.find({ _id: req.params.id })
-			: null;
-		if (!singleEvent) next();
+		// TODO: Да исхендлам грешки
+		let singleEvent = await Events.findOne({ _id: req.body.id });
 
-		return res.status(200).send(singleEvent);
+		return res.status(200).json(singleEvent);
 	} catch (err) {
 		console.log(err);
 		return res.status(500).send('Internal server error.');

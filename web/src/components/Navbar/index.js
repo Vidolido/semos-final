@@ -38,7 +38,6 @@ const Navbar = () => {
 							<Link to='/user/ticket-history'>Account</Link>
 						</Fragment>
 					)}
-					{/* да го ставам ова копче во user details */}
 				</div>
 			</div>
 		</nav>

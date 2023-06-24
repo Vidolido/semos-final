@@ -31,8 +31,8 @@ api.use((req, res, next) => {
 });
 
 api.get('/api/v1/events', events.getAllEvents);
+api.post('/api/v1/events/single-event', events.getSingleEvent);
 api.get('/api/v1/events/:category', events.getEventsByCategory);
-api.get('/api/v1/events/single-event', events.getSingleEvent);
 api.post('/api/v1/events/create', events.createEvent);
 api.put('/api/v1/events/:id', events.updateEvent);
 api.delete('/api/v1/events/:id', events.removeEvent);

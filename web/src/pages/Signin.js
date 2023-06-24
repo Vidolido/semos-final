@@ -19,7 +19,7 @@ const Signin = () => {
 	};
 	return (
 		<div>
-			<h1>Login</h1>
+			<h1>Sign in</h1>
 			<form className='form' onSubmit={handleSubmit}>
 				<div>
 					<label>Full Name</label>

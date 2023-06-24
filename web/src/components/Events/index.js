@@ -1,4 +1,5 @@
 import { useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import { useEventsContext } from '../../hooks/useEventsContext';
 
 import {
@@ -23,24 +24,17 @@ const Events = ({ cat }) => {
 		getEvents();
 	}, [cat, actionType, dispatch]);
 
-	const handleClick = (id) => {
-		console.log(id);
-	};
 	return (
 		<div>
 			<h1>{cat}</h1>
 			{category &&
+				category[cat] &&
 				category[cat].map((event) => {
 					return (
 						<div key={event._id}>
 							<h3>{event.eventName}</h3>
 							<span>{event.category}</span>
-							<button
-								onClick={() => {
-									handleClick(event._id);
-								}}>
-								Get Tickets
-							</button>
+							<Link to={`/events/about/${event._id}`}>Get Tickets</Link>
 						</div>
 					);
 				})}
