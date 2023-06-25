@@ -14,6 +14,7 @@ import UserDetails from './pages/UserDetails';
 import Category from './pages/Category';
 import About from './pages/About';
 import UserEvents from './pages/UserEvents';
+import UserAll from './pages/UserAll';
 import CreateEvent from './pages/CreateEvent';
 
 function App() {
@@ -53,7 +54,7 @@ function App() {
 					/>
 					<Route
 						path='/user/all-users'
-						element={user ? <h1>Users page</h1> : <Navigate to='/' />}
+						element={user ? <UserAll /> : <Navigate to='/' />}
 					/>
 					<Route
 						path='/user/create-event'

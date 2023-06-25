@@ -1,23 +1,42 @@
+// import { Fragment } from 'react';
 import { Link } from 'react-router-dom';
 
-import noImage from './no-event-image.jpg';
+import { months, dates } from '../../misc/dateTime';
+import noImage from '../../misc/no-event-image.jpg';
 
 const EventCard = ({ event }) => {
-	// console.log(event);
+	let date = new Date(event.eventDate);
 	return (
-		<div>
-			{!event.imageUrl ? (
-				<img className='eventImage' src={noImage} alt='Tickets for events' />
-			) : (
-				<img
-					className='eventImage'
-					src={event.imageUrl}
-					alt='Tickets for events'
-				/>
-			)}
-			<h3>{event.eventName}</h3>
-			<span>{event.category}</span>
-			<Link to={`/events/about/${event._id}`}>Get Tickets</Link>
+		<div className='eventCard'>
+			<div className='eventImageContainer'>
+				{!event.imageUrl ? (
+					<img className='eventImage' src={noImage} alt='Tickets for events' />
+				) : (
+					<img
+						className='eventImage'
+						src={event.imageUrl}
+						alt='Tickets for events'
+					/>
+				)}
+			</div>
+			<div className='eventInfo'>
+				<h3>{event.eventName}</h3>
+
+				<span className='block purpleText boldText mediumText'>{`${
+					months[date.getMonth()]
+				} ${date.getDate()}${
+					dates[date.getDate()]
+				}, ${date.getFullYear()}`}</span>
+
+				<p className='cardExcerpt mediumText'>{event.detalis.substr(0, 120)}</p>
+
+				<div className='cardBottom'>
+					<span className='mediumText'>{event.location}</span>
+					<Link className='btn-blackToPurple' to={`/events/about/${event._id}`}>
+						Get Tickets
+					</Link>
+				</div>
+			</div>
 		</div>
 	);
 };

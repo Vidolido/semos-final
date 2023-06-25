@@ -1,5 +1,5 @@
-import { useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import { useEffect, Fragment } from 'react';
+// import { Link } from 'react-router-dom';
 import { useEventsContext } from '../../hooks/useEventsContext';
 // import noImage from './no-event-image.jpg';
 
@@ -29,14 +29,16 @@ const Events = ({ cat }) => {
 	}, [cat, actionType, dispatch]);
 
 	return (
-		<div>
+		<Fragment>
 			<h1>{cat === 'comedy' ? 'Stand-up Comedy' : 'Musical Concerts'}</h1>
-			{category &&
-				category[cat] &&
-				category[cat].map((event) => {
-					return <EventCard key={event._id} event={event} />;
-				})}
-		</div>
+			<div className='eventsContainer'>
+				{category &&
+					category[cat] &&
+					category[cat].map((event) => {
+						return <EventCard key={event._id} event={event} />;
+					})}
+			</div>
+		</Fragment>
 	);
 };
 

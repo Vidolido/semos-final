@@ -5,7 +5,7 @@ const validator = require('validator');
 const eventSchema = mongoose.Schema({
 	eventName: {
 		type: String,
-		minLength: [5, 'Event name must be at least 5 characters long.'],
+		minLength: [2, 'Event name must be at least 5 characters long.'],
 		required: [true, 'Please enter an event name.'],
 	},
 	category: {
@@ -32,6 +32,10 @@ const eventSchema = mongoose.Schema({
 	tickets: {
 		type: Number,
 		min: [0, 'There are no more tickets for this event.'],
+	},
+	ticketPrice: {
+		type: Number,
+		min: [0, 'Please enter a ticket price.'],
 	},
 	adminId: {
 		type: String,

@@ -23,18 +23,6 @@ const accountSchema = mongoose.Schema({
 		minLength: [3, 'Name field must be at least 3 characters.'],
 		maxLength: [30, 'Name field must be at least 3 characters.'],
 	},
-	// firstname: {
-	// 	type: String,
-	// 	required: [true, 'Please enter your first name.'],
-	// 	minLength: [3, 'First name must be at least 3 characters'],
-	// 	maxLength: [12, "First name can't be longer than 12 characters"],
-	// },
-	// lastname: {
-	// 	type: String,
-	// 	required: [true, 'Please enter your last name'],
-	// 	minLength: [3, 'Lastname name must be at least 3 characters'],
-	// 	maxLength: [25, "Lastname can't be longer than 25 characters"],
-	// },
 	accountType: {
 		type: String,
 	},

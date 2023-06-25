@@ -3,6 +3,8 @@ import { useParams } from 'react-router-dom';
 import { useEventsContext } from '../hooks/useEventsContext';
 
 import { SET_SINGLE_EVENT, CLEAR_STATE } from '../misc/actionTypes';
+
+import SingleEvent from '../components/SingleEvent';
 const About = () => {
 	const { id } = useParams();
 	const { event, dispatch } = useEventsContext();
@@ -25,23 +27,7 @@ const About = () => {
 		getEvents();
 	}, [id, dispatch]);
 
-	return (
-		<div>
-			About {id}
-			{event && (
-				<div>
-					<h2>{event.eventName}</h2>
-					<span>{event.eventDate}</span>
-					<br />
-					<span>{event.category}</span>
-					<br />
-					<div>
-						<p>{event.detalis}</p>
-					</div>
-				</div>
-			)}
-		</div>
-	);
+	return <div className='about'>{event && <SingleEvent event={event} />}</div>;
 };
 
 export default About;

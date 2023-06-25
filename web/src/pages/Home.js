@@ -7,8 +7,12 @@ const Home = () => {
 			<Hero />
 			<main>
 				<div className='events'>
-					<Events cat='music' />
-					<Events cat='comedy' />
+					<div className='homeMusicEvents'>
+						<Events cat='music' />
+					</div>
+					<div className='homeComedyEvents'>
+						<Events cat='comedy' />
+					</div>
 				</div>
 			</main>
 		</div>
