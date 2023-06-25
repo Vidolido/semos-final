@@ -28,7 +28,7 @@ const EventCard = ({ event }) => {
 					dates[date.getDate()]
 				}, ${date.getFullYear()}`}</span>
 
-				<p className='cardExcerpt mediumText'>{event.detalis.substr(0, 120)}</p>
+				<p className='cardExcerpt mediumText'>{event.details.substr(0, 120)}</p>
 
 				<div className='cardBottom'>
 					<span className='mediumText'>{event.location}</span>

@@ -41,11 +41,16 @@ const SingleEvent = ({ event }) => {
 				</div>
 				<div className='detailsContainer'>
 					<h2 className='mb-15'>About</h2>
-					<p className='mediumText'>{event.detalis}</p>
+					<p className='mediumText'>{event.details}</p>
 					<div className='tickets'>
 						<div className='price mt-20'>
 							{/* Можеби треба да направам посебна логика за ова */}
-							<p>Tickets: ${parseFloat(event.ticketPrice).toFixed(2)} USD</p>
+							<h3>
+								Tickets:{' '}
+								<b className='purpleText'>
+									${parseFloat(event.ticketPrice).toFixed(2)} USD
+								</b>
+							</h3>
 							<div className='addTickets  mt-10'>
 								<form
 									className='flex half-width align-center gap-20'

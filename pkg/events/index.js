@@ -21,7 +21,7 @@ const eventSchema = mongoose.Schema({
 		type: String,
 		required: [true, 'Please enter a location for the event.'],
 	},
-	detalis: {
+	details: {
 		type: String,
 		required: true,
 		minLength: [10, 'Explain in more detail about the event.'],

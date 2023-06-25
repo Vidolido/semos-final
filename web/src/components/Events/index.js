@@ -1,13 +1,7 @@
 import { useEffect, Fragment } from 'react';
-// import { Link } from 'react-router-dom';
 import { useEventsContext } from '../../hooks/useEventsContext';
-// import noImage from './no-event-image.jpg';
 
-import {
-	// SET_EVENTS_BY_CATEGORY,
-	SET_COMEDY_EVENTS,
-	SET_MUSIC_EVENTS,
-} from '../../misc/actionTypes';
+import { SET_COMEDY_EVENTS, SET_MUSIC_EVENTS } from '../../misc/actionTypes';
 
 // components
 import EventCard from '../EventCard';

@@ -62,7 +62,7 @@ const getEventsByCategory = async (req, res) => {
 };
 
 const createEvent = async (req, res) => {
-	console.log(req.auth);
+	// console.log(req.auth);
 	try {
 		// TODO: id(admin) ...
 		if (!req.auth) {
