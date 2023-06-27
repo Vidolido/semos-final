@@ -32,7 +32,7 @@ export const eventsReducer = (state, action) => {
 				...state,
 				category: {
 					...state.category,
-					comedy: [...action.payload],
+					comedy: action.payload.length > 0 ? [...action.payload] : [],
 				},
 			};
 		case SET_MUSIC_EVENTS:
@@ -40,7 +40,7 @@ export const eventsReducer = (state, action) => {
 				...state,
 				category: {
 					...state.category,
-					music: [...action.payload],
+					music: action.payload.length > 0 ? [...action.payload] : [],
 				},
 			};
 		case SET_SINGLE_EVENT:
@@ -54,9 +54,7 @@ export const eventsReducer = (state, action) => {
 			};
 		case DELETE_EVENT:
 			return {
-				events: state.events.filter(
-					(event) => event._id !== action.payload._id
-				),
+				events: state.events.filter((event) => event._id !== action.payload.id),
 			};
 		case CLEAR_STATE:
 			//TODO: Да чистам од state само тоа што треба.

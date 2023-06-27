@@ -9,6 +9,7 @@
 @import url('./components/Navbar/navbar.css');
 @import url('./components/UserNav/usernav.css');
 @import url('./components/SingleEvent/singleEvent.css');
+@import url('./misc/styles/userEvents.css');
 
 .pages {
 	padding: 35px 20%;
@@ -352,11 +353,16 @@
 	height: 200px;
 }
 
+/* single classes */
 .full-width {
 	width: 100%;
 }
 .half-width {
 	width: 50%;
+}
+
+.width-150 {
+	width: 150px;
 }
 
 .block {
@@ -380,8 +386,12 @@
 .mediumText {
 	font-size: 0.9em;
 }
+
 .m-0 {
 	margin: 0;
+}
+.ml-10 {
+	margin-left: 10px;
 }
 .mt-5 {
 	margin-top: 5px;

@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useCreateEvent } from '../hooks/useCreateEvent';
-import { useAuthContext } from '../hooks/useAuthContext';
+// import { useAuthContext } from '../hooks/useAuthContext';
 import UserNav from '../components/UserNav';
 
 import noImage from '../misc/no-event-image.jpg';
@@ -20,7 +20,7 @@ const CreateEvent = () => {
 	const [createEventOptions, setCreateEventOptions] = useState(initialState);
 	const [previewImage, setPreviewImage] = useState(null);
 	const { createEvent, isLoading, error } = useCreateEvent();
-	const { user } = useAuthContext();
+	// const { user } = useAuthContext();
 
 	const handleOnChange = (e) => {
 		console.log(e.target);
@@ -32,7 +32,6 @@ const CreateEvent = () => {
 		setCreateEventOptions((createEventOptions) => ({
 			...createEventOptions,
 			[e.target.name]: e.target.value,
-			adminId: user ? user._id : '',
 		}));
 	};
 	const handleFormSubmit = (e) => {

@@ -11,12 +11,14 @@ const userTickets = async (req, res) => {
 };
 
 const buyTickets = async (req, res) => {
+	// console.log(req.auth);
 	const userTickets = await Tickets.find({
-		accountId: req.accountId,
+		accountId: req.auth.id,
 		eventId: req.eventId,
+		ticketCount: req.ticketCount || 1,
 	});
 	console.log(userTickets);
-	res.status(200).send('The route works.');
+	res.status(200).send(userTickets);
 };
 
 module.exports = {

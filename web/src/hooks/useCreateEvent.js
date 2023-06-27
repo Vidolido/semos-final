@@ -13,6 +13,13 @@ export const useCreateEvent = () => {
 		setIsLoading(true);
 		setError(null);
 		console.log(user.token, 'from useCreateEvent hook');
+		// const test = await(fetch('/api/v1/storage', {
+		//     method: 'POST',
+		//     headers: {
+		// 		Authorization: `Bearer ${user.token}`,
+		// 		'Content-Type': 'application/json',
+		// 	},
+		// }))
 		const res = await fetch('/api/v1/events/create', {
 			method: 'POST',
 			headers: {

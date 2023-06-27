@@ -33,6 +33,17 @@ const getAllEvents = async (req, res) => {
 	}
 };
 
+const getUserEvents = async (req, res) => {
+	try {
+		// TODO: Да исхендлам грешки
+		let userEvents = await Events.find({ adminId: req.auth.id });
+
+		return res.status(200).json(userEvents);
+	} catch (err) {
+		console.log(err);
+		return res.status(500).send('Internal server error.');
+	}
+};
 const getSingleEvent = async (req, res) => {
 	try {
 		// TODO: Да исхендлам грешки
@@ -129,6 +140,7 @@ const removeEvent = async (req, res) => {
 
 module.exports = {
 	getAllEvents,
+	getUserEvents,
 	getSingleEvent,
 	getEventsByCategory,
 	createEvent,

@@ -1,0 +1,31 @@
+.singleUserEvents:first-of-type {
+	margin-top: 20px;
+}
+.singleUserEvents {
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
+	align-items: center;
+	border-bottom: 1px solid;
+	margin-bottom: 20px;
+	padding-bottom: 20px;
+	align-items: center;
+}
+
+.singleUserEvents .info {
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	gap: 20px;
+}
+
+.singleUserEvents .info .basic h3 {
+	display: inline;
+	/* display: flex; */
+	/* align-items: baseline; */
+}
+
+.singleUserEvents .info .imageContainer {
+	width: 200px;
+	height: 100px;
+}
