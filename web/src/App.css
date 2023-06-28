@@ -29,82 +29,6 @@
 	width: 230px;
 }
 
-.btn-blackToPurple {
-	display: block;
-	text-align: center;
-	text-decoration: none;
-	/* min-width: 200px;
-	width: 260px; */
-	border: none;
-	border-radius: 40px;
-	/* background-color: #ff48ab; */
-	background-color: black;
-	padding: 6px 20px;
-
-	font-size: 0.9em;
-	font-family: 'Lato', sans-serif;
-	font-weight: 700;
-	letter-spacing: -1px;
-
-	color: white;
-	cursor: pointer;
-	transition: all 0.2s ease;
-}
-.btn-blackToPurple:hover {
-	background-color: #ff48ab;
-	color: white;
-}
-.btn-blackToTransparent {
-	display: block;
-	text-align: center;
-	text-decoration: none;
-	/* min-width: 200px;
-	width: 260px; */
-	border: 1px solid black;
-	border-radius: 40px;
-	/* background-color: #ff48ab; */
-	background-color: black;
-	padding: 6px 20px;
-
-	font-size: 0.9em;
-	font-family: 'Lato', sans-serif;
-	font-weight: 700;
-	letter-spacing: -1px;
-
-	color: white;
-	cursor: pointer;
-	transition: all 0.2s ease;
-}
-.btn-blackToTransparent:hover {
-	background-color: transparent;
-	color: black;
-}
-.btn-purpleToWhite {
-	display: block;
-	text-align: center;
-	text-decoration: none;
-	/* min-width: 200px;
-	width: 260px; */
-	border: 1px solid #ff48ab;
-	border-radius: 40px;
-	background-color: #ff48ab;
-	padding: 6px 20px;
-
-	font-size: 0.9em;
-	font-family: 'Lato', sans-serif;
-	font-weight: 700;
-	letter-spacing: -1px;
-
-	color: white;
-	cursor: pointer;
-	transition: all 0.2s ease;
-}
-
-.btn-purpleToWhite:hover {
-	background-color: transparent;
-	color: black;
-}
-
 .inputField {
 	width: 100%;
 	min-width: 70px;
@@ -168,9 +92,9 @@
 }
 
 .form input[type='submit'] {
-	/* width: 100px; */
 	border: 1px solid #ff48ab;
 	background-color: #ff48ab;
+	/* background-color: transparent; */
 	margin: 15px 0;
 	color: white;
 	cursor: pointer;
@@ -238,6 +162,56 @@
 	gap: 20px;
 	max-height: 255px;
 }
+
+.form .userDetails {
+	display: flex;
+}
+
+.form .userDetails .avatar {
+	flex: 0;
+	margin-left: 30px;
+}
+
+.form .userInputs .inputContainer .imageContainer {
+	width: 100px;
+	height: 100px;
+	border-radius: 50px;
+	margin: 0 auto;
+}
+
+.form .userInputs .inputContainer .uploadButton,
+.form .userInputs .inputContainer .maskButton {
+	margin-top: 10px;
+}
+
+.form .userDetails .info .fullName label {
+	/* left: 40%; */
+	margin: 0px 0 18px 0;
+	font-size: 1em;
+	font-weight: 400;
+}
+
+.form .userDetails .info .email label {
+	margin: 18px 0 10px 0;
+	font-size: 1em;
+	font-weight: 400;
+}
+
+.form .userSubmit input {
+	width: 100px;
+	margin-left: 30px;
+	border: 1px solid black;
+	background-color: black;
+	color: white;
+}
+.form .userSubmit input:hover {
+	background-color: white;
+	color: black;
+}
+/* .userDetailsButton {
+	width: 60%;
+	margin-left: 30px;
+} */
 
 /* .inputContainer {
 	margin: 0 10px;
@@ -361,6 +335,10 @@
 	width: 50%;
 }
 
+.width-35per {
+	width: 35%;
+}
+
 .width-150 {
 	width: 150px;
 }
@@ -418,10 +396,93 @@
 .flex-grow {
 	flex: 2 0;
 }
+
+.space-between {
+}
 .align-center {
 	align-items: center;
 }
 
+.gap-30 {
+	gap: 30px;
+}
 .gap-20 {
 	gap: 20px;
+}
+
+/* buttons */
+.btn-blackToPurple {
+	display: block;
+	text-align: center;
+	text-decoration: none;
+	/* min-width: 200px;
+	width: 260px; */
+	border: none;
+	border-radius: 40px;
+	/* background-color: #ff48ab; */
+	background-color: black;
+	padding: 6px 20px;
+
+	font-size: 0.9em;
+	font-family: 'Lato', sans-serif;
+	font-weight: 700;
+	letter-spacing: -1px;
+
+	color: white;
+	cursor: pointer;
+	transition: all 0.2s ease;
+}
+.btn-blackToPurple:hover {
+	background-color: #ff48ab;
+	color: white;
+}
+.btn-blackToTransparent {
+	display: block;
+	text-align: center;
+	text-decoration: none;
+	/* min-width: 200px;
+	width: 260px; */
+	border: 1px solid black;
+	border-radius: 40px;
+	/* background-color: #ff48ab; */
+	background-color: black;
+	padding: 6px 20px;
+
+	font-size: 0.9em;
+	font-family: 'Lato', sans-serif;
+	font-weight: 700;
+	letter-spacing: -1px;
+
+	color: white;
+	cursor: pointer;
+	transition: all 0.2s ease;
+}
+.btn-blackToTransparent:hover {
+	background-color: transparent;
+	color: black;
+}
+.btn-purpleToWhite {
+	display: block;
+	text-align: center;
+	text-decoration: none;
+	/* min-width: 200px;
+	width: 260px; */
+	border: 1px solid #ff48ab;
+	border-radius: 40px;
+	background-color: #ff48ab;
+	padding: 6px 20px;
+
+	font-size: 0.9em;
+	font-family: 'Lato', sans-serif;
+	font-weight: 700;
+	letter-spacing: -1px;
+
+	color: white;
+	cursor: pointer;
+	transition: all 0.2s ease;
+}
+
+.btn-purpleToWhite:hover {
+	background-color: transparent;
+	color: black;
 }
