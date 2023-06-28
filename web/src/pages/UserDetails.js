@@ -1,18 +1,19 @@
 import { useState } from 'react';
+import { useAuthContext } from '../hooks/useAuthContext';
+import jwt_decode from 'jwt-decode';
 import noImage from '../misc/no-event-image.jpg';
 import UserNav from '../components/UserNav';
 
 const UserDetails = () => {
+	const { user } = useAuthContext();
 	const [previewImage, setPreviewImage] = useState(null);
 	const [isHidden, setIsHidden] = useState(true);
 	const handleOnChange = (e) => {
 		console.log('Clicked!');
 		if (e.target.files) setPreviewImage(URL.createObjectURL(e.target.files[0]));
 	};
-
-	const handleClick = () => {
-		setIsHidden(!isHidden);
-	};
+	let decoded = jwt_decode(user.token);
+	console.log(decoded);
 	return (
 		<div className='userDetails'>
 			<UserNav title='User Details' />
@@ -56,7 +57,7 @@ const UserDetails = () => {
 						</div>
 						<div className='email'>
 							<label>Email</label>
-							<input type='email' />
+							<input type='email' placeholder={decoded.email} />
 						</div>
 					</div>
 				</div>
@@ -67,7 +68,9 @@ const UserDetails = () => {
 			<div className='changePassword'>
 				<div className='top flex space-between width-35per'>
 					<h3 className='ml-35'>Password</h3>
-					<button className='btn-purpleToWhite' onClick={handleClick}>
+					<button
+						className='btn-purpleToWhite'
+						onClick={() => setIsHidden(!isHidden)}>
 						Change Password
 					</button>
 				</div>
@@ -75,16 +78,20 @@ const UserDetails = () => {
 					''
 				) : (
 					<div className='bottom'>
-						<form className='form'>
-							<div>
-								<label>Password</label>
-								<input type='password' />
+						<form className='form width-35per'>
+							<div className=' inputContainer flex gap-20'>
+								<div>
+									<label>Password</label>
+									<input type='password' />
+								</div>
+								<div>
+									<label>Re-type Password</label>
+									<input type='password' />
+								</div>
 							</div>
-							<div>
-								<label>Re-type Password</label>
-								<input type='password' />
+							<div className='userSubmit'>
+								<input type='submit' value='Submit' />
 							</div>
-							<input type='submit' value='Submit' />
 						</form>
 					</div>
 				)}
