@@ -112,7 +112,29 @@ const getAllAccounts = async (req, res) => {
 		return res.status(200).send(allAccounts);
 	} catch (err) {
 		console.log(err);
-		return res.status(500).send('Internal Server Error.');
+		const errors = handleErrors(err);
+
+		return res.status(500).json({ errors });
+	}
+};
+
+const deleteAccount = async (req, res) => {
+	try {
+		const { id } = req.params;
+		const rmE = await Account.deleteOne({ _id: id });
+		if (!rmE.deletedCount) {
+			throw {
+				code: 400,
+				errorMessage: 'User does not exist.',
+				for: 'email',
+				message: 'Custom error',
+			};
+		}
+
+		return res.status(200).send({ message: 'User successfully deleted' });
+	} catch (e) {
+		console.log(e);
+		res.status(500).send({ message: 'Internal Server Error!' });
 	}
 };
 
@@ -126,5 +148,6 @@ module.exports = {
 	signIn,
 	login,
 	getAllAccounts,
+	deleteAccount,
 	validate,
 };

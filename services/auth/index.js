@@ -31,6 +31,8 @@ api.get('/api/v1/auth/', auth.getAllAccounts);
 api.post('/api/v1/auth/sign-in', auth.signIn);
 api.post('/api/v1/auth/login', auth.login);
 
+api.delete('/api/v1/auth/:id', auth.deleteAccount);
+
 api.post('/api/v1/auth/validate', auth.validate);
 
 api.use((err, req, res, next) => {

@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import jwt_decode from 'jwt-decode';
 import { useAuthContext } from '../hooks/useAuthContext';
 
@@ -9,33 +9,39 @@ import UserNav from '../components/UserNav';
 
 const UserAll = () => {
 	// TODO: да поставам услов, само доколку е админ да може да ги листа сите корисници
+	const [isDeleted, setIsDeleted] = useState();
 	const { user, allUsers, dispatch } = useAuthContext();
 	useEffect(() => {
+		setIsDeleted(false);
+
 		const getEvents = async () => {
 			const res = await fetch(`/api/v1/auth/`);
 			const jsonRes = await res.json();
+			let curentUser = jwt_decode(user.token).id;
+			let restOfUsers = jsonRes.filter((user) => user._id !== curentUser);
+
 			if (res.ok) {
-				dispatch({ type: SET_ALL_USERS, payload: jsonRes });
+				dispatch({ type: SET_ALL_USERS, payload: restOfUsers });
 			}
 		};
 		getEvents();
-	}, [dispatch]);
+	}, [dispatch, isDeleted, user]);
 	const handleUpdate = async (id) => {
 		console.log(jwt_decode(user.token), 'OVA');
 	};
 	const handleDelete = async (id) => {
-		console.log(jwt_decode(user.token), 'OVA');
-		// let deleteUser = await fetch(`/api/v1/auth//${id}`, {
-		// 	method: 'DELETE',
-		// 	headers: {
-		// 		Authorization: `Bearer ${user.token}`,
-		// 		'Content-Type': 'application/json',
-		// 	},
-		// });
-		// if (deleteEvent.ok) {
-		// 	dispatch({ type: DELETE_USER, payload: id });
-		// 	// setIsDeleted(true);
-		// }
+		console.log(id, 'OVA');
+		let deleteUser = await fetch(`/api/v1/auth//${id}`, {
+			method: 'DELETE',
+			headers: {
+				Authorization: `Bearer ${user.token}`,
+				'Content-Type': 'application/json',
+			},
+		});
+		if (deleteUser.ok) {
+			dispatch({ type: DELETE_USER, payload: id });
+			setIsDeleted(true);
+		}
 	};
 	return (
 		<div>
