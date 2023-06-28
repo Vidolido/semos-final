@@ -1,49 +1,93 @@
+import { useState } from 'react';
+import noImage from '../misc/no-event-image.jpg';
 import UserNav from '../components/UserNav';
 
 const UserDetails = () => {
+	const [previewImage, setPreviewImage] = useState(null);
+	const [isHidden, setIsHidden] = useState(true);
+	const handleOnChange = (e) => {
+		console.log('Clicked!');
+		if (e.target.files) setPreviewImage(URL.createObjectURL(e.target.files[0]));
+	};
+
+	const handleClick = () => {
+		setIsHidden(!isHidden);
+	};
 	return (
 		<div className='userDetails'>
 			<UserNav title='User Details' />
 
-			<form className='form'>
-				<div className='avatar'>
-					<div className='imgContainer'>
-						<image src='' alt='Avatar image' />
+			<form className='form width-35per mt-20'>
+				<div className='userDetails gap-30'>
+					<div className='avatar'>
+						{/* TODO: Да направам иста шема за формите */}
+
+						<div className='userInputs'>
+							<div className='inputContainer'>
+								<div className='imageContainer'>
+									{previewImage ? (
+										<img src={previewImage} alt='Avatar' />
+									) : (
+										<img src={noImage} alt='User Avatar' />
+									)}
+								</div>
+							</div>
+							<div className='inputContainer'>
+								<label className='imageLabel'>Upload Avatar</label>
+								<input
+									className='uploadButton'
+									type='file'
+									name='eventImage'
+									onChange={handleOnChange}
+								/>
+								<input
+									type='text'
+									className='maskButton'
+									value='Upload Avatar'
+									placeholder='Upload Avatar'
+								/>
+							</div>
+						</div>
 					</div>
-					<input type='file' name='avatarImg' className='uploadButton' />
-					{/* Да го направам ова инпут поле скриено и да направам копче со стил под него за да пишува Upload Avatar */}
-					{/* Да ставам слика за default avatar */}
+					<div className='info'>
+						<div className='fullName'>
+							<label>Full Name</label>
+							<input type='fullName' />
+						</div>
+						<div className='email'>
+							<label>Email</label>
+							<input type='email' />
+						</div>
+					</div>
 				</div>
-				<div className='info'>
-					<div className='fullName'>
-						<label>Full Name</label>
-						<input type='fullName' />
-					</div>
-					<div className='email'>
-						<label>Email</label>
-						<input type='email' />
-					</div>
+				<div className='userSubmit'>
+					<input type='submit' value='Submit' />
 				</div>
-				<input type='submit' value='Submit' />
 			</form>
 			<div className='changePassword'>
-				<div className='top'>
-					<h3>Change Password</h3>
-					<button>Change Password</button>
+				<div className='top flex space-between width-35per'>
+					<h3 className='ml-35'>Password</h3>
+					<button className='btn-purpleToWhite' onClick={handleClick}>
+						Change Password
+					</button>
 				</div>
-				<div className='bottom'>
-					<form>
-						<div>
-							<label>Password</label>
-							<input type='password' />
-						</div>
-						<div>
-							<label>Re-type Password</label>
-							<input type='password' />
-						</div>
-						<input type='submit' value='Submit' />
-					</form>
-				</div>
+				{isHidden ? (
+					''
+				) : (
+					<div className='bottom'>
+						<form className='form'>
+							<div>
+								<label>Password</label>
+								<input type='password' />
+							</div>
+							<div>
+								<label>Re-type Password</label>
+								<input type='password' />
+							</div>
+							<input type='submit' value='Submit' />
+						</form>
+					</div>
+				)}
 			</div>
 		</div>
 	);

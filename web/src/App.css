@@ -371,6 +371,9 @@
 .ml-10 {
 	margin-left: 10px;
 }
+.ml-35 {
+	margin-left: 35px;
+}
 .mt-5 {
 	margin-top: 5px;
 }
@@ -398,6 +401,7 @@
 }
 
 .space-between {
+	justify-content: space-between;
 }
 .align-center {
 	align-items: center;

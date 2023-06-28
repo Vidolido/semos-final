@@ -1,10 +1,11 @@
 import { useState } from 'react';
 import { useCreateEvent } from '../hooks/useCreateEvent';
 // import { useAuthContext } from '../hooks/useAuthContext';
-import UserNav from '../components/UserNav';
 
+import UserNav from '../components/UserNav';
 import noImage from '../misc/no-event-image.jpg';
 
+//TODO: ticketPrice да го направам да прима децимали
 const CreateEvent = () => {
 	const initialState = {
 		eventName: '',
