@@ -5,6 +5,11 @@ export const AuthContext = createContext();
 
 export const authReducer = (state, action) => {
 	switch (action.type) {
+		case 'SET_ALL_USERS':
+			return {
+				...state,
+				allUsers: [...action.payload],
+			};
 		case LOGIN:
 			return { user: action.payload };
 		case LOGOUT:
@@ -15,7 +20,10 @@ export const authReducer = (state, action) => {
 };
 
 export const AuthContextProvider = ({ children }) => {
-	const [state, dispatch] = useReducer(authReducer, { user: null });
+	const [state, dispatch] = useReducer(authReducer, {
+		user: null,
+		allUsers: [],
+	});
 
 	useEffect(() => {
 		// Работи без разлика дали е добар токенот или не, доколку се поклопува името user-от е логиран. Да го поминам преку /validate рутата.
