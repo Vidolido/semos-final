@@ -11,6 +11,10 @@ const eventSchema = mongoose.Schema({
 	category: {
 		type: String,
 		required: [true, 'Please assign a category.'],
+		enum: {
+			values: ['comedy', 'music'],
+			message: 'Please select a category',
+		},
 	},
 	eventDate: {
 		type: Date,

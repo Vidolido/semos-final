@@ -26,12 +26,13 @@ const UserAll = () => {
 		};
 		getEvents();
 	}, [dispatch, isDeleted, user]);
+
 	const handleUpdate = async (id) => {
 		console.log(jwt_decode(user.token), 'OVA');
 	};
 	const handleDelete = async (id) => {
 		console.log(id, 'OVA');
-		let deleteUser = await fetch(`/api/v1/auth//${id}`, {
+		let deleteUser = await fetch(`/api/v1/auth/${id}`, {
 			method: 'DELETE',
 			headers: {
 				Authorization: `Bearer ${user.token}`,
@@ -65,7 +66,9 @@ const UserAll = () => {
 								<button
 									onClick={() => handleUpdate(singleUser._id)}
 									className='btn-purpleToWhite width-150'>
-									Make Admin
+									{singleUser.accountType === 'customer'
+										? 'Make Admin'
+										: 'Make Customer'}
 								</button>
 								<button
 									onClick={() => handleDelete(singleUser._id)}

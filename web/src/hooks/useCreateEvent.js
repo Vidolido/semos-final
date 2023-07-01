@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { useAuthContext } from './useAuthContext'; // ќе видам дали ми треба
 import { useEventsContext } from './useEventsContext';
-// import { LOGIN } from '../misc/actionTypes';
+import { CREATE_EVENT } from '../misc/actionTypes';
 
 export const useCreateEvent = () => {
 	const [error, setError] = useState(null);
@@ -30,6 +30,16 @@ export const useCreateEvent = () => {
 		});
 		const jsonRes = await res.json();
 		console.log(jsonRes, 'ova li');
+		if (!res.ok) {
+			setIsLoading(false);
+			setError(jsonRes.errors);
+		}
+		if (res.ok) {
+			console.log(jsonRes);
+			dispatch({ type: CREATE_EVENT, payload: jsonRes });
+
+			setIsLoading(false);
+		}
 	};
 
 	return { createEvent, isLoading, error };

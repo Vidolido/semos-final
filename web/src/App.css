@@ -328,6 +328,10 @@
 }
 
 /* single classes */
+.text-white {
+	color: white;
+}
+
 .full-width {
 	width: 100%;
 }

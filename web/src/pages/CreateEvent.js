@@ -1,8 +1,9 @@
-import { useState } from 'react';
+import { useState, Fragment } from 'react';
 import { useCreateEvent } from '../hooks/useCreateEvent';
 // import { useAuthContext } from '../hooks/useAuthContext';
 
 import UserNav from '../components/UserNav';
+import RelatedEvents from '../components/RelatedEvents';
 import noImage from '../misc/no-event-image.jpg';
 
 //TODO: ticketPrice да го направам да прима децимали
@@ -24,12 +25,9 @@ const CreateEvent = () => {
 	// const { user } = useAuthContext();
 
 	const handleOnChange = (e) => {
-		console.log(e.target);
-		// if (URL.createObjectURL(e.target.files[0]))
+		// console.log(e.target);
 		if (e.target.files) setPreviewImage(URL.createObjectURL(e.target.files[0]));
 
-		// let testImage = URL.createObjectURL(e.target.files[0]);
-		// console.log(e.target.name, e.target.value, testImage);
 		setCreateEventOptions((createEventOptions) => ({
 			...createEventOptions,
 			[e.target.name]: e.target.value,
@@ -38,6 +36,8 @@ const CreateEvent = () => {
 	const handleFormSubmit = (e) => {
 		e.preventDefault();
 		createEvent(createEventOptions);
+		// console.log(error, 'ovoj');
+		!error && setCreateEventOptions(initialState);
 	};
 	return (
 		<div className='createEvent'>
@@ -47,28 +47,44 @@ const CreateEvent = () => {
 					<div className='eventInputs'>
 						<div className='inputContainer'>
 							<label>Event Name</label>
-							<input type='text' name='eventName' onChange={handleOnChange} />
+							<input
+								type='text'
+								value={createEventOptions.eventName}
+								name='eventName'
+								onChange={handleOnChange}
+							/>
+							{error && error['eventName'] && (
+								<span className='error'>{error['eventName']}</span>
+							)}
 						</div>
 						<div className='inputContainer'>
 							<label>Category</label>
 							<select
 								name='category'
-								defaultValue={'Choose Event Category'}
+								defaultValue='Choose Event Category'
 								onChange={handleOnChange}>
-								<option
-									value='Choose Event Category'
-									defaultValue={'Choose Event Category'}
-									disabled
-									hidden>
+								<option defaultValue='Choose Event Category' disabled hidden>
 									Choose Event Category
 								</option>
 								<option value='comedy'>Stand-up Comedy</option>
 								<option value='music'>Musical Concert</option>
 							</select>
+							{/* TODO: Да најдам начин да го испечатам еророт */}
+							{error && error['category'] && (
+								<span className='error'>{error['category']}</span>
+							)}
 						</div>
 						<div className='inputContainer'>
 							<label>Date</label>
-							<input type='date' name='eventDate' onChange={handleOnChange} />
+							<input
+								type='date'
+								value={createEventOptions.eventDate}
+								name='eventDate'
+								onChange={handleOnChange}
+							/>
+							{error && error['eventDate'] && (
+								<span className='error'>{error['eventDate']}</span>
+							)}
 						</div>
 					</div>
 					<div className='eventInputs'>
@@ -85,19 +101,32 @@ const CreateEvent = () => {
 								className='maskButton'
 								value='Upload Event Art'
 								placeholder='Upload Event Art'
+								readOnly
 							/>
 						</div>
 						<div className='inputContainer'>
 							<label>Location</label>
-							<input type='text' name='location' onChange={handleOnChange} />
+							<input
+								type='text'
+								value={createEventOptions.location}
+								name='location'
+								onChange={handleOnChange}
+							/>
+							{error && error['location'] && (
+								<span className='error'>{error['location']}</span>
+							)}
 						</div>
 						<div className='inputContainer'>
 							<label>Ticket Price</label>
 							<input
 								type='number'
+								value={createEventOptions.ticketPrice}
 								name='ticketPrice'
 								onChange={handleOnChange}
 							/>
+							{error && error['tickets'] && (
+								<span className='error'>{error['tickets']}</span>
+							)}
 						</div>
 					</div>
 					<div className='eventInputs'>
@@ -116,25 +145,28 @@ const CreateEvent = () => {
 							<textarea
 								className='mt-5'
 								type='text'
+								value={createEventOptions.details}
 								name='details'
 								onChange={handleOnChange}
 							/>
+							{error && error['details'] && (
+								<span className='error'>{error['details']}</span>
+							)}
 						</div>
 					</div>
 					<div className='container'>
-						<div className='eventInputs'>
-							{/* Ова треба да има посебна логика */}
-							<div className='inputContainer'>
-								<label>Related events</label>
-								<input type='text' />
+						{/* Ова треба да има посебна логика */}
+						{!createEventOptions.category && <h1>Please select a category</h1>}
+						{createEventOptions.category && (
+							<div className='eventInputs'>
+								<RelatedEvents cat={createEventOptions.category} />
 							</div>
-							<div className='inputContainer'>
-								<label>Event Details</label>
-								<input type='text' />
-							</div>
-						</div>
+						)}
 					</div>
-					<input type='submit' value='Submit' />
+
+					<button type='submit' className='btn-blackToTransparent' value='Save'>
+						Save
+					</button>
 				</form>
 			</div>
 		</div>
