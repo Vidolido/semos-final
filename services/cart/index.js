@@ -24,6 +24,7 @@ api.use((req, res, next) => {
 
 //routes
 api.post('/api/v1/cart/create', cart.createCart);
+api.get('/api/v1/cart/get', cart.getCart);
 api.post('/api/v1/cart/add', cart.addToCart);
 
 // no token

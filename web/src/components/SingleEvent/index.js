@@ -1,13 +1,18 @@
 import { Fragment } from 'react';
 
+//hooks
+import { useCart } from '../../hooks/useCart';
+// misc
 import { months, dates } from '../../misc/dateTime';
 import noImage from '../../misc/no-event-image.jpg';
 
 const SingleEvent = ({ event }) => {
 	let date = new Date(event.eventDate);
+	const { addToCart, isLoading, error } = useCart(); //  Да ги искористам овие
 
-	const handleSubmit = (e) => {
-		e.preventDefault();
+	const handleSubmit = (form, id) => {
+		form.preventDefault();
+		addToCart(form, id);
 	};
 	// console.log(event);
 	return (
@@ -54,8 +59,14 @@ const SingleEvent = ({ event }) => {
 							<div className='addTickets  mt-10'>
 								<form
 									className='flex half-width align-center gap-20'
-									onSubmit={handleSubmit}>
-									<input className='inputField' type='number' min={1} />
+									onSubmit={(e) => handleSubmit(e, event._id)}>
+									<input
+										className='inputField'
+										defaultValue='1'
+										name='numberOfTickets'
+										type='number'
+										min={1}
+									/>
 									<input
 										className='btn-blackToTransparent'
 										type='submit'

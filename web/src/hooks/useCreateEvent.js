@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { useAuthContext } from './useAuthContext'; // ќе видам дали ми треба
+import { useAuthContext } from './useAuthContext';
 import { useEventsContext } from './useEventsContext';
 import { CREATE_EVENT } from '../misc/actionTypes';
 
