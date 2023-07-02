@@ -2,8 +2,6 @@ const mongoose = require('mongoose');
 const validator = require('validator');
 const bcrypt = require('bcryptjs');
 
-// TODO: да го направам моделот да прима fullName место fistname и lastname
-
 const accountSchema = mongoose.Schema({
 	email: {
 		type: String,
@@ -30,7 +28,7 @@ const accountSchema = mongoose.Schema({
 
 accountSchema.pre('save', async function (next) {
 	const salt = await bcrypt.genSalt();
-	this.password = await bcrypt.hash(this.password, salt);
+	this.password = bcrypt.hash(this.password, salt);
 	next();
 });
 

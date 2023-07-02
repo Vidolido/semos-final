@@ -45,6 +45,16 @@ api.use(
 );
 
 api.use(
+	'/api/v1/cart',
+	proxy(`http://127.0.0.1:${config.get('services').cart.port}`, {
+		proxyReqPathResolver: (req) =>
+			`http://127.0.0.1:${config.get('services').cart.port}/api/v1/cart${
+				req.url
+			}`,
+	})
+);
+
+api.use(
 	'/api/v1',
 	proxy(`http://127.0.0.1:${config.get('services').proxy.port}`, {
 		proxyReqPathResolver: (req) =>

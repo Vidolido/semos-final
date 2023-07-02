@@ -4,6 +4,7 @@ const jwt = require('jsonwebtoken');
 
 // moddels
 const Account = require('../../../pkg/account');
+const Cart = require('../../../pkg/cart');
 
 // config and custom
 const config = require('../../../pkg/config');
@@ -13,6 +14,7 @@ const handleErrors = (err) => {
 		email: '',
 		password: '',
 		fullName: '',
+		accountId: '',
 	};
 
 	// unique error handle
@@ -50,6 +52,10 @@ const signIn = async (req, res) => {
 			email,
 			password,
 			accountType: collectionLength > 0 ? 'customer' : 'admin',
+		});
+		await Cart.create({
+			accountId: newAccount._id,
+			cartItems: [],
 		});
 		const payload = {
 			fullName: newAccount.fullName,

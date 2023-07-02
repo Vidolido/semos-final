@@ -16,6 +16,7 @@ import About from './pages/About';
 import UserEvents from './pages/UserEvents';
 import UserAll from './pages/UserAll';
 import CreateEvent from './pages/CreateEvent';
+import ShoppingCart from './pages/ShoppingCart';
 
 function App() {
 	const { user } = useAuthContext();
@@ -38,7 +39,7 @@ function App() {
 					{/* TODO: Да го негирам !user од кога ќе ги средам рутите. */}
 					<Route
 						path='/user/cart'
-						element={user ? <h1>Cart</h1> : <Navigate to='/' />}
+						element={user ? <ShoppingCart /> : <Navigate to='/' />}
 					/>
 					<Route
 						path='/user/checkout'

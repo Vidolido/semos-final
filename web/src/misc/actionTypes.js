@@ -1,4 +1,5 @@
 export const SET_EVENTS = 'SET_EVENTS';
+
 export const SET_COMEDY_EVENTS = 'SET_COMEDY_EVENTS';
 export const SET_MUSIC_EVENTS = 'SET_MUSIC_EVENTS';
 export const SET_SINGLE_EVENT = 'SET_SINGLE_EVENT';

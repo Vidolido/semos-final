@@ -8,7 +8,8 @@
 		"storage": "nodemon ./services/storage",
 		"eventServer": "nodemon ./services/events",
 		"authServer": "nodemon ./services/auth",
-		"ticketServer": "nodemon ./services/tickets"
+		"ticketServer": "nodemon ./services/tickets",
+		"cartServer": "nodemon ./services/cart"
 	},
 	"author": "",
 	"license": "ISC",
