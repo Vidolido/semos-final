@@ -6,7 +6,7 @@ const cartItemSchema = mongoose.Schema(
 		eventId: {
 			type: mongoose.Types.ObjectId,
 			unique: true,
-			ref: 'Events',
+			ref: 'Event',
 			validate: [mongoose.Types.ObjectId.isValid, 'Something went wrong.'],
 		},
 		numberOfTickets: {

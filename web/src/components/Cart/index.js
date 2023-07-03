@@ -25,8 +25,8 @@ const Cart = () => {
 	return (
 		<div>
 			<h1>Shopping Cart</h1>
-			{cart && cart.cartItems.map((item) => <p>{item}</p>)}
-			{/* {console.log(cart)} */}
+			{/* {cart && cart.cartItems.map((item) => <p>{item.eventId}</p>)} */}
+			{console.log(cart)}
 		</div>
 	);
 };

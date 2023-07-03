@@ -11,14 +11,13 @@ const api = express();
 api.use(express.json());
 
 api.use(
-	jwt
-		.expressjwt({
-			algorithms: ['HS256'],
-			secret: config.get('security').jwt_secret,
-		})
-		.unless({
-			path: ['/api/v1/tickets/', '/api/v1/buy-tickets'],
-		}) // да го трнгам ова, корисникот мора да биде логиран.
+	jwt.expressjwt({
+		algorithms: ['HS256'],
+		secret: config.get('security').jwt_secret,
+	})
+	// .unless({
+	// 	path: ['/api/v1/tickets/', '/api/v1/buy-tickets'],
+	// }) // да го трнгам ова, корисникот мора да биде логиран.
 );
 api.use((req, res, next) => {
 	console.log(req.method, req.path);

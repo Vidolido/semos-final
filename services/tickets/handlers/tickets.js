@@ -4,7 +4,7 @@ const Tickets = require('../../../pkg/tickets');
 
 const userTickets = async (req, res) => {
 	const userTickets = await Tickets.find({
-		accountId: req.accountId,
+		accountId: req.auth.id,
 	});
 	console.log(userTickets);
 	res.status(200).send(userTickets);

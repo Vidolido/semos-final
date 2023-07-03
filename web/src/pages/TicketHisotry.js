@@ -1,13 +1,22 @@
 import { useState, useEffect } from 'react';
 import UserNav from '../components/UserNav';
 
+import { useAuthContext } from '../hooks/useAuthContext';
+
 // TODO: Да го префрлам useEffect во Ticket компонента.
 const TicketHisotry = () => {
+	const { user } = useAuthContext();
 	const [tickets, setTickets] = useState(null);
 
 	useEffect(() => {
 		const getTickets = async () => {
-			const res = await fetch('/api/v1/tickets');
+			const res = await fetch('/api/v1/tickets', {
+				method: 'GET',
+				headers: {
+					Authorization: `Bearer ${user.token}`,
+					'Content-Type': 'application/json',
+				},
+			});
 			const jsonRes = await res.json();
 			console.log(jsonRes);
 
@@ -23,6 +32,7 @@ const TicketHisotry = () => {
 
 	return (
 		<div className='ticketHistory'>
+			{console.log(tickets)}
 			<UserNav title='Ticket Hisotry' />
 			<h2>Ticket Hisotry</h2>
 			{tickets &&
