@@ -1,6 +1,7 @@
 // const mongoose = require('mongoose');
 
 // models
+const Event = require('../../../pkg/events');
 const Cart = require('../../../pkg/cart');
 
 // config and custom
@@ -9,6 +10,8 @@ const config = require('../../../pkg/config');
 // TODO: Оваа функција да ја сместам во misc секаде ја користам
 // треба да прима параметри, err и errObject
 const handleErrors = (err) => {
+	console.log(err);
+
 	let errors = {
 		accountId: '',
 	};
@@ -16,7 +19,6 @@ const handleErrors = (err) => {
 	if (err.code === 11000) {
 		errors.accountId = 'Something went wrong, please try again.';
 	}
-
 	if (err.message.includes('Account validation failed')) {
 		// TODO: Да проверам убаво какви грешки се случуваат тука
 
@@ -26,12 +28,12 @@ const handleErrors = (err) => {
 	} else if (err.message.includes('Custom error')) {
 		errors[err.for] = err.errorMessage;
 	}
+	console.log(errors);
 
 	return errors;
 };
 
 const createCart = async (req, res) => {
-	// можно е да не ми треба овој handler
 	try {
 		const cart = await Cart.create({ accountId: req.auth.id, cartItems: [] });
 		res.status(200).send(cart);
@@ -44,8 +46,16 @@ const createCart = async (req, res) => {
 
 const getCart = async (req, res) => {
 	try {
-		const cart = await Cart.findOne({ accountId: req.auth.id });
+		const cart = await Cart.findOne({ accountId: req.auth.id }).populate({
+			path: 'cartItems',
+			populate: {
+				path: 'eventId',
+				model: Event,
+			},
+		});
+		// console.log(cart);
 		return res.status(200).send(cart);
+		// return res.status(200).json({ message: 'ok' });
 	} catch (err) {
 		// console.log(err);
 		const errors = handleErrors(err);
