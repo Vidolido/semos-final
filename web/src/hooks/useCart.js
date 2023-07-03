@@ -16,6 +16,7 @@ export const useCart = () => {
 		setIsLoading(true);
 		setError(null);
 		console.log(form, id);
+		// TODO: Да најдам друг начин за numberOfTickets
 		let numberOfTickets = Number(
 			Array.from(form.target.children).filter(
 				(input) => input.name === 'numberOfTickets'

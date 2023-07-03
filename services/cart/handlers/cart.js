@@ -51,11 +51,15 @@ const getCart = async (req, res) => {
 			populate: {
 				path: 'eventId',
 				model: Event,
+				select: {
+					eventName: 1,
+					eventDate: 1,
+					location: 1,
+					ticketPrice: 1,
+				},
 			},
 		});
-		// console.log(cart);
 		return res.status(200).send(cart);
-		// return res.status(200).json({ message: 'ok' });
 	} catch (err) {
 		// console.log(err);
 		const errors = handleErrors(err);
