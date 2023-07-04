@@ -1,9 +1,11 @@
 import { useEffect, useState } from 'react';
 import { useAuthContext } from '../../hooks/useAuthContext';
+import { useCartContext } from '../../hooks/useCartContext';
 
 const Cart = () => {
 	const { user } = useAuthContext();
-	const [cart, setCart] = useState(null);
+	const { cart, dispatch } = useCartContext();
+	// const [cart, setCart] = useState(null);
 
 	// samo kolku za test
 	useEffect(() => {
@@ -15,17 +17,20 @@ const Cart = () => {
 				},
 			});
 			const jsonRes = await res.json();
-			setCart(jsonRes);
-			// if (res.ok) {
-			// 	dispatch({ type: actionType, payload: jsonRes });
-			// }
+			// setCart(jsonRes);
+			if (res.ok) {
+				dispatch({ type: 'SET_CART', payload: jsonRes });
+			}
 		};
 		getEvents();
-	}, [user]);
+	}, [user, dispatch]);
 	return (
 		<div>
 			<h1>Shopping Cart</h1>
-			{/* {cart && cart.cartItems.map((item) => <p>{item.eventId}</p>)} */}
+			{cart &&
+				cart.cartItems.map((item) => (
+					<p key={item.event._id}>{item.event.eventName}</p>
+				))}
 			{console.log(cart)}
 		</div>
 	);

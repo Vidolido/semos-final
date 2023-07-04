@@ -1,16 +1,18 @@
 import { useState } from 'react';
 import { useAuthContext } from './useAuthContext';
-import { useEventsContext } from './useEventsContext';
+// import { useEventsContext } from './useEventsContext';
+import { useCartContext } from './useCartContext';
 
 // Логика на frontend апликацијата
 // TODO: Да ги сместам функциите за работа со база и state на апликацијата
 // во еден фајл(auth, events, cart секое засебно). React hooks да ми користат како handler-и за frontend.
 
 export const useCart = () => {
-	const [error, setError] = useState(null);
+	const { cart, dispatch } = useCartContext();
+	const [error, setError] = useState(null); // Ерор објект со клучеви за сите функции
 	const [isLoading, setIsLoading] = useState(null);
 	const { user } = useAuthContext();
-	const { dispatch } = useEventsContext();
+	// const { dispatch } = useEventsContext();
 
 	const addToCart = async (form, id) => {
 		setIsLoading(true);
@@ -24,7 +26,7 @@ export const useCart = () => {
 		);
 
 		let payload = {
-			eventId: id.toString(),
+			event: id.toString(),
 			numberOfTickets,
 		};
 
@@ -37,8 +39,14 @@ export const useCart = () => {
 				},
 				body: JSON.stringify(payload),
 			});
+			const addJson = await add.json();
 
-			console.log(add);
+			if (add.ok) {
+				// TODO: Овде да направам логика, доколку го има евентот во кошница
+				// да праша дали сака да додаде уште карти на веќе постоечкиот број.
+				console.log(add, addJson);
+				dispatch({ type: 'SET_CART', payload: cart });
+			}
 		} catch (err) {
 			console.log(err);
 			if (err) {
@@ -49,7 +57,7 @@ export const useCart = () => {
 		// let numberOfTickets = Array.from(form.target.children).map(
 		// 	(input) => input.name === 'numberOfTickets' && input.value
 		// );
-		console.log(numberOfTickets);
+		// console.log(numberOfTickets);
 	};
 
 	return { addToCart, isLoading, error };

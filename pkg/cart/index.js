@@ -3,7 +3,7 @@ const validator = require('validator');
 
 const cartItemSchema = mongoose.Schema(
 	{
-		eventId: {
+		event: {
 			type: mongoose.Types.ObjectId,
 			unique: true,
 			ref: 'Event',

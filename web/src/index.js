@@ -5,6 +5,7 @@ import App from './App';
 import reportWebVitals from './reportWebVitals';
 import { AuthContextProvider } from './context/AuthContext';
 import { EventsContextProvider } from './context/EventsContext';
+import { CartContextProvider } from './context/CartContext';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 // TODO: Да ги сместам сите contextProvider-и во еден како во документацијата.
@@ -13,7 +14,9 @@ root.render(
 	<React.StrictMode>
 		<AuthContextProvider>
 			<EventsContextProvider>
-				<App />
+				<CartContextProvider>
+					<App />
+				</CartContextProvider>
 			</EventsContextProvider>
 		</AuthContextProvider>
 	</React.StrictMode>
