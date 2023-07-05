@@ -15,6 +15,11 @@ export const useCart = () => {
 	const [isLoading, setIsLoading] = useState(null);
 	const { user } = useAuthContext();
 
+	const headers = {
+		Authorization: `Bearer ${user.token}`,
+		'Content-Type': 'application/json',
+	};
+
 	const addToCart = async (form, id) => {
 		setIsLoading(true);
 		setError(null);
@@ -34,10 +39,7 @@ export const useCart = () => {
 		try {
 			const add = await fetch('/api/v1/cart/add', {
 				method: 'POST',
-				headers: {
-					Authorization: `Bearer ${user.token}`,
-					'Content-Type': 'application/json',
-				},
+				headers,
 				body: JSON.stringify(payload),
 			});
 			const addJson = await add.json();
@@ -45,8 +47,8 @@ export const useCart = () => {
 			if (add.ok) {
 				// TODO: Овде да направам логика, доколку го има евентот во кошница
 				// да праша дали сака да додаде уште карти на веќе постоечкиот број.
-				console.log(add, addJson);
-				dispatch({ type: SET_CART, payload: cart });
+				// dispatch({ type: SET_CART, payload: cart });
+				getCart();
 			}
 		} catch (err) {
 			console.log(err);
@@ -63,13 +65,15 @@ export const useCart = () => {
 		try {
 			const setCart = await fetch(`/api/v1/cart/get`, {
 				method: 'GET',
-				headers: {
-					Authorization: `Bearer ${user.token}`,
-				},
+				headers,
 			});
 
 			const cartJson = await setCart.json();
-			dispatch({ type: SET_CART, payload: cartJson });
+			console.log(cartJson);
+			if (setCart.ok) {
+				dispatch({ type: SET_CART, payload: cartJson });
+				setIsLoading(false);
+			}
 		} catch (err) {
 			console.log(err);
 			if (err) {

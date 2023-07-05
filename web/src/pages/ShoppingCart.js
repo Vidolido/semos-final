@@ -1,12 +1,7 @@
-import { useEffect } from 'react';
 import { useCart } from '../hooks/useCart';
 
 const ShoppingCart = () => {
-	const { getCart, cart, isLoading, error } = useCart();
-	useEffect(() => {
-		if (!cart) getCart();
-	});
-
+	const { cart, isLoading, error } = useCart();
 	return (
 		<div>
 			<h1>Shopping Cart</h1>

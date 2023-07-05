@@ -1,5 +1,5 @@
 import { useState, Fragment } from 'react';
-import { useCreateEvent } from '../hooks/useCreateEvent';
+import { useEvents } from '../hooks/useEvents';
 // import { useAuthContext } from '../hooks/useAuthContext';
 
 import UserNav from '../components/UserNav';
@@ -21,7 +21,7 @@ const CreateEvent = () => {
 	};
 	const [createEventOptions, setCreateEventOptions] = useState(initialState);
 	const [previewImage, setPreviewImage] = useState(null);
-	const { createEvent, isLoading, error } = useCreateEvent();
+	const { createEvent, isLoading, error } = useEvents();
 	// const { user } = useAuthContext();
 
 	const handleOnChange = (e) => {
@@ -52,6 +52,7 @@ const CreateEvent = () => {
 								value={createEventOptions.eventName}
 								name='eventName'
 								onChange={handleOnChange}
+								disabled={isLoading}
 							/>
 							{error && error['eventName'] && (
 								<span className='error'>{error['eventName']}</span>
