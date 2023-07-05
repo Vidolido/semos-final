@@ -12,3 +12,6 @@ export const LOGIN = 'LOGIN';
 export const SET_ALL_USERS = 'SET_ALL_USERS';
 export const DELETE_USER = 'DELETE_USER';
 export const LOGOUT = 'LOGOUT';
+
+export const SET_CART = 'SET_CART';
+export const DELETE_CART = 'DELETE_CART';

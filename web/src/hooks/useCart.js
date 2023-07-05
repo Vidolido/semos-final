@@ -3,6 +3,8 @@ import { useAuthContext } from './useAuthContext';
 // import { useEventsContext } from './useEventsContext';
 import { useCartContext } from './useCartContext';
 
+import { SET_CART, DELETE_CART } from '../misc/actionTypes';
+
 // Логика на frontend апликацијата
 // TODO: Да ги сместам функциите за работа со база и state на апликацијата
 // во еден фајл(auth, events, cart секое засебно). React hooks да ми користат како handler-и за frontend.
@@ -12,12 +14,11 @@ export const useCart = () => {
 	const [error, setError] = useState(null); // Ерор објект со клучеви за сите функции
 	const [isLoading, setIsLoading] = useState(null);
 	const { user } = useAuthContext();
-	// const { dispatch } = useEventsContext();
 
 	const addToCart = async (form, id) => {
 		setIsLoading(true);
 		setError(null);
-		console.log(form, id);
+
 		// TODO: Да најдам друг начин за numberOfTickets
 		let numberOfTickets = Number(
 			Array.from(form.target.children).filter(
@@ -45,7 +46,7 @@ export const useCart = () => {
 				// TODO: Овде да направам логика, доколку го има евентот во кошница
 				// да праша дали сака да додаде уште карти на веќе постоечкиот број.
 				console.log(add, addJson);
-				dispatch({ type: 'SET_CART', payload: cart });
+				dispatch({ type: SET_CART, payload: cart });
 			}
 		} catch (err) {
 			console.log(err);
@@ -53,12 +54,36 @@ export const useCart = () => {
 				setError(err);
 			}
 		}
-
-		// let numberOfTickets = Array.from(form.target.children).map(
-		// 	(input) => input.name === 'numberOfTickets' && input.value
-		// );
-		// console.log(numberOfTickets);
 	};
 
-	return { addToCart, isLoading, error };
+	const getCart = async () => {
+		setIsLoading(true);
+		setError(null);
+
+		try {
+			const setCart = await fetch(`/api/v1/cart/get`, {
+				method: 'GET',
+				headers: {
+					Authorization: `Bearer ${user.token}`,
+				},
+			});
+
+			const cartJson = await setCart.json();
+			dispatch({ type: SET_CART, payload: cartJson });
+		} catch (err) {
+			console.log(err);
+			if (err) {
+				setError(err);
+			}
+		}
+	};
+
+	// TODO: Да ја избришам на крај, само за тест
+	const clearCart = async () => {
+		setIsLoading(true);
+		setError(null);
+		dispatch({ type: DELETE_CART });
+	};
+
+	return { addToCart, getCart, clearCart, cart, isLoading, error };
 };

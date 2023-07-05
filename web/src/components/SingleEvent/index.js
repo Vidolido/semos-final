@@ -1,5 +1,4 @@
 import { Fragment } from 'react';
-
 //hooks
 import { useCart } from '../../hooks/useCart';
 // misc
@@ -14,7 +13,6 @@ const SingleEvent = ({ event }) => {
 		form.preventDefault();
 		addToCart(form, id);
 	};
-	// console.log(event);
 	return (
 		<Fragment>
 			<div className='mainInfo'>

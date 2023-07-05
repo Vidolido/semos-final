@@ -1,14 +1,20 @@
 import { createContext, useReducer } from 'react';
 
+import { DELETE_CART, SET_CART } from '../misc/actionTypes';
+
 // Тука ќе импортирам actionTypes
 
 export const CartContext = createContext();
 
 export const cartReducer = (state, action) => {
 	switch (action.type) {
-		case 'SET_CART':
+		case SET_CART:
 			return {
 				cart: action.payload,
+			};
+		case DELETE_CART:
+			return {
+				cart: null,
 			};
 		default:
 			return state;
