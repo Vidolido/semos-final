@@ -14,6 +14,7 @@ const UserEvents = () => {
 	const [isDeleted, setIsDeleted] = useState(false);
 	const { user } = useAuthContext();
 	const { events, dispatch } = useEventsContext();
+
 	useEffect(() => {
 		setIsDeleted(false);
 		const getEvents = async () => {
