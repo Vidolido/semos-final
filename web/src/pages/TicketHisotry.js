@@ -18,7 +18,7 @@ const TicketHisotry = () => {
 				},
 			});
 			const jsonRes = await res.json();
-			console.log(jsonRes);
+			// console.log(jsonRes);
 
 			if (res.ok) {
 				setTickets(jsonRes);
@@ -32,7 +32,7 @@ const TicketHisotry = () => {
 
 	return (
 		<div className='ticketHistory'>
-			{console.log(tickets)}
+			{/* {console.log(tickets)} */}
 			<UserNav title='Ticket Hisotry' />
 			<h2>Ticket Hisotry</h2>
 			{tickets &&

@@ -42,5 +42,10 @@ export const useEvents = () => {
 		}
 	};
 
+	const deleteEvent = async () => {
+		setIsLoading(true);
+		setError(null);
+	};
+
 	return { createEvent, isLoading, error };
 };

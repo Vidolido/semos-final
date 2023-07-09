@@ -10,13 +10,15 @@ import { SET_CART, DELETE_CART } from '../misc/actionTypes';
 // во еден фајл(auth, events, cart секое засебно). React hooks да ми користат како handler-и за frontend.
 
 export const useCart = () => {
+	const { user } = useAuthContext();
 	const { cart, dispatch } = useCartContext();
 	const [error, setError] = useState(null); // Ерор објект со клучеви за сите функции
 	const [isLoading, setIsLoading] = useState(null);
-	const { user } = useAuthContext();
 
 	const headers = {
-		Authorization: `Bearer ${user.token}`,
+		// Authorization: `Bearer ${user.token}`,
+		// Authorization: ``,
+		Authorization: user ? `Bearer ${user.token}` : '',
 		'Content-Type': 'application/json',
 	};
 
@@ -61,19 +63,21 @@ export const useCart = () => {
 	const getCart = async () => {
 		setIsLoading(true);
 		setError(null);
-
+		// console.log(cart, user);
 		try {
+			if (!user) return;
 			const setCart = await fetch(`/api/v1/cart/get`, {
 				method: 'GET',
 				headers,
 			});
 
 			const cartJson = await setCart.json();
-			console.log(cartJson);
+			// console.log(cartJson);
 			if (setCart.ok) {
 				dispatch({ type: SET_CART, payload: cartJson });
 				setIsLoading(false);
 			}
+			// return cartJson;
 		} catch (err) {
 			console.log(err);
 			if (err) {

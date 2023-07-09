@@ -4,12 +4,14 @@
 	"description": "",
 	"main": "index.js",
 	"scripts": {
+		"all": "npm-run-all -p proxy events auth tickets storage carts",
 		"proxy": "nodemon ./services/proxy/",
 		"storage": "nodemon ./services/storage",
-		"eventServer": "nodemon ./services/events",
-		"authServer": "nodemon ./services/auth",
-		"ticketServer": "nodemon ./services/tickets",
-		"cartServer": "nodemon ./services/cart"
+		"events": "nodemon ./services/events",
+		"auth": "nodemon ./services/auth",
+		"tickets": "nodemon ./services/tickets",
+		"carts": "nodemon ./services/cart",
+		"react": "cd web/ & npm start"
 	},
 	"author": "",
 	"license": "ISC",
@@ -24,6 +26,7 @@
 		"validator": "^13.9.0"
 	},
 	"devDependencies": {
-		"nodemon": "^2.0.22"
+		"nodemon": "^2.0.22",
+		"npm-run-all": "^4.1.5"
 	}
 }
