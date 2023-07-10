@@ -1,11 +1,12 @@
 const mongoose = require('mongoose');
 const validator = require('validator');
 
+// da napravam validacija za uniqe event
 const cartItemSchema = mongoose.Schema(
 	{
 		event: {
 			type: mongoose.Types.ObjectId,
-			unique: true,
+			// unique: true,
 			ref: 'Event',
 			validate: [mongoose.Types.ObjectId.isValid, 'Something went wrong.'],
 		},

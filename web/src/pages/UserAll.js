@@ -16,17 +16,16 @@ const UserAll = () => {
 
 		// TODO: За allUsers да направам во mongoose со populate():
 
-		const getEvents = async () => {
+		const getAllUsers = async () => {
 			const res = await fetch(`/api/v1/auth/`);
 			const jsonRes = await res.json();
 			let curentUser = jwt_decode(user.token).id;
 			let restOfUsers = jsonRes.filter((user) => user._id !== curentUser);
-
 			if (res.ok) {
 				dispatch({ type: SET_ALL_USERS, payload: restOfUsers });
 			}
 		};
-		getEvents();
+		getAllUsers();
 	}, [dispatch, isDeleted, user]);
 
 	const handleUpdate = async (id) => {

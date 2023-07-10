@@ -35,9 +35,7 @@ export const useEvents = () => {
 			setError(jsonRes.errors);
 		}
 		if (res.ok) {
-			console.log(jsonRes);
 			dispatch({ type: CREATE_EVENT, payload: jsonRes });
-
 			setIsLoading(false);
 		}
 	};
@@ -47,5 +45,5 @@ export const useEvents = () => {
 		setError(null);
 	};
 
-	return { createEvent, isLoading, error };
+	return { createEvent, deleteEvent, isLoading, error };
 };

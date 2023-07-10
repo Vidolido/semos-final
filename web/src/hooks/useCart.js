@@ -66,6 +66,7 @@ export const useCart = () => {
 		// console.log(cart, user);
 		try {
 			if (!user) return;
+
 			const setCart = await fetch(`/api/v1/cart/get`, {
 				method: 'GET',
 				headers,
