@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom';
 import { useState } from 'react';
-import { useSignin } from '../hooks/useSignin';
+// import { useSignin } from '../hooks/useSignin';
 import { useAuth } from '../hooks/useAuth';
 
 const Signin = () => {
@@ -11,13 +11,13 @@ const Signin = () => {
 	const [email, setEmail] = useState('');
 	const [password, setPassword] = useState('');
 	const [confirmPassword, setConfirmPassword] = useState('');
-	const { signin, isLoading, error } = useSignin();
-	// const { signIn, isLoading, error } = useAuth();
+	// const { signin, isLoading, error } = useSignin();
+	const { signIn, isLoading, error } = useAuth();
 
 	const handleSubmit = async (e) => {
 		e.preventDefault();
 
-		await signin(fullName, email, password, confirmPassword);
+		await signIn(fullName, email, password, confirmPassword);
 	};
 	return (
 		<div>

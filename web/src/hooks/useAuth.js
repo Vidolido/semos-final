@@ -4,7 +4,7 @@ import { LOGIN, LOGOUT } from '../misc/actionTypes';
 export const useAuth = () => {
 	const [error, setError] = useState(null);
 	const [isLoading, setIsLoading] = useState(null);
-	const { dispatch } = useAuthContext();
+	const { user, dispatch } = useAuthContext();
 
 	const signIn = async (fullName, email, password, confirmPassword) => {
 		setIsLoading(true);
@@ -66,5 +66,5 @@ export const useAuth = () => {
 		dispatch({ type: LOGOUT });
 	};
 
-	return { signIn, login, logout, isLoading, error };
+	return { signIn, login, logout, user, isLoading, error };
 };

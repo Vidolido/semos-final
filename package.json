@@ -5,12 +5,12 @@
 	"main": "index.js",
 	"scripts": {
 		"all": "npm-run-all -p proxy events auth tickets storage carts",
-		"proxy": "nodemon ./services/proxy/",
-		"storage": "nodemon ./services/storage",
-		"events": "nodemon ./services/events",
-		"auth": "nodemon ./services/auth",
-		"tickets": "nodemon ./services/tickets",
-		"carts": "nodemon ./services/cart",
+		"proxy": "node ./services/proxy/",
+		"storage": "node ./services/storage",
+		"events": "node ./services/events",
+		"auth": "node ./services/auth",
+		"tickets": "node ./services/tickets",
+		"carts": "node ./services/cart",
 		"react": "cd web/ & npm start"
 	},
 	"author": "",

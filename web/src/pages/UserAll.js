@@ -14,8 +14,6 @@ const UserAll = () => {
 	useEffect(() => {
 		setIsDeleted(false);
 
-		// TODO: За allUsers да направам во mongoose со populate():
-
 		const getAllUsers = async () => {
 			const res = await fetch(`/api/v1/auth/`);
 			const jsonRes = await res.json();

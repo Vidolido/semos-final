@@ -4,7 +4,7 @@ import { useEventsContext } from '../../hooks/useEventsContext';
 import { SET_COMEDY_EVENTS, SET_MUSIC_EVENTS } from '../../misc/actionTypes';
 import { months, dates } from '../../misc/dateTime';
 
-const RelatedEvents = ({ cat }) => {
+const RelatedEvents = ({ cat, handleOnChange, handleAdd }) => {
 	const { category, dispatch } = useEventsContext();
 
 	let actionType = cat === 'comedy' ? SET_COMEDY_EVENTS : SET_MUSIC_EVENTS;
@@ -19,11 +19,15 @@ const RelatedEvents = ({ cat }) => {
 		};
 		getEvents();
 	}, [cat, actionType, dispatch]);
+
 	return (
 		<Fragment>
 			<div className='inputContainer'>
 				<label>Related events</label>
-				<select name='event' defaultValue='Choose Event'>
+				<select
+					name='relatedEvents'
+					defaultValue='Choose Event'
+					onChange={handleOnChange}>
 					<option defaultValue='Choose Event' disabled hidden>
 						Choose Event
 					</option>
@@ -32,7 +36,7 @@ const RelatedEvents = ({ cat }) => {
 							let date = new Date(event.eventDate);
 
 							return (
-								<option value={cat}>{`${event.eventName} - ${
+								<option value={event._id}>{`${event.eventName} - ${
 									months[date.getMonth()]
 								} ${date.getDate()}${
 									dates[date.getDate()]
@@ -43,7 +47,13 @@ const RelatedEvents = ({ cat }) => {
 			</div>
 			<div className='inputContainer'>
 				<label>Event Details</label>
-				<button className='btn-blackToTransparent'>Add</button>
+				<button
+					onClick={handleAdd}
+					type='submit'
+					className='btn-blackToTransparent'
+					value='Add'>
+					Add
+				</button>
 			</div>
 		</Fragment>
 	);

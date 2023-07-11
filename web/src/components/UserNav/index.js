@@ -2,12 +2,13 @@ import { Link } from 'react-router-dom';
 import jwt_decode from 'jwt-decode';
 
 import { useAuthContext } from '../../hooks/useAuthContext';
-import { useLogout } from '../../hooks/useLogout';
+import { useAuth } from '../../hooks/useAuth';
+// import { useLogout } from '../../hooks/useLogout';
 import { Fragment } from 'react';
 
 const UserNav = ({ title }) => {
 	const { user } = useAuthContext();
-	const { logout } = useLogout();
+	const { logout } = useAuth();
 
 	const handleClick = () => {
 		logout();

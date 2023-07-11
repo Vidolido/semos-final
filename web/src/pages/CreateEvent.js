@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useEvents } from '../hooks/useEvents';
-// import { useAuthContext } from '../hooks/useAuthContext';
+// import { useAuth } from '../hooks/useAuth';
 
 import UserNav from '../components/UserNav';
 import RelatedEvents from '../components/RelatedEvents';
@@ -18,14 +18,18 @@ const CreateEvent = () => {
 		tickets: 0,
 		ticketPrice: 0,
 		adminId: '',
+		relatedEvents: [],
 	};
 	const [createEventOptions, setCreateEventOptions] = useState(initialState);
 	const [previewImage, setPreviewImage] = useState(null);
+	// const [relatedEvents, setRelatedEvents] = useState([]);
 	const { createEvent, isLoading, error } = useEvents();
-	// const { user } = useAuthContext();
+	// const { user } = useAuth();
 
 	const handleOnChange = (e) => {
-		// console.log(e.target);
+		// console.log(user); // Навидум работи
+		if (e.target.name === 'relatedEvents') return;
+		// console.log(e.target.name === 'relatedEvents', 'OVOA E RELATED');
 		if (e.target.files) setPreviewImage(URL.createObjectURL(e.target.files[0]));
 
 		setCreateEventOptions((createEventOptions) => ({
@@ -36,8 +40,26 @@ const CreateEvent = () => {
 	const handleFormSubmit = (e) => {
 		e.preventDefault();
 		createEvent(createEventOptions);
-		// console.log(error, 'ovoj');
 		!error && setCreateEventOptions(initialState);
+	};
+
+	const handleAdd = (e) => {
+		e.preventDefault();
+		let relatedEvents = createEventOptions.relatedEvents;
+		let selectedEvent = e.target.form.elements.relatedEvents.value;
+
+		if (!relatedEvents.length) {
+			relatedEvents.push(selectedEvent);
+		} else if (relatedEvents.length < 2) {
+			relatedEvents.unshift(selectedEvent);
+		} else if (relatedEvents.length === 2) {
+			relatedEvents.pop();
+			relatedEvents.unshift(selectedEvent);
+		}
+		setCreateEventOptions((createEventOptions) => ({
+			...createEventOptions,
+			...relatedEvents,
+		}));
 	};
 	return (
 		<div className='createEvent'>
@@ -160,7 +182,11 @@ const CreateEvent = () => {
 						{!createEventOptions.category && <h1>Please select a category</h1>}
 						{createEventOptions.category && (
 							<div className='eventInputs'>
-								<RelatedEvents cat={createEventOptions.category} />
+								<RelatedEvents
+									cat={createEventOptions.category}
+									handleOnChange={handleOnChange}
+									handleAdd={handleAdd}
+								/>
 							</div>
 						)}
 					</div>
