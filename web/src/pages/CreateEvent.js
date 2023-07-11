@@ -28,7 +28,7 @@ const CreateEvent = () => {
 
 	const handleOnChange = (e) => {
 		// console.log(user); // Навидум работи
-		if (e.target.name === 'relatedEvents') return;
+		// if (e.target.name === 'relatedEvents') return;
 		// console.log(e.target.name === 'relatedEvents', 'OVOA E RELATED');
 		if (e.target.files) setPreviewImage(URL.createObjectURL(e.target.files[0]));
 
@@ -39,8 +39,16 @@ const CreateEvent = () => {
 	};
 	const handleFormSubmit = (e) => {
 		e.preventDefault();
+		console.log(e);
 		createEvent(createEventOptions);
-		!error && setCreateEventOptions(initialState);
+
+		// if (!error) {
+		setCreateEventOptions(initialState);
+		console.log(e.target);
+		e.target.reset();
+		// }
+
+		//TODO: Да вратам порака за успешно креиран event
 	};
 
 	const handleAdd = (e) => {
@@ -86,13 +94,16 @@ const CreateEvent = () => {
 								name='category'
 								defaultValue='Choose Event Category'
 								onChange={handleOnChange}>
-								<option defaultValue='Choose Event Category' disabled hidden>
+								<option
+									defaultValue='Choose Event Category'
+									disabled
+									hidden
+									selected={!createEventOptions.category ? true : false}>
 									Choose Event Category
 								</option>
 								<option value='comedy'>Stand-up Comedy</option>
 								<option value='music'>Musical Concert</option>
 							</select>
-							{/* TODO: Да најдам начин да го испечатам еророт */}
 							{error && error['category'] && (
 								<span className='error'>{error['category']}</span>
 							)}
@@ -178,7 +189,6 @@ const CreateEvent = () => {
 						</div>
 					</div>
 					<div className='container'>
-						{/* Ова треба да има посебна логика */}
 						{!createEventOptions.category && <h1>Please select a category</h1>}
 						{createEventOptions.category && (
 							<div className='eventInputs'>
@@ -186,12 +196,17 @@ const CreateEvent = () => {
 									cat={createEventOptions.category}
 									handleOnChange={handleOnChange}
 									handleAdd={handleAdd}
+									isLoading={isLoading}
 								/>
 							</div>
 						)}
 					</div>
 
-					<button type='submit' className='btn-blackToTransparent' value='Save'>
+					<button
+						type='submit'
+						className='btn-blackToTransparent'
+						value='Save'
+						disabled={isLoading}>
 						Save
 					</button>
 				</form>

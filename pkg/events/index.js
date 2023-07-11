@@ -41,6 +41,13 @@ const eventSchema = mongoose.Schema({
 		type: Number,
 		min: [0, 'Please enter a ticket price.'],
 	},
+	relatedEvents: [
+		{
+			type: mongoose.Types.ObjectId,
+			ref: 'Event',
+			validate: [mongoose.Types.ObjectId.isValid, 'Something went wrong.'],
+		},
+	],
 	adminId: {
 		type: String,
 		required: true,

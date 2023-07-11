@@ -4,7 +4,7 @@ import { useEventsContext } from '../../hooks/useEventsContext';
 import { SET_COMEDY_EVENTS, SET_MUSIC_EVENTS } from '../../misc/actionTypes';
 import { months, dates } from '../../misc/dateTime';
 
-const RelatedEvents = ({ cat, handleOnChange, handleAdd }) => {
+const RelatedEvents = ({ cat, handleAdd, isLoading }) => {
 	const { category, dispatch } = useEventsContext();
 
 	let actionType = cat === 'comedy' ? SET_COMEDY_EVENTS : SET_MUSIC_EVENTS;
@@ -24,21 +24,19 @@ const RelatedEvents = ({ cat, handleOnChange, handleAdd }) => {
 		<Fragment>
 			<div className='inputContainer'>
 				<label>Related events</label>
-				<select
-					name='relatedEvents'
-					defaultValue='Choose Event'
-					onChange={handleOnChange}>
+				<select name='relatedEvents' defaultValue='Choose Event'>
 					<option defaultValue='Choose Event' disabled hidden>
 						Choose Event
 					</option>
-					{category[cat] &&
+					{category &&
+						category[cat] &&
 						category[cat].map((event) => {
 							let date = new Date(event.eventDate);
 
 							return (
-								<option value={event._id}>{`${event.eventName} - ${
-									months[date.getMonth()]
-								} ${date.getDate()}${
+								<option key={event._id} value={event._id}>{`${
+									event.eventName
+								} - ${months[date.getMonth()]} ${date.getDate()}${
 									dates[date.getDate()]
 								}, ${date.getFullYear()} - ${event.location} `}</option>
 							);
@@ -51,7 +49,8 @@ const RelatedEvents = ({ cat, handleOnChange, handleAdd }) => {
 					onClick={handleAdd}
 					type='submit'
 					className='btn-blackToTransparent'
-					value='Add'>
+					value='Add'
+					disabled={isLoading}>
 					Add
 				</button>
 			</div>
