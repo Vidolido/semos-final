@@ -44,6 +44,7 @@ const getUserEvents = async (req, res) => {
 		return res.status(500).send('Internal server error.');
 	}
 };
+
 const getSingleEvent = async (req, res) => {
 	try {
 		// TODO: Да исхендлам грешки
@@ -53,6 +54,20 @@ const getSingleEvent = async (req, res) => {
 	} catch (err) {
 		console.log(err);
 		return res.status(500).send('Internal server error.');
+	}
+};
+
+const getRelatedEvents = async (req, res) => {
+	try {
+		let relatedEvents = await Events.find({ _id: { $in: req.body } }).select(
+			'eventName eventDate location imageUrl'
+		);
+		console.log(relatedEvents, 'Events handler');
+		res.status(200).send(relatedEvents);
+	} catch (err) {
+		console.log(err);
+		let errors = handleErrors(err);
+		res.status(500).json(errors);
 	}
 };
 
@@ -142,6 +157,7 @@ module.exports = {
 	getAllEvents,
 	getUserEvents,
 	getSingleEvent,
+	getRelatedEvents,
 	getEventsByCategory,
 	createEvent,
 	updateEvent,

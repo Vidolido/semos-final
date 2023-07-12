@@ -7,7 +7,7 @@ export const useEvents = () => {
 	const [error, setError] = useState(null);
 	const [isLoading, setIsLoading] = useState(null);
 	const { user } = useAuthContext();
-	const { dispatch } = useEventsContext();
+	const { event, events, category, dispatch } = useEventsContext();
 
 	const createEvent = async (createEventOptions) => {
 		setIsLoading(true);
@@ -40,10 +40,40 @@ export const useEvents = () => {
 		}
 	};
 
+	const getRelatedEvents = async (rE) => {
+		console.log(rE);
+		setIsLoading(true);
+		const res = await fetch('/api/v1/events/related', {
+			method: 'POST',
+			headers: {
+				Authorization: `Bearer ${user.token}`,
+				'Content-Type': 'application/json',
+			},
+			body: JSON.stringify(rE),
+		});
+		const jsonRes = await res.json();
+		if (!res.ok) {
+			setIsLoading(false);
+			setError(jsonRes.errors);
+		}
+		if (res.ok) {
+			setIsLoading(false);
+		}
+		return jsonRes;
+	};
+
 	const deleteEvent = async () => {
 		setIsLoading(true);
 		setError(null);
 	};
 
-	return { createEvent, deleteEvent, isLoading, error };
+	return {
+		createEvent,
+		getRelatedEvents,
+		deleteEvent,
+		category,
+		dispatch,
+		isLoading,
+		error,
+	};
 };
