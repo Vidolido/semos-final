@@ -62,7 +62,6 @@ const getRelatedEvents = async (req, res) => {
 		let relatedEvents = await Events.find({ _id: { $in: req.body } }).select(
 			'eventName eventDate location imageUrl'
 		);
-		console.log(relatedEvents, 'Events handler');
 		res.status(200).send(relatedEvents);
 	} catch (err) {
 		console.log(err);

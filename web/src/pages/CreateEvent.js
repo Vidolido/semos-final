@@ -52,11 +52,10 @@ const CreateEvent = () => {
 		let relatedEvents = createEventOptions.relatedEvents;
 		let selectedEvent = e.target.form.elements.relatedEvents.value;
 
-		if (!relatedEvents.length) {
-			relatedEvents.push(selectedEvent);
-		} else if (relatedEvents.length < 2) {
-			relatedEvents.unshift(selectedEvent);
-		} else if (relatedEvents.length === 2) {
+		!relatedEvents.length && relatedEvents.push(selectedEvent);
+		relatedEvents.length < 2 && relatedEvents.unshift(selectedEvent);
+
+		if (relatedEvents.length === 2) {
 			relatedEvents.pop();
 			relatedEvents.unshift(selectedEvent);
 		}
@@ -202,7 +201,7 @@ const CreateEvent = () => {
 					<div className='container'>
 						{related &&
 							related.map((event) => (
-								<div className='related'>
+								<div key={event._id} className='related'>
 									<p>{event.eventName}</p>
 									<p>{event.eventDate}</p>
 									<p>{event.location}</p>

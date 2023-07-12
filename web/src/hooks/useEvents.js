@@ -41,7 +41,6 @@ export const useEvents = () => {
 	};
 
 	const getRelatedEvents = async (rE) => {
-		console.log(rE);
 		setIsLoading(true);
 		const res = await fetch('/api/v1/events/related', {
 			method: 'POST',
