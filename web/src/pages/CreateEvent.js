@@ -22,14 +22,10 @@ const CreateEvent = () => {
 	};
 	const [createEventOptions, setCreateEventOptions] = useState(initialState);
 	const [previewImage, setPreviewImage] = useState(null);
-	// const [relatedEvents, setRelatedEvents] = useState([]);
-	const { createEvent, isLoading, error } = useEvents();
-	// const { user } = useAuth();
+	const [related, setRelated] = useState(null);
+	const { createEvent, getRelatedEvents, isLoading, error } = useEvents();
 
 	const handleOnChange = (e) => {
-		// console.log(user); // Навидум работи
-		// if (e.target.name === 'relatedEvents') return;
-		// console.log(e.target.name === 'relatedEvents', 'OVOA E RELATED');
 		if (e.target.files) setPreviewImage(URL.createObjectURL(e.target.files[0]));
 
 		setCreateEventOptions((createEventOptions) => ({
@@ -37,21 +33,21 @@ const CreateEvent = () => {
 			[e.target.name]: e.target.value,
 		}));
 	};
+
 	const handleFormSubmit = (e) => {
 		e.preventDefault();
 		console.log(e);
 		createEvent(createEventOptions);
 
-		// if (!error) {
-		setCreateEventOptions(initialState);
-		console.log(e.target);
-		e.target.reset();
-		// }
+		if (!error) {
+			setCreateEventOptions(initialState);
+		}
 
 		//TODO: Да вратам порака за успешно креиран event
+		// можеби во модал и онака ќе го правам
 	};
 
-	const handleAdd = (e) => {
+	const handleAdd = async (e) => {
 		e.preventDefault();
 		let relatedEvents = createEventOptions.relatedEvents;
 		let selectedEvent = e.target.form.elements.relatedEvents.value;
@@ -68,6 +64,8 @@ const CreateEvent = () => {
 			...createEventOptions,
 			...relatedEvents,
 		}));
+		let getRelated = await getRelatedEvents(relatedEvents);
+		setRelated(getRelated);
 	};
 	return (
 		<div className='createEvent'>
@@ -200,6 +198,16 @@ const CreateEvent = () => {
 								/>
 							</div>
 						)}
+					</div>
+					<div className='container'>
+						{related &&
+							related.map((event) => (
+								<div className='related'>
+									<p>{event.eventName}</p>
+									<p>{event.eventDate}</p>
+									<p>{event.location}</p>
+								</div>
+							))}
 					</div>
 
 					<button
