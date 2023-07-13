@@ -12,7 +12,7 @@ export const useEvents = () => {
 	const createEvent = async (createEventOptions) => {
 		setIsLoading(true);
 		setError(null);
-		console.log(user.token, 'from useCreateEvent hook');
+		// console.log(user.token, 'from useCreateEvent hook');
 		// const test = await(fetch('/api/v1/storage', {
 		//     method: 'POST',
 		//     headers: {

@@ -15,8 +15,8 @@ api.use(
 
 api.use(fileUpload());
 
-api.post('/api/v1/storage', storage.upload);
-api.get('/api/v1/storage/:file', storage.download);
+api.post('/api/v1/storage/upload', storage.upload);
+api.get('/api/v1/storage/download/:file', storage.download);
 
 api.listen(config.get('services').storage.port, (err) => {
 	if (err) {

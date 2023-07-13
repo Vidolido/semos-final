@@ -4,7 +4,7 @@ import { useEventsContext } from '../../hooks/useEventsContext';
 import { SET_COMEDY_EVENTS, SET_MUSIC_EVENTS } from '../../misc/actionTypes';
 import { months, dates } from '../../misc/dateTime';
 
-const RelatedEvents = ({ cat, handleAdd, isLoading }) => {
+const RelatedEvents = ({ cat, handleOnChange, handleAdd, isLoading }) => {
 	const { category, dispatch } = useEventsContext();
 
 	let actionType = cat === 'comedy' ? SET_COMEDY_EVENTS : SET_MUSIC_EVENTS;
@@ -24,7 +24,10 @@ const RelatedEvents = ({ cat, handleAdd, isLoading }) => {
 		<Fragment>
 			<div className='inputContainer'>
 				<label>Related events</label>
-				<select name='relatedEvents' defaultValue='Choose Event'>
+				<select
+					name='relatedEvents'
+					onChange={handleOnChange}
+					defaultValue='Choose Event'>
 					<option defaultValue='Choose Event' disabled hidden>
 						Choose Event
 					</option>

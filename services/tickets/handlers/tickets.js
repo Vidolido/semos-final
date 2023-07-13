@@ -6,7 +6,7 @@ const userTickets = async (req, res) => {
 	const userTickets = await Tickets.find({
 		accountId: req.auth.id,
 	});
-	console.log(userTickets);
+	// console.log(userTickets);
 	res.status(200).send(userTickets);
 };
 
@@ -17,7 +17,7 @@ const buyTickets = async (req, res) => {
 		eventId: req.eventId,
 		ticketCount: req.ticketCount || 1,
 	});
-	console.log(userTickets);
+	// console.log(userTickets);
 	res.status(200).send(userTickets);
 };
 

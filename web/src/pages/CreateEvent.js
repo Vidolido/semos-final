@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { useEvents } from '../hooks/useEvents';
+import { useStorage } from '../hooks/useStorage';
 // import { useAuth } from '../hooks/useAuth';
 
 import UserNav from '../components/UserNav';
@@ -23,11 +24,29 @@ const CreateEvent = () => {
 	const [createEventOptions, setCreateEventOptions] = useState(initialState);
 	const [previewImage, setPreviewImage] = useState(null);
 	const [related, setRelated] = useState(null);
-	const { createEvent, getRelatedEvents, isLoading, error } = useEvents();
+	const [selectedEvent, setSelectedEvent] = useState(null);
+
+	const {
+		createEvent,
+		getRelatedEvents,
+		isLoading: eventIsLoading,
+		error: eventError,
+	} = useEvents();
+
+	const {
+		uploadFile,
+		isLoading: fileIsLoading,
+		error: fileError,
+	} = useStorage();
 
 	const handleOnChange = (e) => {
+		console.log(e.target.name);
 		if (e.target.files) setPreviewImage(URL.createObjectURL(e.target.files[0]));
-
+		if (e.target.name === 'relatedEvents') {
+			// console.log(e.target.value);
+			setSelectedEvent(e.target.value);
+			return;
+		}
 		setCreateEventOptions((createEventOptions) => ({
 			...createEventOptions,
 			[e.target.name]: e.target.value,
@@ -36,12 +55,19 @@ const CreateEvent = () => {
 
 	const handleFormSubmit = (e) => {
 		e.preventDefault();
-		console.log(e);
-		createEvent(createEventOptions);
+		// console.log(e.target.elements.eventImage.files[0]);
+		// console.log(e.target.elements.eventImage);
+		// console.log(e.target);
 
-		if (!error) {
+		if (!fileError && !eventError) {
+			e.target.elements.eventImage.files &&
+				uploadFile(e.target.elements.eventImage.files[0]);
+			createEvent(createEventOptions);
 			setCreateEventOptions(initialState);
 		}
+
+		// if (!eventError) {
+		// }
 
 		//TODO: Да вратам порака за успешно креиран event
 		// можеби во модал и онака ќе го правам
@@ -50,15 +76,10 @@ const CreateEvent = () => {
 	const handleAdd = async (e) => {
 		e.preventDefault();
 		let relatedEvents = createEventOptions.relatedEvents;
-		let selectedEvent = e.target.form.elements.relatedEvents.value;
 
-		!relatedEvents.length && relatedEvents.push(selectedEvent);
-		relatedEvents.length < 2 && relatedEvents.unshift(selectedEvent);
+		// relatedEvents.push(selectedEvent);
+		// s
 
-		if (relatedEvents.length === 2) {
-			relatedEvents.pop();
-			relatedEvents.unshift(selectedEvent);
-		}
 		setCreateEventOptions((createEventOptions) => ({
 			...createEventOptions,
 			...relatedEvents,
@@ -79,10 +100,10 @@ const CreateEvent = () => {
 								value={createEventOptions.eventName}
 								name='eventName'
 								onChange={handleOnChange}
-								disabled={isLoading}
+								disabled={eventIsLoading}
 							/>
-							{error && error['eventName'] && (
-								<span className='error'>{error['eventName']}</span>
+							{eventError && eventError['eventName'] && (
+								<span className='error'>{eventError['eventName']}</span>
 							)}
 						</div>
 						<div className='inputContainer'>
@@ -101,8 +122,8 @@ const CreateEvent = () => {
 								<option value='comedy'>Stand-up Comedy</option>
 								<option value='music'>Musical Concert</option>
 							</select>
-							{error && error['category'] && (
-								<span className='error'>{error['category']}</span>
+							{eventError && eventError['category'] && (
+								<span className='error'>{eventError['category']}</span>
 							)}
 						</div>
 						<div className='inputContainer'>
@@ -113,8 +134,8 @@ const CreateEvent = () => {
 								name='eventDate'
 								onChange={handleOnChange}
 							/>
-							{error && error['eventDate'] && (
-								<span className='error'>{error['eventDate']}</span>
+							{eventError && eventError['eventDate'] && (
+								<span className='error'>{eventError['eventDate']}</span>
 							)}
 						</div>
 					</div>
@@ -143,8 +164,8 @@ const CreateEvent = () => {
 								name='location'
 								onChange={handleOnChange}
 							/>
-							{error && error['location'] && (
-								<span className='error'>{error['location']}</span>
+							{eventError && eventError['location'] && (
+								<span className='error'>{eventError['location']}</span>
 							)}
 						</div>
 						<div className='inputContainer'>
@@ -155,8 +176,8 @@ const CreateEvent = () => {
 								name='ticketPrice'
 								onChange={handleOnChange}
 							/>
-							{error && error['tickets'] && (
-								<span className='error'>{error['tickets']}</span>
+							{eventError && eventError['tickets'] && (
+								<span className='error'>{eventError['tickets']}</span>
 							)}
 						</div>
 					</div>
@@ -180,8 +201,8 @@ const CreateEvent = () => {
 								name='details'
 								onChange={handleOnChange}
 							/>
-							{error && error['details'] && (
-								<span className='error'>{error['details']}</span>
+							{eventError && eventError['details'] && (
+								<span className='error'>{eventError['details']}</span>
 							)}
 						</div>
 					</div>
@@ -193,7 +214,7 @@ const CreateEvent = () => {
 									cat={createEventOptions.category}
 									handleOnChange={handleOnChange}
 									handleAdd={handleAdd}
-									isLoading={isLoading}
+									isLoading={eventIsLoading}
 								/>
 							</div>
 						)}
@@ -213,7 +234,7 @@ const CreateEvent = () => {
 						type='submit'
 						className='btn-blackToTransparent'
 						value='Save'
-						disabled={isLoading}>
+						disabled={eventIsLoading}>
 						Save
 					</button>
 				</form>
