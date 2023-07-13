@@ -43,7 +43,6 @@ const CreateEvent = () => {
 		console.log(e.target.name);
 		if (e.target.files) setPreviewImage(URL.createObjectURL(e.target.files[0]));
 		if (e.target.name === 'relatedEvents') {
-			// console.log(e.target.value);
 			setSelectedEvent(e.target.value);
 			return;
 		}
@@ -55,19 +54,12 @@ const CreateEvent = () => {
 
 	const handleFormSubmit = (e) => {
 		e.preventDefault();
-		// console.log(e.target.elements.eventImage.files[0]);
-		// console.log(e.target.elements.eventImage);
-		// console.log(e.target);
-
 		if (!fileError && !eventError) {
 			e.target.elements.eventImage.files &&
 				uploadFile(e.target.elements.eventImage.files[0]);
 			createEvent(createEventOptions);
 			setCreateEventOptions(initialState);
 		}
-
-		// if (!eventError) {
-		// }
 
 		//TODO: Да вратам порака за успешно креиран event
 		// можеби во модал и онака ќе го правам
@@ -76,9 +68,6 @@ const CreateEvent = () => {
 	const handleAdd = async (e) => {
 		e.preventDefault();
 		let relatedEvents = createEventOptions.relatedEvents;
-
-		// relatedEvents.push(selectedEvent);
-		// s
 
 		setCreateEventOptions((createEventOptions) => ({
 			...createEventOptions,
