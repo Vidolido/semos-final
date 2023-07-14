@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useEvents } from '../hooks/useEvents';
 import { useStorage } from '../hooks/useStorage';
 // import { useAuth } from '../hooks/useAuth';
@@ -15,7 +15,7 @@ const CreateEvent = () => {
 		eventDate: '',
 		location: '',
 		details: '',
-		imageUrl: '',
+		imageName: '',
 		tickets: 0,
 		ticketPrice: 0,
 		adminId: '',
@@ -42,25 +42,46 @@ const CreateEvent = () => {
 	const handleOnChange = (e) => {
 		console.log(e.target.name);
 		if (e.target.files) setPreviewImage(URL.createObjectURL(e.target.files[0]));
+
 		if (e.target.name === 'relatedEvents') {
 			setSelectedEvent(e.target.value);
 			return;
 		}
+
 		setCreateEventOptions((createEventOptions) => ({
 			...createEventOptions,
 			[e.target.name]: e.target.value,
 		}));
 	};
 
-	const handleFormSubmit = (e) => {
+	const handleFormSubmit = async (e) => {
 		e.preventDefault();
-		if (!fileError && !eventError) {
-			e.target.elements.eventImage.files &&
-				uploadFile(e.target.elements.eventImage.files[0]);
-			createEvent(createEventOptions);
-			setCreateEventOptions(initialState);
-		}
 
+		console.log(eventError, 'EVENT ERROR');
+		console.log(fileError, 'FILE ERROR');
+
+		if (!eventError && !fileError) {
+			let imageName = !e.target.elements.eventImage.files
+				? null
+				: await uploadFile(e.target.elements.eventImage.files[0]);
+			console.log(imageName);
+			// e.target.elements.eventImage.files &&
+			// 	uploadFile(e.target.elements.eventImage.files[0]);
+
+			setCreateEventOptions((createEventOptions) => ({
+				...createEventOptions,
+				imageName,
+			}));
+			console.log(createEventOptions.imageName);
+			createEvent(createEventOptions);
+			// setCreateEventOptions(initialState);
+		}
+		// if (!eventError && !fileError) {
+		// 	createEvent(createEventOptions);
+		// 	setCreateEventOptions(initialState);
+
+		// 	console.log(createEventOptions);
+		// }
 		//TODO: Да вратам порака за успешно креиран event
 		// можеби во модал и онака ќе го правам
 	};
@@ -68,16 +89,18 @@ const CreateEvent = () => {
 	const handleAdd = async (e) => {
 		e.preventDefault();
 		let relatedEvents = createEventOptions.relatedEvents;
-
+		relatedEvents.push(selectedEvent);
 		setCreateEventOptions((createEventOptions) => ({
 			...createEventOptions,
-			...relatedEvents,
+			relatedEvents: [...relatedEvents],
 		}));
+
 		let getRelated = await getRelatedEvents(relatedEvents);
 		setRelated(getRelated);
 	};
 	return (
 		<div className='createEvent'>
+			{console.log(createEventOptions)}
 			<UserNav title='Create Events' />
 			<div className='container'>
 				<form className='form full-width' onSubmit={handleFormSubmit}>
