@@ -30,7 +30,7 @@ const eventSchema = mongoose.Schema({
 		required: true,
 		minLength: [10, 'Explain in more detail about the event.'],
 	},
-	imageName: {
+	eventImage: {
 		type: String,
 	},
 	tickets: {

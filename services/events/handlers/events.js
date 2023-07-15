@@ -3,16 +3,19 @@ const Events = require('../../../pkg/events');
 //TODO: Да ставам соодветни статуси.
 
 const handleErrors = (err) => {
+	console.log(err, 'TUKA SHTAMPAM NEKOJ ERROR');
 	let errors = {
 		eventName: '',
 		category: '',
 		eventDate: '',
+		eventImage: '',
 		details: '',
 		tickets: '',
 		adminId: '',
 	};
 	if (err.message.includes('Event validation failed')) {
 		Object.values(err.errors).forEach(({ properties }) => {
+			console.log(err);
 			errors[properties.path] = properties.message;
 		});
 	} else if (err.message.includes('Custom error')) {

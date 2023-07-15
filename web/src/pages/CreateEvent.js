@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useEvents } from '../hooks/useEvents';
-import { useStorage } from '../hooks/useStorage';
+// import { useStorage } from '../hooks/useStorage';
 // import { useAuth } from '../hooks/useAuth';
 
 import UserNav from '../components/UserNav';
@@ -12,19 +12,21 @@ const CreateEvent = () => {
 	const initialState = {
 		eventName: '',
 		category: '',
-		eventDate: '',
+		eventDate: null,
 		location: '',
 		details: '',
-		imageName: '',
-		tickets: 0,
+		eventImage: null,
 		ticketPrice: 0,
-		adminId: '',
+		// adminId: null,
 		relatedEvents: [],
 	};
 	const [createEventOptions, setCreateEventOptions] = useState(initialState);
-	const [previewImage, setPreviewImage] = useState(null);
+	const [previewImage, setPreviewImage] = useState('');
 	const [related, setRelated] = useState(null);
 	const [selectedEvent, setSelectedEvent] = useState(null);
+
+	//TODO: Да направам функција handleUpload i vrz baza na toa da napravam logika
+	// vaka se vrtam vo krug
 
 	const {
 		createEvent,
@@ -33,74 +35,64 @@ const CreateEvent = () => {
 		error: eventError,
 	} = useEvents();
 
-	const {
-		uploadFile,
-		isLoading: fileIsLoading,
-		error: fileError,
-	} = useStorage();
-
 	const handleOnChange = (e) => {
-		console.log(e.target.name);
-		if (e.target.files) setPreviewImage(URL.createObjectURL(e.target.files[0]));
-
 		if (e.target.name === 'relatedEvents') {
 			setSelectedEvent(e.target.value);
 			return;
 		}
-
+		// console.log(previewImage);
 		setCreateEventOptions((createEventOptions) => ({
 			...createEventOptions,
 			[e.target.name]: e.target.value,
 		}));
 	};
-
-	const handleFormSubmit = async (e) => {
-		e.preventDefault();
-
-		console.log(eventError, 'EVENT ERROR');
-		console.log(fileError, 'FILE ERROR');
-
-		if (!eventError && !fileError) {
-			let imageName = !e.target.elements.eventImage.files
-				? null
-				: await uploadFile(e.target.elements.eventImage.files[0]);
-			console.log(imageName);
-			// e.target.elements.eventImage.files &&
-			// 	uploadFile(e.target.elements.eventImage.files[0]);
-
-			setCreateEventOptions((createEventOptions) => ({
-				...createEventOptions,
-				imageName,
-			}));
-			console.log(createEventOptions.imageName);
-			createEvent(createEventOptions);
-			// setCreateEventOptions(initialState);
-		}
-		// if (!eventError && !fileError) {
-		// 	createEvent(createEventOptions);
-		// 	setCreateEventOptions(initialState);
-
-		// 	console.log(createEventOptions);
-		// }
-		//TODO: Да вратам порака за успешно креиран event
-		// можеби во модал и онака ќе го правам
-	};
-
-	const handleAdd = async (e) => {
-		e.preventDefault();
-		let relatedEvents = createEventOptions.relatedEvents;
-		relatedEvents.push(selectedEvent);
+	const handleUpload = async (e) => {
+		// console.log(e.target.files);
+		setPreviewImage(e.target.files[0]);
 		setCreateEventOptions((createEventOptions) => ({
 			...createEventOptions,
-			relatedEvents: [...relatedEvents],
+			eventImage: e.target.files[0],
+		}));
+	};
+	const handleAdd = async (e) => {
+		e.preventDefault();
+
+		let relatedEvents = createEventOptions.relatedEvents;
+		relatedEvents.push(selectedEvent);
+
+		setCreateEventOptions((createEventOptions) => ({
+			...createEventOptions,
+			...relatedEvents,
 		}));
 
 		let getRelated = await getRelatedEvents(relatedEvents);
 		setRelated(getRelated);
 	};
+	const handleFormSubmit = async (e) => {
+		e.preventDefault();
+		console.log(createEventOptions, 'tuka nekade');
+		let created = await createEvent(createEventOptions);
+		// console.log(created, 'OVOJ E TESTOT');
+		if (!created) {
+			// console.log(createEventOptions);
+			// setCreateEventOptions(createEventOptions);
+			setCreateEventOptions((createEventOptions) => ({
+				...createEventOptions,
+				eventImage: previewImage,
+			}));
+		}
+		if (created) {
+			setCreateEventOptions(initialState);
+			setRelated([]);
+			setPreviewImage(null);
+		}
+		//TODO: Да вратам порака за успешно креиран event
+		// можеби во модал и онака ќе го правам
+	};
+
 	return (
 		<div className='createEvent'>
-			{console.log(createEventOptions)}
+			{/* {console.log(createEventOptions)} */}
 			<UserNav title='Create Events' />
 			<div className='container'>
 				<form className='form full-width' onSubmit={handleFormSubmit}>
@@ -158,7 +150,7 @@ const CreateEvent = () => {
 								className='uploadButton'
 								type='file'
 								name='eventImage'
-								onChange={handleOnChange}
+								onChange={handleUpload}
 							/>
 							<input
 								type='text'
@@ -198,7 +190,10 @@ const CreateEvent = () => {
 							<label>Event Photo</label>
 							<div className='imageContainer'>
 								{previewImage ? (
-									<img src={previewImage} alt='Art about the event' />
+									<img
+										src={URL.createObjectURL(previewImage)}
+										alt='Art about the event'
+									/>
 								) : (
 									<img src={noImage} alt='Art about the event' />
 								)}

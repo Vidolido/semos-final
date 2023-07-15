@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { useAuthContext } from './useAuthContext';
 import { useEventsContext } from './useEventsContext';
+import { useStorage } from './useStorage';
 import { CREATE_EVENT } from '../misc/actionTypes';
 
 export const useEvents = () => {
@@ -8,18 +9,23 @@ export const useEvents = () => {
 	const [isLoading, setIsLoading] = useState(null);
 	const { user } = useAuthContext();
 	const { event, events, category, dispatch } = useEventsContext();
+	const { uploadFile } = useStorage();
 
 	const createEvent = async (createEventOptions) => {
 		setIsLoading(true);
 		setError(null);
-		// console.log(user.token, 'from useCreateEvent hook');
-		// const test = await(fetch('/api/v1/storage', {
-		//     method: 'POST',
-		//     headers: {
-		// 		Authorization: `Bearer ${user.token}`,
-		// 		'Content-Type': 'application/json',
-		// 	},
-		// }))
+
+		let optionIsEmpty = Object.entries(createEventOptions).some((option) =>
+			!option[1] && option[0] !== 'adminId' ? true : false
+		);
+
+		if (!optionIsEmpty) {
+			let fileName = await uploadFile(createEventOptions.eventImage);
+			createEventOptions.eventImage = fileName;
+		} else if (optionIsEmpty) {
+			createEventOptions.eventImage = '';
+		}
+
 		const res = await fetch('/api/v1/events/create', {
 			method: 'POST',
 			headers: {
@@ -33,10 +39,13 @@ export const useEvents = () => {
 		if (!res.ok) {
 			setIsLoading(false);
 			setError(jsonRes.errors);
+			return false;
 		}
 		if (res.ok) {
 			dispatch({ type: CREATE_EVENT, payload: jsonRes });
 			setIsLoading(false);
+			setError(null);
+			return true;
 		}
 	};
 

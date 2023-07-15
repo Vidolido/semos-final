@@ -9,7 +9,7 @@ export const useStorage = () => {
 	const uploadFile = async (image) => {
 		setIsLoading(true);
 		setError(null);
-		// console.log(image, 'uploadFile: gore');
+		console.log(image, 'uploadFile: gore');
 		const formData = new FormData();
 		formData.append('file', image);
 		try {
@@ -20,9 +20,11 @@ export const useStorage = () => {
 				},
 				body: formData,
 			});
-			const jsonRes = await res.json();
+			if (res.ok) {
+				const jsonRes = await res.json();
+				return jsonRes.fileName;
+			}
 			// console.log(res, jsonRes.fileName);
-			return jsonRes.fileName;
 		} catch (err) {
 			console.log(err);
 		}
