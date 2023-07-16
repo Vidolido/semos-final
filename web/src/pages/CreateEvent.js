@@ -1,7 +1,5 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { useEvents } from '../hooks/useEvents';
-// import { useStorage } from '../hooks/useStorage';
-// import { useAuth } from '../hooks/useAuth';
 
 import UserNav from '../components/UserNav';
 import RelatedEvents from '../components/RelatedEvents';
@@ -11,22 +9,18 @@ import noImage from '../misc/no-event-image.jpg';
 const CreateEvent = () => {
 	const initialState = {
 		eventName: '',
-		category: '',
-		eventDate: null,
+		category: 'empty',
+		eventDate: '',
 		location: '',
 		details: '',
-		eventImage: null,
+		eventImage: '',
 		ticketPrice: 0,
-		// adminId: null,
 		relatedEvents: [],
 	};
 	const [createEventOptions, setCreateEventOptions] = useState(initialState);
 	const [previewImage, setPreviewImage] = useState('');
 	const [related, setRelated] = useState(null);
 	const [selectedEvent, setSelectedEvent] = useState(null);
-
-	//TODO: Да направам функција handleUpload i vrz baza na toa da napravam logika
-	// vaka se vrtam vo krug
 
 	const {
 		createEvent,
@@ -40,14 +34,12 @@ const CreateEvent = () => {
 			setSelectedEvent(e.target.value);
 			return;
 		}
-		// console.log(previewImage);
 		setCreateEventOptions((createEventOptions) => ({
 			...createEventOptions,
 			[e.target.name]: e.target.value,
 		}));
 	};
 	const handleUpload = async (e) => {
-		// console.log(e.target.files);
 		setPreviewImage(e.target.files[0]);
 		setCreateEventOptions((createEventOptions) => ({
 			...createEventOptions,
@@ -72,10 +64,7 @@ const CreateEvent = () => {
 		e.preventDefault();
 		console.log(createEventOptions, 'tuka nekade');
 		let created = await createEvent(createEventOptions);
-		// console.log(created, 'OVOJ E TESTOT');
 		if (!created) {
-			// console.log(createEventOptions);
-			// setCreateEventOptions(createEventOptions);
 			setCreateEventOptions((createEventOptions) => ({
 				...createEventOptions,
 				eventImage: previewImage,
@@ -92,7 +81,6 @@ const CreateEvent = () => {
 
 	return (
 		<div className='createEvent'>
-			{/* {console.log(createEventOptions)} */}
 			<UserNav title='Create Events' />
 			<div className='container'>
 				<form className='form full-width' onSubmit={handleFormSubmit}>
@@ -115,12 +103,13 @@ const CreateEvent = () => {
 							<select
 								name='category'
 								defaultValue='Choose Event Category'
-								onChange={handleOnChange}>
+								onChange={handleOnChange}
+								value={createEventOptions.category}>
 								<option
 									defaultValue='Choose Event Category'
 									disabled
 									hidden
-									selected={!createEventOptions.category ? true : false}>
+									value='empty'>
 									Choose Event Category
 								</option>
 								<option value='comedy'>Stand-up Comedy</option>
@@ -214,8 +203,11 @@ const CreateEvent = () => {
 						</div>
 					</div>
 					<div className='container'>
-						{!createEventOptions.category && <h1>Please select a category</h1>}
-						{createEventOptions.category && (
+						{/* Тука треба логика, доколку нема други евенти, да каже дека категоријата е празна. */}
+						{createEventOptions.category === 'empty' && (
+							<h1>Please select a category</h1>
+						)}
+						{createEventOptions.category !== 'empty' && (
 							<div className='eventInputs'>
 								<RelatedEvents
 									cat={createEventOptions.category}

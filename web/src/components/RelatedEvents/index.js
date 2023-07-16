@@ -28,7 +28,7 @@ const RelatedEvents = ({ cat, handleOnChange, handleAdd, isLoading }) => {
 					name='relatedEvents'
 					onChange={handleOnChange}
 					defaultValue='Choose Event'>
-					<option defaultValue='Choose Event' disabled hidden>
+					<option value='Choose Event' disabled hidden>
 						Choose Event
 					</option>
 					{category &&

@@ -1,4 +1,4 @@
-const Events = require('../../../pkg/events');
+const Event = require('../../../pkg/events');
 
 //TODO: Да ставам соодветни статуси.
 
@@ -28,7 +28,7 @@ const handleErrors = (err) => {
 
 const getAllEvents = async (req, res) => {
 	try {
-		let allEvents = await Events.find({});
+		let allEvents = await Event.find({});
 		return res.status(200).send(allEvents);
 	} catch (err) {
 		console.log(err);
@@ -39,7 +39,7 @@ const getAllEvents = async (req, res) => {
 const getUserEvents = async (req, res) => {
 	try {
 		// TODO: Да исхендлам грешки
-		let userEvents = await Events.find({ adminId: req.auth.id });
+		let userEvents = await Event.find({ adminId: req.auth.id });
 
 		return res.status(200).json(userEvents);
 	} catch (err) {
@@ -51,7 +51,18 @@ const getUserEvents = async (req, res) => {
 const getSingleEvent = async (req, res) => {
 	try {
 		// TODO: Да исхендлам грешки
-		let singleEvent = await Events.findOne({ _id: req.body.id });
+		let singleEvent = await Event.findOne({ _id: req.body.id }).populate({
+			path: 'relatedEvents',
+			model: Event,
+			select: {
+				eventName: 1,
+				eventDate: 1,
+				eventImage: 1,
+				details: 1,
+				location: 1,
+				ticketPrice: 1,
+			},
+		});
 
 		return res.status(200).json(singleEvent);
 	} catch (err) {
@@ -62,7 +73,7 @@ const getSingleEvent = async (req, res) => {
 
 const getRelatedEvents = async (req, res) => {
 	try {
-		let relatedEvents = await Events.find({ _id: { $in: req.body } }).select(
+		let relatedEvents = await Event.find({ _id: { $in: req.body } }).select(
 			'eventName eventDate location imageUrl'
 		);
 		res.status(200).send(relatedEvents);
@@ -75,7 +86,7 @@ const getRelatedEvents = async (req, res) => {
 
 const getEventsByCategory = async (req, res) => {
 	try {
-		let evetnsByCat = await Events.find({ category: req.params.category });
+		let evetnsByCat = await Event.find({ category: req.params.category });
 		// console.log(evetnsByCat);
 		if (!evetnsByCat.length) {
 			return res
@@ -105,7 +116,7 @@ const createEvent = async (req, res) => {
 			...req.body,
 			adminId: req.auth.id,
 		};
-		let newEvent = await Events.create(payload);
+		let newEvent = await Event.create(payload);
 		return res.status(201).send(newEvent);
 	} catch (err) {
 		const errors = handleErrors(err);
@@ -117,7 +128,7 @@ const updateEvent = async (req, res) => {
 	try {
 		// На овој начин само Account-от што го креирал Event-от, може да прави промени.
 		// Да направам по accountType: admin, за да може само админ да прави промени.
-		const upE = await Events.updateOne(
+		const upE = await Event.updateOne(
 			{ _id: req.params.id, adminId: req.auth.id },
 			req.body
 		);
@@ -138,7 +149,7 @@ const updateEvent = async (req, res) => {
 
 const removeEvent = async (req, res) => {
 	try {
-		const rmE = await Events.deleteOne({ _id: req.params.id });
+		const rmE = await Event.deleteOne({ _id: req.params.id });
 		if (!rmE.deletedCount) {
 			throw {
 				code: 400,
