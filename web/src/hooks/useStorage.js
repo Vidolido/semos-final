@@ -27,8 +27,14 @@ export const useStorage = () => {
 			// console.log(res, jsonRes.fileName);
 		} catch (err) {
 			console.log(err);
+			setError(err);
 		}
 	};
 
-	return { uploadFile, isLoading, error };
+	const downloadFile = async (fileName) => {
+		setIsLoading(true);
+		setError(null);
+	};
+
+	return { uploadFile, downloadFile, isLoading, error };
 };

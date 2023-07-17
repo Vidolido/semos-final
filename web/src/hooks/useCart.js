@@ -22,20 +22,13 @@ export const useCart = () => {
 		'Content-Type': 'application/json',
 	};
 
-	const addToCart = async (form, id) => {
+	const addToCart = async (numberOfTickets, id) => {
 		setIsLoading(true);
 		setError(null);
 
-		// TODO: Да најдам друг начин за numberOfTickets
-		let numberOfTickets = Number(
-			Array.from(form.target.children).filter(
-				(input) => input.name === 'numberOfTickets'
-			)[0].value
-		);
-
 		let payload = {
 			event: id.toString(),
-			numberOfTickets,
+			numberOfTickets: Number(numberOfTickets),
 		};
 
 		try {
@@ -46,10 +39,18 @@ export const useCart = () => {
 			});
 			const addJson = await add.json();
 
+			if (!add.ok) {
+				setIsLoading(false);
+				setError(addJson.errors);
+			}
+
 			if (add.ok) {
 				// TODO: Овде да направам логика, доколку го има евентот во кошница
 				// да праша дали сака да додаде уште карти на веќе постоечкиот број.
 				// dispatch({ type: SET_CART, payload: cart });
+
+				setIsLoading(false);
+				setError(null);
 				getCart();
 			}
 		} catch (err) {

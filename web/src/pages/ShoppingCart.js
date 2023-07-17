@@ -3,23 +3,37 @@ import { useCart } from '../hooks/useCart';
 // import { useAuthContext } from '../hooks/useAuthContext';
 
 const ShoppingCart = () => {
-	const { getCart, cart, isLoading, error } = useCart();
+	const {
+		getCart,
+		cart,
+		isLoading: cartIsLoading,
+		error: cartError,
+	} = useCart();
+
 	useEffect(() => {
 		// Работи последен пат кога е пробано...
+		// Да пробам со isLoading
 		const fetchData = async () => {
-			if (!cart) {
+			if (!cart && !cartIsLoading) {
 				await getCart();
 			}
 		};
 		fetchData();
-	}, [cart, getCart]);
+	}, [cartIsLoading, cart, getCart]);
+	console.log(cart);
 	return (
 		<div>
 			<h1>Shopping Cart</h1>
-			{/* {!cart && getCart()} */}
+			{cart && !cart.cartItems.length && (
+				<h2>You have no items in your cart. </h2>
+			)}
 			{cart &&
 				cart.cartItems.map((item) => (
-					<p key={item.event._id}>{item.event.eventName}</p>
+					<div key={item.event._id}>
+						<p>{item.event.eventName}</p>
+						<p>{item.event.ticketPrice}</p>
+						<p>{item.numberOfTickets}</p>
+					</div>
 				))}
 		</div>
 	);

@@ -1,4 +1,4 @@
-import { Fragment } from 'react';
+import { Fragment, useState } from 'react';
 //hooks
 import { useCart } from '../../hooks/useCart';
 // misc
@@ -6,14 +6,18 @@ import { months, dates } from '../../misc/dateTime';
 import noImage from '../../misc/no-event-image.jpg';
 
 const SingleEvent = ({ event }) => {
-	let date = new Date(event.eventDate);
+	const [numberOfTickets, setNumberOfTickets] = useState(1);
 	const { addToCart, isLoading, error } = useCart(); //  Да ги искористам овие
+	let date = new Date(event.eventDate);
 
+	const handleChange = (e) => {
+		setNumberOfTickets(e.target.value);
+	};
 	const handleSubmit = (form, id) => {
 		form.preventDefault();
-		addToCart(form, id);
+		addToCart(numberOfTickets, event._id);
 	};
-	console.log(event);
+	// console.log(event);
 	return (
 		<Fragment>
 			<div className='mainInfo'>
@@ -58,12 +62,13 @@ const SingleEvent = ({ event }) => {
 							<div className='addTickets  mt-10'>
 								<form
 									className='flex half-width align-center gap-20'
-									onSubmit={(e) => handleSubmit(e, event._id)}>
+									onSubmit={handleSubmit}>
 									<input
 										className='inputField'
-										defaultValue='1'
+										value={numberOfTickets}
 										name='numberOfTickets'
 										type='number'
+										onChange={handleChange}
 										min={1}
 									/>
 									<input
@@ -76,14 +81,13 @@ const SingleEvent = ({ event }) => {
 						</div>
 					</div>
 				</div>
-				<div className='relatedEvents'>
-					{event.relatedEvents &&
-						event.relatedEvents.map((rE) => (
-							<div>
-								<p>{rE.eventName}</p>
-							</div>
-						))}
-				</div>
+			</div>
+			<div className='relatedEvents'>
+				{event.relatedEvents.map((rE) => (
+					<div>
+						<p>{rE.eventName}</p>
+					</div>
+				))}
 			</div>
 		</Fragment>
 	);
