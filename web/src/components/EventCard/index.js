@@ -1,22 +1,38 @@
 // import { Fragment } from 'react';
+import { useState, useEffect, Fragment } from 'react';
 import { Link } from 'react-router-dom';
+
+import { useStorage } from '../../hooks/useStorage';
 
 import { months, dates } from '../../misc/dateTime';
 import noImage from '../../misc/no-event-image.jpg';
 
 const EventCard = ({ event }) => {
+	const { downloadFile, isLoading: fileIsLoading } = useStorage();
+	const [image, setImage] = useState(null);
 	let date = new Date(event.eventDate);
+	useEffect(() => {
+		const getImage = async () => {
+			const file = await downloadFile(event.eventImage);
+			setImage(file);
+		};
+		getImage();
+	}, [downloadFile, fileIsLoading, event]);
+	// console.log(image);
 	return (
 		<div className='eventCard'>
 			<div className='eventImageContainer'>
-				{!event.imageUrl ? (
+				{!image ? (
 					<img className='eventImage' src={noImage} alt='Tickets for events' />
 				) : (
-					<img
-						className='eventImage'
-						src={event.imageUrl}
-						alt='Tickets for events'
-					/>
+					<Fragment>
+						<img className='eventImage' src={image} alt='Tickets for events' />
+						<img
+							className='eventImage'
+							src={`${event.eventImage}`}
+							alt='Tickets for events'
+						/>
+					</Fragment>
 				)}
 			</div>
 			<div className='eventInfo'>

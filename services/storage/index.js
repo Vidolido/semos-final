@@ -10,6 +10,8 @@ api.use(
 	jwt({
 		algorithms: ['HS256'],
 		secret: config.get('security').jwt_secret,
+	}).unless({
+		path: [/([/|.|\w|\s])*\.(?:jpg|jpeg|pjpeg|png|gif)$/g],
 	})
 );
 

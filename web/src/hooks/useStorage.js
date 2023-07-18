@@ -34,6 +34,14 @@ export const useStorage = () => {
 	const downloadFile = async (fileName) => {
 		setIsLoading(true);
 		setError(null);
+		// console.log(fileName);
+		const res = await fetch(`/api/v1/storage/download/${fileName}`);
+		if (!res.ok) {
+			setError({ message: 'Something went wrong.' });
+		}
+		if (res.ok) {
+			return res.url;
+		}
 	};
 
 	return { uploadFile, downloadFile, isLoading, error };

@@ -14,6 +14,7 @@ const upload = async (req, res) => {
 	];
 	let maxFileSize = 1024 * 1024;
 
+	// TODO: Да вратам errors како на секаде.
 	if (!fileTypes.includes(file.mimetype)) {
 		return res.status(400).send('Not supported file type');
 	}
@@ -28,6 +29,7 @@ const upload = async (req, res) => {
 };
 
 const download = async (req, res) => {
+	console.log(req.params, 'OVA e vo handlerot');
 	let filePath = `${__dirname}/../../../uploads/${req.params.file}`;
 	res.download(filePath, req.params.file.split('_')[1]);
 };

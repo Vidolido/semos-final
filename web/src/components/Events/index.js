@@ -25,7 +25,7 @@ const Events = ({ cat }) => {
 	return (
 		<Fragment>
 			<h1>{cat === 'comedy' ? 'Stand-up Comedy' : 'Musical Concerts'}</h1>
-			<div className='eventsContainer'>
+			<div className='eventsContainer mb-50'>
 				{category &&
 					category[cat] &&
 					category[cat].map((event) => {

@@ -17,7 +17,7 @@ const SingleEvent = ({ event }) => {
 		form.preventDefault();
 		addToCart(numberOfTickets, event._id);
 	};
-	// console.log(event);
+	console.log(event);
 	return (
 		<Fragment>
 			<div className='mainInfo'>
@@ -33,7 +33,7 @@ const SingleEvent = ({ event }) => {
 
 			<div className='eventDetails'>
 				<div className='imageContainer'>
-					{!event.eventImage ? (
+					{/* {!event.eventImage ? (
 						<img
 							className='eventImage'
 							src={noImage}
@@ -45,7 +45,8 @@ const SingleEvent = ({ event }) => {
 							src={event.eventImage}
 							alt='Tickets for events'
 						/>
-					)}
+					)} */}
+					<img className='eventImage' src={noImage} alt='Tickets for events' />
 				</div>
 				<div className='detailsContainer'>
 					<h2 className='mb-15'>About</h2>
