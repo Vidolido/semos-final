@@ -39,7 +39,7 @@ export const useEvents = () => {
 			dispatch({ type: SET_SINGLE_EVENT, payload: jsonRes });
 			setIsLoading(false);
 			setError(null);
-			return jsonRes;
+			// return jsonRes;
 		}
 	};
 

@@ -1,5 +1,6 @@
 //hooks
 import { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
 import { useEventsContext } from '../hooks/useEventsContext';
 import { useAuthContext } from '../hooks/useAuthContext';
 
@@ -72,7 +73,13 @@ const UserEvents = () => {
 										</div>
 									</div>
 								</div>
-								<div className='buttons'>
+								<div className='buttons flex gap-20'>
+									<Link
+										to={`/user/events/update/${event._id}`}
+										onClick={() => handleClick(event._id)}
+										className='btn-purpleToWhite width-150'>
+										Edit Event
+									</Link>
 									<button
 										onClick={() => handleClick(event._id)}
 										className='btn-blackToTransparent width-150'>

@@ -27,11 +27,6 @@ const EventCard = ({ event }) => {
 				) : (
 					<Fragment>
 						<img className='eventImage' src={image} alt='Tickets for events' />
-						<img
-							className='eventImage'
-							src={`${event.eventImage}`}
-							alt='Tickets for events'
-						/>
 					</Fragment>
 				)}
 			</div>

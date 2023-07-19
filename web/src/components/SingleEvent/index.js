@@ -1,14 +1,32 @@
-import { Fragment, useState } from 'react';
+import { Fragment, useState, useEffect } from 'react';
 //hooks
 import { useCart } from '../../hooks/useCart';
+import { useStorage } from '../../hooks/useStorage';
+
 // misc
 import { months, dates } from '../../misc/dateTime';
 import noImage from '../../misc/no-event-image.jpg';
+import EventCard from '../EventCard';
+
+//components
+// import { EventCard } from '../';
 
 const SingleEvent = ({ event }) => {
+	const { downloadFile, isLoading: fileIsLoading } = useStorage();
+	const [image, setImage] = useState(null);
+
 	const [numberOfTickets, setNumberOfTickets] = useState(1);
+
 	const { addToCart, isLoading, error } = useCart(); //  Да ги искористам овие
 	let date = new Date(event.eventDate);
+
+	useEffect(() => {
+		const getImage = async () => {
+			const file = await downloadFile(event.eventImage);
+			setImage(file);
+		};
+		getImage();
+	}, [downloadFile, fileIsLoading, event]);
 
 	const handleChange = (e) => {
 		setNumberOfTickets(e.target.value);
@@ -33,19 +51,15 @@ const SingleEvent = ({ event }) => {
 
 			<div className='eventDetails'>
 				<div className='imageContainer'>
-					{/* {!event.eventImage ? (
+					{!image ? (
 						<img
 							className='eventImage'
 							src={noImage}
 							alt='Tickets for events'
 						/>
 					) : (
-						<img
-							className='eventImage'
-							src={event.eventImage}
-							alt='Tickets for events'
-						/>
-					)} */}
+						<img className='eventImage' src={image} alt='Tickets for events' />
+					)}
 					<img className='eventImage' src={noImage} alt='Tickets for events' />
 				</div>
 				<div className='detailsContainer'>
@@ -83,12 +97,18 @@ const SingleEvent = ({ event }) => {
 					</div>
 				</div>
 			</div>
-			<div className='relatedEvents'>
-				{event.relatedEvents.map((rE) => (
+			<div className='relatedEvents mt-50'>
+				<h2>Related Events</h2>
+				<div className='flex gap-20'>
+					{event.relatedEvents.map((rE) => (
+						<EventCard event={rE} />
+					))}
+				</div>
+				{/* {event.relatedEvents.map((rE) => (
 					<div>
 						<p>{rE.eventName}</p>
 					</div>
-				))}
+				))} */}
 			</div>
 		</Fragment>
 	);

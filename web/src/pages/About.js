@@ -1,26 +1,17 @@
-import { useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { useEvents } from '../hooks/useEvents';
 
 import SingleEvent from '../components/SingleEvent';
 const About = () => {
 	const { id } = useParams();
+	// const [event, setEvent] = useState(null);
 
-	const {
-		getSingleEvent,
-		event,
-		isLoading: eventIsLoading,
-		error: eventError,
-	} = useEvents();
+	const { getSingleEvent, event } = useEvents();
 
 	useEffect(() => {
-		const fetchData = async (id) => {
-			if (eventIsLoading === null) {
-				return await getSingleEvent(id);
-			}
-		};
-		fetchData(id);
-	});
+		getSingleEvent(id);
+	}, [id]);
 
 	return <div className='about'>{event && <SingleEvent event={event} />}</div>;
 };
