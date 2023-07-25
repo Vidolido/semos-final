@@ -35,7 +35,7 @@ const SingleEvent = ({ event }) => {
 		form.preventDefault();
 		addToCart(numberOfTickets, event._id);
 	};
-	console.log(event);
+	// console.log(event);
 	return (
 		<Fragment>
 			<div className='mainInfo'>

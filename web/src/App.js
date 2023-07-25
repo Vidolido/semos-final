@@ -26,6 +26,8 @@ function App() {
 			<div className='pages'>
 				<Routes>
 					<Route path='/' element={<Home />} />
+					<Route path='/events/about/:id' element={<About />} />
+					<Route path='/category/:cat' element={<Category />} />
 					<Route
 						path='/login'
 						element={!user ? <Login /> : <Navigate to='/' />}
@@ -34,9 +36,6 @@ function App() {
 						path='/signin'
 						element={!user ? <Signin /> : <Navigate to='/' />}
 					/>
-					<Route path='/events/about/:id' element={<About />} />
-					<Route path='/category/:cat' element={<Category />} />
-					{/* TODO: Да го негирам !user од кога ќе ги средам рутите. */}
 					<Route
 						path='/user/cart'
 						element={user ? <ShoppingCart /> : <Navigate to='/' />}

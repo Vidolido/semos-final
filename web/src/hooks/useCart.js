@@ -16,8 +16,6 @@ export const useCart = () => {
 	const [isLoading, setIsLoading] = useState(null);
 
 	const headers = {
-		// Authorization: `Bearer ${user.token}`,
-		// Authorization: ``,
 		Authorization: user ? `Bearer ${user.token}` : '',
 		'Content-Type': 'application/json',
 	};
@@ -64,27 +62,17 @@ export const useCart = () => {
 	const getCart = async () => {
 		setIsLoading(true);
 		setError(null);
-		// console.log(cart, user);
-		try {
-			if (!user) return;
+		if (!user) return;
+		const setCart = await fetch(`/api/v1/cart/get`, {
+			method: 'GET',
+			headers,
+		});
 
-			const setCart = await fetch(`/api/v1/cart/get`, {
-				method: 'GET',
-				headers,
-			});
+		const cartJson = await setCart.json();
 
-			const cartJson = await setCart.json();
-			// console.log(cartJson);
-			if (setCart.ok) {
-				dispatch({ type: SET_CART, payload: cartJson });
-				setIsLoading(false);
-			}
-			// return cartJson;
-		} catch (err) {
-			console.log(err);
-			if (err) {
-				setError(err);
-			}
+		if (setCart.ok) {
+			dispatch({ type: SET_CART, payload: cartJson });
+			setIsLoading(false);
 		}
 	};
 

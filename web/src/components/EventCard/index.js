@@ -8,8 +8,9 @@ import { months, dates } from '../../misc/dateTime';
 import noImage from '../../misc/no-event-image.jpg';
 
 const EventCard = ({ event }) => {
-	const { downloadFile, isLoading: fileIsLoading } = useStorage();
+	const { downloadFile } = useStorage();
 	const [image, setImage] = useState(null);
+
 	let date = new Date(event.eventDate);
 	useEffect(() => {
 		const getImage = async () => {
@@ -17,7 +18,7 @@ const EventCard = ({ event }) => {
 			setImage(file);
 		};
 		getImage();
-	}, [downloadFile, fileIsLoading, event]);
+	}, [downloadFile, event]);
 	// console.log(image);
 	return (
 		<div className='eventCard'>
