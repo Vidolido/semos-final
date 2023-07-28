@@ -12,14 +12,11 @@ const EventCard = ({ event }) => {
 	const [image, setImage] = useState(null);
 
 	let date = new Date(event.eventDate);
+
 	useEffect(() => {
-		const getImage = async () => {
-			const file = await downloadFile(event.eventImage);
-			setImage(file);
-		};
-		getImage();
-	}, [downloadFile, event]);
-	// console.log(image);
+		downloadFile(event.eventImage).then((file) => setImage(file));
+	}, [event, downloadFile]);
+
 	return (
 		<div className='eventCard'>
 			<div className='eventImageContainer'>

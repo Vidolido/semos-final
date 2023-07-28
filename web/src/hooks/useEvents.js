@@ -6,6 +6,10 @@ import {
 	CREATE_EVENT,
 	SET_SINGLE_EVENT,
 	CLEAR_STATE,
+	SET_COMEDY_EVENTS,
+	SET_MUSIC_EVENTS,
+	SET_EVENTS,
+	DELETE_EVENT,
 } from '../misc/actionTypes';
 
 export const useEvents = () => {
@@ -14,6 +18,44 @@ export const useEvents = () => {
 	const { user } = useAuthContext();
 	const { event, events, category, dispatch } = useEventsContext();
 	const { uploadFile } = useStorage();
+
+	const getEvents = async () => {
+		setIsLoading(true);
+		setError(null);
+		const res = await fetch('/api/v1/events/user-events', {
+			method: 'POST',
+			headers: {
+				Authorization: `Bearer ${user.token}`,
+				'Content-Type': 'application/json',
+			},
+		});
+
+		const jsonRes = await res.json();
+
+		if (res.ok) {
+			dispatch({ type: SET_EVENTS, payload: jsonRes });
+		}
+	};
+
+	const getEventsByCategory = async (cat) => {
+		setIsLoading(true);
+		setError(null);
+
+		let actionType = cat === 'comedy' ? SET_COMEDY_EVENTS : SET_MUSIC_EVENTS;
+
+		const res = await fetch(`/api/v1/events/${cat}`);
+
+		const jsonRes = await res.json();
+
+		if (!res.ok) {
+			setIsLoading(false);
+			setError(jsonRes.errors);
+		}
+
+		if (res.ok) {
+			dispatch({ type: actionType, payload: jsonRes });
+		}
+	};
 
 	const getSingleEvent = async (id) => {
 		setIsLoading(true);
@@ -43,6 +85,27 @@ export const useEvents = () => {
 		}
 	};
 
+	const getRelatedEvents = async (rE) => {
+		setIsLoading(true);
+		const res = await fetch('/api/v1/events/related', {
+			method: 'POST',
+			headers: {
+				Authorization: `Bearer ${user.token}`,
+				'Content-Type': 'application/json',
+			},
+			body: JSON.stringify(rE),
+		});
+		const jsonRes = await res.json();
+		if (!res.ok) {
+			setIsLoading(false);
+			setError(jsonRes.errors);
+		}
+		if (res.ok) {
+			setIsLoading(false);
+		}
+		return jsonRes;
+	};
+
 	const createEvent = async (createEventOptions) => {
 		setIsLoading(true);
 		setError(null);
@@ -67,7 +130,7 @@ export const useEvents = () => {
 			body: JSON.stringify(createEventOptions),
 		});
 		const jsonRes = await res.json();
-		console.log(jsonRes, 'ova li');
+		// console.log(jsonRes, 'ova li');
 		if (!res.ok) {
 			setIsLoading(false);
 			setError(jsonRes.errors);
@@ -81,33 +144,27 @@ export const useEvents = () => {
 		}
 	};
 
-	const getRelatedEvents = async (rE) => {
+	const deleteEvent = async (id) => {
 		setIsLoading(true);
-		const res = await fetch('/api/v1/events/related', {
-			method: 'POST',
+		setError(null);
+
+		let res = await fetch(`/api/v1/events/${id}`, {
+			method: 'DELETE',
 			headers: {
 				Authorization: `Bearer ${user.token}`,
 				'Content-Type': 'application/json',
 			},
-			body: JSON.stringify(rE),
 		});
-		const jsonRes = await res.json();
-		if (!res.ok) {
-			setIsLoading(false);
-			setError(jsonRes.errors);
-		}
-		if (res.ok) {
-			setIsLoading(false);
-		}
-		return jsonRes;
-	};
 
-	const deleteEvent = async () => {
-		setIsLoading(true);
-		setError(null);
+		if (res.ok) {
+			dispatch({ type: DELETE_EVENT, payload: id });
+			return true;
+		}
 	};
 
 	return {
+		getEvents,
+		getEventsByCategory,
 		getSingleEvent,
 		createEvent,
 		getRelatedEvents,

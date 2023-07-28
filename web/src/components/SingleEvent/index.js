@@ -12,30 +12,23 @@ import EventCard from '../EventCard';
 // import { EventCard } from '../';
 
 const SingleEvent = ({ event }) => {
-	const { downloadFile, isLoading: fileIsLoading } = useStorage();
+	const { downloadFile } = useStorage();
 	const [image, setImage] = useState(null);
-
 	const [numberOfTickets, setNumberOfTickets] = useState(1);
-
-	const { addToCart, isLoading, error } = useCart(); //  Да ги искористам овие
+	const { addToCart } = useCart();
 	let date = new Date(event.eventDate);
 
 	useEffect(() => {
-		const getImage = async () => {
-			const file = await downloadFile(event.eventImage);
-			setImage(file);
-		};
-		getImage();
-	}, [downloadFile, fileIsLoading, event]);
+		downloadFile(event.eventImage).then((res) => setImage(res));
+	}, [event, downloadFile]);
 
 	const handleChange = (e) => {
 		setNumberOfTickets(e.target.value);
 	};
-	const handleSubmit = (form, id) => {
+	const handleSubmit = (form) => {
 		form.preventDefault();
 		addToCart(numberOfTickets, event._id);
 	};
-	// console.log(event);
 	return (
 		<Fragment>
 			<div className='mainInfo'>

@@ -1,10 +1,8 @@
 //hooks
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { useEventsContext } from '../hooks/useEventsContext';
-import { useAuthContext } from '../hooks/useAuthContext';
+import { useEvents } from '../hooks/useEvents';
 
-import { SET_EVENTS } from '../misc/actionTypes';
 import { months, dates } from '../misc/dateTime';
 import noImage from '../misc/no-event-image.jpg';
 
@@ -13,37 +11,17 @@ import UserNav from '../components/UserNav';
 
 const UserEvents = () => {
 	const [isDeleted, setIsDeleted] = useState(false);
-	const { user } = useAuthContext();
-	const { events, dispatch } = useEventsContext();
+
+	const { events, getEvents, deleteEvent } = useEvents();
 
 	useEffect(() => {
 		setIsDeleted(false);
-		const getEvents = async () => {
-			const res = await fetch(`/api/v1/events/user-events`, {
-				method: 'POST',
-				headers: {
-					Authorization: `Bearer ${user.token}`,
-					'Content-Type': 'application/json',
-				},
-			});
-			const jsonRes = await res.json();
-			if (res.ok) {
-				dispatch({ type: SET_EVENTS, payload: jsonRes });
-			}
-		};
 		getEvents();
-	}, [user, isDeleted, dispatch]);
+	}, [isDeleted]);
 
 	const handleClick = async (id) => {
-		let deleteEvent = await fetch(`/api/v1/events/${id}`, {
-			method: 'DELETE',
-			headers: {
-				Authorization: `Bearer ${user.token}`,
-				'Content-Type': 'application/json',
-			},
-		});
-		if (deleteEvent.ok) {
-			dispatch({ type: 'DELETE_EVENT', payload: id });
+		const deleted = deleteEvent(id);
+		if (deleted) {
 			setIsDeleted(true);
 		}
 	};

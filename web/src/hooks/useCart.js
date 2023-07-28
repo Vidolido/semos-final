@@ -62,7 +62,9 @@ export const useCart = () => {
 	const getCart = async () => {
 		setIsLoading(true);
 		setError(null);
+
 		if (!user) return;
+
 		const setCart = await fetch(`/api/v1/cart/get`, {
 			method: 'GET',
 			headers,
@@ -73,6 +75,8 @@ export const useCart = () => {
 		if (setCart.ok) {
 			dispatch({ type: SET_CART, payload: cartJson });
 			setIsLoading(false);
+			setError(null);
+			// return;
 		}
 	};
 

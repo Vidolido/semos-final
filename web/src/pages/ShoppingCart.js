@@ -8,14 +8,12 @@ const ShoppingCart = () => {
 		isLoading: cartIsLoading,
 		error: cartError,
 	} = useCart();
+
 	useEffect(() => {
-		const fetchData = async () => {
-			if (!cart && !cartIsLoading) {
-				await getCart();
-			}
-		};
-		fetchData();
-	}, [cartIsLoading, cart]);
+		if (!cart || (cartIsLoading && !cartError)) {
+			getCart();
+		}
+	});
 
 	return (
 		<div>
@@ -26,7 +24,7 @@ const ShoppingCart = () => {
 			{cart &&
 				cart.cartItems &&
 				cart.cartItems.map((item) => {
-					if (!item) {
+					if (!item.event) {
 						return 'The event was deleted.';
 					} else {
 						return (
