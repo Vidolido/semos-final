@@ -1,8 +1,6 @@
 import { useEffect, useState } from 'react';
-import jwt_decode from 'jwt-decode';
-import { useAuthContext } from '../hooks/useAuthContext';
+import { useAuth } from '../hooks/useAuth';
 
-import { SET_ALL_USERS, DELETE_USER } from '../misc/actionTypes';
 import noImage from '../misc/no-event-image.jpg';
 // components
 import UserNav from '../components/UserNav';
@@ -10,36 +8,19 @@ import UserNav from '../components/UserNav';
 const UserAll = () => {
 	// TODO: да поставам услов, само доколку е админ да може да ги листа сите корисници
 	const [isDeleted, setIsDeleted] = useState();
-	const { user, allUsers, dispatch } = useAuthContext();
+	const { allUsers, getAllAccounts, deleteAccount } = useAuth();
+
 	useEffect(() => {
 		setIsDeleted(false);
-
-		const getAllUsers = async () => {
-			const res = await fetch(`/api/v1/auth/`);
-			const jsonRes = await res.json();
-			let curentUser = jwt_decode(user.token).id;
-			let restOfUsers = jsonRes.filter((user) => user._id !== curentUser);
-			if (res.ok) {
-				dispatch({ type: SET_ALL_USERS, payload: restOfUsers });
-			}
-		};
-		getAllUsers();
-	}, [dispatch, isDeleted, user]);
+		getAllAccounts();
+	}, [isDeleted]);
 
 	const handleUpdate = async (id) => {
-		console.log(jwt_decode(user.token), 'OVA');
-	};
-	const handleDelete = async (id) => {
 		console.log(id, 'OVA');
-		let deleteUser = await fetch(`/api/v1/auth/${id}`, {
-			method: 'DELETE',
-			headers: {
-				Authorization: `Bearer ${user.token}`,
-				'Content-Type': 'application/json',
-			},
-		});
-		if (deleteUser.ok) {
-			dispatch({ type: DELETE_USER, payload: id });
+	};
+	const handleDelete = (id) => {
+		let isDeleted = deleteAccount(id);
+		if (isDeleted) {
 			setIsDeleted(true);
 		}
 	};

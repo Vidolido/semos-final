@@ -1,10 +1,10 @@
 import { useState } from 'react';
 import { useAuthContext } from './useAuthContext';
-import { LOGIN, LOGOUT } from '../misc/actionTypes';
+import { DELETE_USER, LOGIN, LOGOUT, SET_ALL_USERS } from '../misc/actionTypes';
 export const useAuth = () => {
 	const [error, setError] = useState(null);
 	const [isLoading, setIsLoading] = useState(null);
-	const { user, dispatch } = useAuthContext();
+	const { user, allUsers, dispatch } = useAuthContext();
 
 	const signIn = async (fullName, email, password, confirmPassword) => {
 		setIsLoading(true);
@@ -56,6 +56,34 @@ export const useAuth = () => {
 			dispatch({ type: LOGIN, payload: jsonRes });
 
 			setIsLoading(false);
+			setError(null); // ova go dodadov posledno
+		}
+	};
+
+	const getAllAccounts = async () => {
+		setIsLoading(true);
+		setError(null);
+
+		const res = await fetch('/api/v1/auth/', {
+			method: 'GET',
+			headers: {
+				Authorization: `Bearer ${user.token}`,
+			},
+		});
+
+		const jsonRes = await res.json();
+
+		console.log(jsonRes);
+		if (res.ok) {
+			setIsLoading(false);
+			setError(null);
+
+			dispatch({ type: SET_ALL_USERS, payload: jsonRes });
+		}
+
+		if (!res.ok) {
+			setIsLoading(false);
+			setError(jsonRes.erros);
 		}
 	};
 
@@ -66,5 +94,40 @@ export const useAuth = () => {
 		dispatch({ type: LOGOUT });
 	};
 
-	return { signIn, login, logout, user, isLoading, error };
+	const deleteAccount = async (id) => {
+		setIsLoading(true);
+		setError(null);
+
+		let res = await fetch(`/api/v1/auth/${id}`, {
+			method: 'DELETE',
+			headers: {
+				Authorization: `Bearer ${user.token}`,
+				'Content-Type': 'application/json',
+			},
+		});
+		if (res.ok) {
+			setIsLoading(false);
+			setError(null);
+
+			dispatch({ type: DELETE_USER, payload: id });
+			return true;
+		}
+		if (!res.ok) {
+			setIsLoading(false);
+			// setError(null); // kakvi errori?
+			return false;
+		}
+	};
+
+	return {
+		signIn,
+		login,
+		logout,
+		getAllAccounts,
+		deleteAccount,
+		user,
+		allUsers,
+		isLoading,
+		error,
+	};
 };

@@ -114,7 +114,9 @@ const login = async (req, res) => {
 
 const getAllAccounts = async (req, res) => {
 	try {
-		let allAccounts = await Account.find({}).select('_id email fullName');
+		let allAccounts = await Account.find({ _id: { $ne: req.auth.id } }).select(
+			'_id email fullName'
+		);
 		return res.status(200).send(allAccounts);
 	} catch (err) {
 		console.log(err);

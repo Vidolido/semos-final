@@ -29,9 +29,9 @@ const upload = async (req, res) => {
 };
 
 const download = async (req, res) => {
-	console.log(req.params, 'OVA e vo handlerot');
+	// console.log(req.params, 'OVA e vo handlerot');
 	let filePath = `${__dirname}/../../../uploads/${req.params.file}`;
-	res.download(filePath, req.params.file.split('_')[1]);
+	return res.download(filePath, req.params.file.split('_')[1]);
 };
 
 module.exports = {
