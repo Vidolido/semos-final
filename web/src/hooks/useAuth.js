@@ -119,12 +119,26 @@ export const useAuth = () => {
 		}
 	};
 
+	const getAccountType = async () => {
+		const res = await fetch('/api/v1/auth/getAccountType', {
+			method: 'GET',
+			headers: {
+				Authorization: `Bearer ${user.token}`,
+				'Content-Type': 'application/json',
+			},
+		});
+
+		const jsonRes = res.json();
+		console.log(jsonRes);
+	};
+
 	return {
 		signIn,
 		login,
 		logout,
 		getAllAccounts,
 		deleteAccount,
+		getAccountType,
 		user,
 		allUsers,
 		isLoading,

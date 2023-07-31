@@ -29,6 +29,7 @@ api.use((req, res, next) => {
 });
 
 api.get('/api/v1/auth/', auth.getAllAccounts);
+api.get('/api/v1/auth/', auth.getAccountType);
 api.post('/api/v1/auth/sign-in', auth.signIn);
 api.post('/api/v1/auth/login', auth.login);
 

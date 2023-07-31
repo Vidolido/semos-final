@@ -1,15 +1,14 @@
 import { Fragment, useState, useEffect } from 'react';
-//hooks
+// hooks
 import { useCart } from '../../hooks/useCart';
 import { useStorage } from '../../hooks/useStorage';
 
 // misc
 import { months, dates } from '../../misc/dateTime';
 import noImage from '../../misc/no-event-image.jpg';
-import EventCard from '../EventCard';
 
-//components
-// import { EventCard } from '../';
+// components
+import EventCard from '../EventCard';
 
 const SingleEvent = ({ event }) => {
 	const { downloadFile } = useStorage();

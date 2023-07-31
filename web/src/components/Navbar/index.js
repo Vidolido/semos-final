@@ -1,10 +1,11 @@
 import { Link } from 'react-router-dom';
 import { Fragment } from 'react';
-import { useAuthContext } from '../../hooks/useAuthContext';
+// import { useAuthContext } from '../../hooks/useAuthContext';
+import { useAuth } from '../../hooks/useAuth';
 import { ReactComponent as Logo } from './logo.svg';
 
 const Navbar = () => {
-	const { user } = useAuthContext();
+	const { user } = useAuth();
 
 	return (
 		<nav className='navbar'>

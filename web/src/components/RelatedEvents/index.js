@@ -4,6 +4,7 @@ import { useEventsContext } from '../../hooks/useEventsContext';
 import { SET_COMEDY_EVENTS, SET_MUSIC_EVENTS } from '../../misc/actionTypes';
 import { months, dates } from '../../misc/dateTime';
 
+// TODO: Оваа компонента и Events компонентата да ги спојам во една
 const RelatedEvents = ({ cat, handleOnChange, handleAdd, isLoading }) => {
 	const { category, dispatch } = useEventsContext();
 

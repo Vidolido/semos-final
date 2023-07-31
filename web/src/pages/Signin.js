@@ -1,17 +1,14 @@
 import { Link } from 'react-router-dom';
 import { useState } from 'react';
-// import { useSignin } from '../hooks/useSignin';
 import { useAuth } from '../hooks/useAuth';
 
 const Signin = () => {
 	// TODO: CSS, да проверам за додатни грешки.
-	// тука може да направам објект за local state.
 
 	const [fullName, setFullName] = useState('');
 	const [email, setEmail] = useState('');
 	const [password, setPassword] = useState('');
 	const [confirmPassword, setConfirmPassword] = useState('');
-	// const { signin, isLoading, error } = useSignin();
 	const { signIn, isLoading, error } = useAuth();
 
 	const handleSubmit = async (e) => {

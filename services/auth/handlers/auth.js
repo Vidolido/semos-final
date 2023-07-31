@@ -126,6 +126,11 @@ const getAllAccounts = async (req, res) => {
 	}
 };
 
+const getAccountType = async (req, res) => {
+	try {
+	} catch (err) {}
+};
+
 const deleteAccount = async (req, res) => {
 	try {
 		const { id } = req.params;
@@ -156,6 +161,7 @@ module.exports = {
 	signIn,
 	login,
 	getAllAccounts,
+	getAccountType,
 	deleteAccount,
 	validate,
 };
