@@ -19,7 +19,7 @@ const SingleEvent = ({ event }) => {
 
 	useEffect(() => {
 		downloadFile(event.eventImage).then((res) => setImage(res));
-	}, [event, downloadFile]);
+	}, [event]);
 
 	const handleChange = (e) => {
 		setNumberOfTickets(e.target.value);

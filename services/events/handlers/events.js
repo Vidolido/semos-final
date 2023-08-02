@@ -48,6 +48,16 @@ const getUserEvents = async (req, res) => {
 	}
 };
 
+const getHeroEvent = async (req, res) => {
+	try {
+		let events = await Event.find({}).limit(10);
+		let random = Math.floor(Math.random() * events.length);
+		return res.status(200).send(events[random]);
+	} catch (err) {
+		console.log(err);
+	}
+};
+
 const getSingleEvent = async (req, res) => {
 	try {
 		// TODO: Да исхендлам грешки
@@ -169,6 +179,7 @@ const removeEvent = async (req, res) => {
 module.exports = {
 	getAllEvents,
 	getUserEvents,
+	getHeroEvent,
 	getSingleEvent,
 	getRelatedEvents,
 	getEventsByCategory,

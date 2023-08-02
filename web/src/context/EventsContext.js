@@ -4,6 +4,7 @@ import {
 	SET_COMEDY_EVENTS,
 	SET_MUSIC_EVENTS,
 	SET_SINGLE_EVENT,
+	SET_HERO_EVENT,
 	CLEAR_STATE,
 	CREATE_EVENT,
 	DELETE_EVENT,
@@ -12,6 +13,7 @@ import {
 const initialState = {
 	events: [],
 	event: null,
+	heroEvent: null,
 	category: {
 		comedy: [],
 		music: [],
@@ -26,6 +28,11 @@ export const eventsReducer = (state, action) => {
 			return {
 				...state,
 				events: action.payload,
+			};
+		case SET_HERO_EVENT:
+			return {
+				...state,
+				heroEvent: action.payload,
 			};
 		case SET_COMEDY_EVENTS:
 			return {

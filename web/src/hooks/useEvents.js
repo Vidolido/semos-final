@@ -5,23 +5,25 @@ import { useStorage } from './useStorage';
 import {
 	CREATE_EVENT,
 	SET_SINGLE_EVENT,
-	CLEAR_STATE,
+	SET_HERO_EVENT,
 	SET_COMEDY_EVENTS,
 	SET_MUSIC_EVENTS,
 	SET_EVENTS,
 	DELETE_EVENT,
+	CLEAR_STATE,
 } from '../misc/actionTypes';
 
 export const useEvents = () => {
 	const [error, setError] = useState(null);
 	const [isLoading, setIsLoading] = useState(null);
 	const { user } = useAuthContext();
-	const { event, events, category, dispatch } = useEventsContext();
+	const { event, heroEvent, events, category, dispatch } = useEventsContext();
 	const { uploadFile } = useStorage();
 
 	const getEvents = async () => {
 		setIsLoading(true);
 		setError(null);
+		console.log(user);
 		const res = await fetch('/api/v1/events/user-events', {
 			method: 'POST',
 			headers: {
@@ -31,7 +33,6 @@ export const useEvents = () => {
 		});
 
 		const jsonRes = await res.json();
-
 		if (res.ok) {
 			dispatch({ type: SET_EVENTS, payload: jsonRes });
 		}
@@ -82,6 +83,27 @@ export const useEvents = () => {
 			setIsLoading(false);
 			setError(null);
 			// return jsonRes;
+		}
+	};
+
+	const getHero = async () => {
+		setIsLoading(true);
+		setError(null);
+
+		const res = await fetch('/api/v1/events/get-hero');
+
+		const jsonRes = await res.json();
+		console.log(res, jsonRes);
+
+		if (!res.ok) {
+			setIsLoading(false);
+			setError(jsonRes.errors);
+		}
+
+		if (res.ok) {
+			setIsLoading(false);
+			setError(null);
+			dispatch({ type: SET_HERO_EVENT, payload: jsonRes });
 		}
 	};
 
@@ -165,11 +187,13 @@ export const useEvents = () => {
 	return {
 		getEvents,
 		getEventsByCategory,
+		getHero,
 		getSingleEvent,
 		createEvent,
 		getRelatedEvents,
 		deleteEvent,
 		event,
+		heroEvent,
 		events,
 		category,
 		dispatch,

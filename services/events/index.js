@@ -19,6 +19,7 @@ api.use(
 		.unless({
 			path: [
 				'/api/v1/events/',
+				'/api/v1/events/get-hero',
 				'/api/v1/events/single-event',
 				'/api/v1/events/music',
 				'/api/v1/events/comedy',
@@ -31,6 +32,7 @@ api.use((req, res, next) => {
 });
 
 api.get('/api/v1/events', events.getAllEvents);
+api.get('/api/v1/events/get-hero', events.getHeroEvent);
 api.post('/api/v1/events/single-event', events.getSingleEvent);
 api.post('/api/v1/events/related', events.getRelatedEvents);
 api.post('/api/v1/events/user-events', events.getUserEvents);
