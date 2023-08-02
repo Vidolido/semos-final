@@ -9,6 +9,7 @@
 @import url('./components/Navbar/navbar.css');
 @import url('./components/UserNav/usernav.css');
 @import url('./components/SingleEvent/singleEvent.css');
+@import url('./components/Hero/hero.css');
 @import url('./misc/styles/userEvents.css');
 
 .pages {

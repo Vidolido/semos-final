@@ -19,7 +19,8 @@ import CreateEvent from './pages/CreateEvent';
 import ShoppingCart from './pages/ShoppingCart';
 
 function App() {
-	const { user } = useAuthContext();
+	const { user } = useAuthContext(); // da go smenam
+
 	return (
 		<BrowserRouter>
 			<Navbar />

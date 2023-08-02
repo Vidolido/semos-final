@@ -14,7 +14,7 @@ const EventCard = ({ event }) => {
 
 	useEffect(() => {
 		downloadFile(event.eventImage).then((file) => setImage(file));
-	}, [event, downloadFile]);
+	}, []);
 
 	return (
 		<div className='eventCard'>

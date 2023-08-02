@@ -6,6 +6,7 @@ import {
 	SET_SINGLE_EVENT,
 	SET_HERO_EVENT,
 	CLEAR_STATE,
+	CLEAR_HERO_EVENT,
 	CREATE_EVENT,
 	DELETE_EVENT,
 } from '../misc/actionTypes';
@@ -33,6 +34,10 @@ export const eventsReducer = (state, action) => {
 			return {
 				...state,
 				heroEvent: action.payload,
+			};
+		case CLEAR_HERO_EVENT:
+			return {
+				heroEvent: null,
 			};
 		case SET_COMEDY_EVENTS:
 			return {

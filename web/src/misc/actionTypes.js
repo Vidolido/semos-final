@@ -8,6 +8,7 @@ export const DELETE_EVENT = 'DELETE_EVENT';
 export const CREATE_EVENT = 'CREATE_EVENT';
 
 export const CLEAR_STATE = 'CLEAR_STATE';
+export const CLEAR_HERO_EVENT = 'CLEAR_HERO_EVENT';
 
 export const LOGIN = 'LOGIN';
 export const SET_ALL_USERS = 'SET_ALL_USERS';

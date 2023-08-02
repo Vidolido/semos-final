@@ -15,6 +15,7 @@ api.use(
 	})
 );
 
+api.use(express.json());
 api.use(fileUpload());
 
 api.post('/api/v1/storage/upload', storage.upload);

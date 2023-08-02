@@ -20,10 +20,15 @@ export const useStorage = () => {
 				},
 				body: formData,
 			});
+
 			if (res.ok) {
+				setIsLoading(false);
+				setError(null);
 				const jsonRes = await res.json();
+				console.log(jsonRes);
 				return jsonRes.fileName;
 			}
+			console.log(res, 'OVAJ');
 			// console.log(res, jsonRes.fileName);
 		} catch (err) {
 			console.log(err);
@@ -39,6 +44,7 @@ export const useStorage = () => {
 			setError({ message: 'Something went wrong.' });
 		}
 		if (res.ok) {
+			// console.log(res.url);
 			return res.url;
 		}
 	};

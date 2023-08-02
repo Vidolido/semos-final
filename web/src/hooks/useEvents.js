@@ -11,6 +11,7 @@ import {
 	SET_EVENTS,
 	DELETE_EVENT,
 	CLEAR_STATE,
+	CLEAR_HERO_EVENT,
 } from '../misc/actionTypes';
 
 export const useEvents = () => {
@@ -89,6 +90,7 @@ export const useEvents = () => {
 	const getHero = async () => {
 		setIsLoading(true);
 		setError(null);
+		dispatch({ type: CLEAR_HERO_EVENT });
 
 		const res = await fetch('/api/v1/events/get-hero');
 

@@ -1,4 +1,6 @@
+const path = require('path');
 const strings = require('../../../pkg/strings');
+
 // во request-от да праќам некакво ID за да ја разликува сликата доколку има повеќе event-и со исто име.
 // ако не постои патека /uploads не ја креира, треба со fs на windows
 const upload = async (req, res) => {
@@ -24,12 +26,18 @@ const upload = async (req, res) => {
 	}
 
 	let newFileName = `${strings.rng(10)}_${file.name}`;
-	await file.mv(`${__dirname}/../../../uploads/${newFileName}`);
+
+	const uploadsPath = path.join(__dirname, '/../../../uploads/');
+
+	console.log(uploadsPath, 'noviot pat');
+
+	let fileLocation = `${__dirname}/../../../uploads/${newFileName}`;
+	await file.mv(fileLocation);
+	console.log(file);
 	res.status(201).send({ fileName: newFileName });
 };
 
 const download = async (req, res) => {
-	// console.log(req.params, 'OVA e vo handlerot');
 	let filePath = `${__dirname}/../../../uploads/${req.params.file}`;
 	return res.download(filePath, req.params.file.split('_')[1]);
 };
