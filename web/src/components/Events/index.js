@@ -18,7 +18,9 @@ const Events = ({ cat }) => {
 				{category &&
 					category[cat] &&
 					category[cat].map((event) => {
-						return <EventCard key={event._id} event={event} />;
+						return (
+							<EventCard key={event._id} event={event} showDiscription={true} />
+						);
 					})}
 			</div>
 		</Fragment>

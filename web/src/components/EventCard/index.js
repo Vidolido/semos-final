@@ -6,7 +6,7 @@ import { useStorage } from '../../hooks/useStorage';
 import { months, dates } from '../../misc/dateTime';
 import noImage from '../../misc/no-event-image.jpg';
 
-const EventCard = ({ event }) => {
+const EventCard = ({ event, showDiscription }) => {
 	const { downloadFile } = useStorage();
 	const [image, setImage] = useState(null);
 
@@ -15,7 +15,7 @@ const EventCard = ({ event }) => {
 	useEffect(() => {
 		downloadFile(event.eventImage).then((file) => setImage(file));
 	}, []);
-
+	console.log(event);
 	return (
 		<div className='eventCard'>
 			<div className='eventImageContainer'>
@@ -36,13 +36,17 @@ const EventCard = ({ event }) => {
 					dates[date.getDate()]
 				}, ${date.getFullYear()}`}</span>
 
-				<p className='cardExcerpt mediumText'>{event.details.substr(0, 120)}</p>
+				{showDiscription && (
+					<p className='cardExcerpt mediumText'>
+						{event.details.substr(0, 120)}
+					</p>
+				)}
 
 				<div className='cardBottom'>
 					<span className='mediumText'>{event.location}</span>
-					<Link className='btn-blackToPurple' to={`/events/about/${event._id}`}>
+					{/* <Link className='btn-blackToPurple' to={`/events/about/${event._id}`}>
 						Get Tickets
-					</Link>
+					</Link> */}
 				</div>
 			</div>
 		</div>

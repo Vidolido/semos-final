@@ -55,6 +55,7 @@ const getCart = async (req, res) => {
 					eventName: 1,
 					eventDate: 1,
 					location: 1,
+					eventImage: 1,
 					ticketPrice: 1,
 				},
 			},

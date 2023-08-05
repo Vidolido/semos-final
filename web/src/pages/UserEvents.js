@@ -8,10 +8,9 @@ import noImage from '../misc/no-event-image.jpg';
 
 // compononets
 import UserNav from '../components/UserNav';
-
+import EventCard from '../components/EventCard';
 const UserEvents = () => {
 	const [isDeleted, setIsDeleted] = useState(false);
-
 	const { events, getEvents, deleteEvent } = useEvents();
 
 	useEffect(() => {
@@ -29,7 +28,7 @@ const UserEvents = () => {
 		<div>
 			<UserNav title='Events' />
 			<div className='userEvents'>
-				{events &&
+				{/* {events &&
 					events.map((event) => {
 						let date = new Date(event.eventDate);
 
@@ -66,7 +65,26 @@ const UserEvents = () => {
 								</div>
 							</div>
 						);
-					})}
+					})} */}
+				{events &&
+					events.map((event) => (
+						<div key={event._id} className='singleUserEvents'>
+							<EventCard event={event} showDiscription={false} />
+							<div className='buttons flex gap-20'>
+								<Link
+									to={`/user/events/update/${event._id}`}
+									onClick={() => handleClick(event._id)}
+									className='btn-purpleToWhite width-150'>
+									Edit Event
+								</Link>
+								<button
+									onClick={() => handleClick(event._id)}
+									className='btn-blackToTransparent width-150'>
+									Delete Event
+								</button>
+							</div>
+						</div>
+					))}
 			</div>
 		</div>
 	);

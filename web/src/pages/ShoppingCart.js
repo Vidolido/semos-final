@@ -1,6 +1,8 @@
 import { useEffect } from 'react';
 import { useCart } from '../hooks/useCart';
 
+import EventCard from '../components/EventCard';
+
 const ShoppingCart = () => {
 	const {
 		getCart,
@@ -27,13 +29,16 @@ const ShoppingCart = () => {
 					if (!item.event) {
 						return 'The event was deleted.';
 					} else {
-						return (
+						{
+							/* return (
 							<div key={item.event._id}>
 								<p>{item.event.eventName}</p>
 								<p>{item.event.ticketPrice}</p>
 								<p>{item.numberOfTickets}</p>
 							</div>
-						);
+						); */
+						}
+						return <EventCard event={item.event} />;
 					}
 				})}
 		</div>

@@ -52,7 +52,8 @@ const getHeroEvent = async (req, res) => {
 	try {
 		let events = await Event.find({}).limit(10);
 		let random = Math.floor(Math.random() * events.length);
-		return res.status(200).send(events[random]);
+		const test = events[random];
+		return res.status(200).send(test);
 	} catch (err) {
 		console.log(err);
 	}
