@@ -9,7 +9,7 @@ const UserDetails = () => {
 	const [previewImage, setPreviewImage] = useState(null);
 	const [isHidden, setIsHidden] = useState(true);
 	const handleOnChange = (e) => {
-		console.log('Clicked!');
+		// console.log('Clicked!');
 		if (e.target.files) setPreviewImage(URL.createObjectURL(e.target.files[0]));
 	};
 	let decoded = jwt_decode(user.token);

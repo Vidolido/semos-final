@@ -109,11 +109,26 @@ const addToCart = async (req, res) => {
 };
 
 const removeFromCart = async (req, res) => {
-	let { id } = req.params;
-	res.status(200).send({ message: id });
 	try {
+		const { id } = req.params;
+		console.log(id);
+		// const rmE = await Cart.updateMany({ _id: req.params.id });
+		const rmE = await Cart.deleteOne({ cartItems: { event: { _id: id } } });
+		console.log(rmE);
+		// db.survey.updateMany({}, { $pull: { results: { score: 8, item: 'B' } } });
+		// if (!rmE.modifiedCount) {
+		// 	throw {
+		// 		code: 400,
+		// 		errorMessage: 'Event does not exist.',
+		// 		for: 'eventName',
+		// 		message: 'Custom error',
+		// 	};
+		// }
+		res.status(200).send({ message: 'Item removed from cart.' });
 	} catch (err) {
 		console.log(err);
+		const errors = handleErrors(err);
+		res.status(500).json({ errors });
 	}
 };
 

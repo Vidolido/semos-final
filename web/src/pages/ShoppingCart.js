@@ -17,16 +17,15 @@ const ShoppingCart = () => {
 	} = useCart();
 
 	useEffect(() => {
-		if (!cart || (cartIsLoading && !cartError)) {
+		if (isDeleted || !cart || (cartIsLoading && !cartError)) {
 			getCart();
 		}
-	});
+		setIsDeleted(false);
+	}, []);
 	const handleClick = async (id) => {
-		const deleted = removeFromCart(id);
-		if (deleted) {
-			setIsDeleted(true);
-		}
-		console.log('Clicked!');
+		removeFromCart(id);
+		setIsDeleted(true);
+		// console.log('Clicked!');
 	};
 	return (
 		<div>
@@ -41,7 +40,7 @@ const ShoppingCart = () => {
 						return 'The event was deleted.';
 					} else {
 						return (
-							<div className='shoppingCartFlex'>
+							<div key={item.event._id} className='shoppingCartFlex'>
 								<EventCard event={item.event} groupItems={true} />
 								<div className='buttons buttonItems item5'>
 									<p className='boldText bigText'>

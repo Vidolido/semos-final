@@ -19,8 +19,8 @@ const Events = ({ cat }) => {
 				category[cat] &&
 				category[cat].map((event) => {
 					return (
-						<div className='categoryEvents eventGrid'>
-							<EventCard key={event._id} event={event} showDiscription={true} />
+						<div key={event._id} className='categoryEvents eventGrid'>
+							<EventCard event={event} showDiscription={true} />
 							<div className='buttons buttonItems item5'>
 								<Link
 									className='btn-blackToPurple'

@@ -15,11 +15,6 @@ const EventCard = ({ event, showDiscription, groupItems }) => {
 	useEffect(() => {
 		downloadFile(event.eventImage).then((file) => setImage(file));
 	}, []);
-	// console.log(event);
-	{
-		/* <div className='categoriGrid eventCard'>
-		</div> */
-	}
 
 	return (
 		<Fragment>

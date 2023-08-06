@@ -1,6 +1,6 @@
 .shoppingCartFlex {
 	display: flex;
-	margin: 10px;
+	margin: 10px 0;
 }
 
 .shoppingCartFlex .eventImageContainer {
@@ -16,4 +16,9 @@
 	flex-direction: column;
 	justify-content: center;
 	align-items: flex-end;
+}
+
+.cartBottomButtons {
+	display: flex;
+	justify-content: space-between;
 }

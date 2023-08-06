@@ -13,6 +13,7 @@
 @import url('./misc/styles/userEvents.css');
 @import url('./misc/styles/categoryGrid.css');
 @import url('./misc/styles/shoppingCart.css');
+@import url('./misc//styles/checkout.css');
 
 .pages {
 	/* padding: 35px 20%; */
