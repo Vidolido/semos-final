@@ -1,0 +1,41 @@
+.category {
+	display: grid;
+	grid-template-columns: repeat(2, 1fr);
+	column-gap: 20;
+}
+
+.category h1:first-child {
+	grid-column: 1 / -1;
+}
+
+.eventGrid {
+	margin: 15px;
+	display: grid;
+	grid-template-areas:
+		'img header header'
+		'img date date'
+		'img description description'
+		'img location button';
+	gap: 10px;
+}
+
+.item1 {
+	grid-area: header;
+}
+.item2 {
+	grid-area: date;
+}
+.item3 {
+	grid-area: description;
+}
+.item4 {
+	grid-area: location;
+}
+.item5 {
+	grid-area: button;
+	justify-self: right;
+	text-align: right;
+}
+.item6 {
+	grid-area: img;
+}

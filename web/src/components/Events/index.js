@@ -1,4 +1,5 @@
 import { useEffect, Fragment } from 'react';
+import { Link } from 'react-router-dom';
 import { useEvents } from '../../hooks/useEvents';
 
 // components
@@ -14,15 +15,22 @@ const Events = ({ cat }) => {
 	return (
 		<Fragment>
 			<h1>{cat === 'comedy' ? 'Stand-up Comedy' : 'Musical Concerts'}</h1>
-			<div className='eventsContainer mb-50'>
-				{category &&
-					category[cat] &&
-					category[cat].map((event) => {
-						return (
+			{category &&
+				category[cat] &&
+				category[cat].map((event) => {
+					return (
+						<div className='categoryEvents eventGrid'>
 							<EventCard key={event._id} event={event} showDiscription={true} />
-						);
-					})}
-			</div>
+							<div className='buttons buttonItems item5'>
+								<Link
+									className='btn-blackToPurple'
+									to={`/events/about/${event._id}`}>
+									Get Tickets
+								</Link>
+							</div>
+						</div>
+					);
+				})}
 		</Fragment>
 	);
 };

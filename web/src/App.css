@@ -11,9 +11,13 @@
 @import url('./components/SingleEvent/singleEvent.css');
 @import url('./components/Hero/hero.css');
 @import url('./misc/styles/userEvents.css');
+@import url('./misc/styles/categoryGrid.css');
+@import url('./misc/styles/shoppingCart.css');
 
 .pages {
-	padding: 35px 20%;
+	/* padding: 35px 20%; */
+	width: 85vw;
+	margin: 0 auto;
 }
 
 .heading {
@@ -232,7 +236,7 @@
 }
 
 /* TEST ZA CATEGORII */
-.category .eventsContainer {
+/* .category .eventsContainer {
 	display: flex;
 	flex-direction: row;
 	flex-wrap: wrap;
@@ -242,7 +246,8 @@
 	padding: 10px;
 	width: 48%;
 	margin: 5px 0;
-}
+} */
+
 /* Home page */
 
 .events {
@@ -261,7 +266,6 @@
 }
 
 .eventImageContainer {
-	/* width: 300px; */
 	min-width: 250px;
 	height: 140px;
 	max-height: 150px;
@@ -405,6 +409,9 @@
 }
 .mediumText {
 	font-size: 0.9em;
+}
+.bigText {
+	font-size: 1.2em;
 }
 
 .full-width {

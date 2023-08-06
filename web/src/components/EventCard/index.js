@@ -1,12 +1,12 @@
 import { useState, useEffect, Fragment } from 'react';
-import { Link } from 'react-router-dom';
+// import { Link } from 'react-router-dom';
 
 import { useStorage } from '../../hooks/useStorage';
 
 import { months, dates } from '../../misc/dateTime';
 import noImage from '../../misc/no-event-image.jpg';
 
-const EventCard = ({ event, showDiscription }) => {
+const EventCard = ({ event, showDiscription, groupItems }) => {
 	const { downloadFile } = useStorage();
 	const [image, setImage] = useState(null);
 
@@ -15,10 +15,15 @@ const EventCard = ({ event, showDiscription }) => {
 	useEffect(() => {
 		downloadFile(event.eventImage).then((file) => setImage(file));
 	}, []);
-	console.log(event);
+	// console.log(event);
+	{
+		/* <div className='categoriGrid eventCard'>
+		</div> */
+	}
+
 	return (
-		<div className='eventCard'>
-			<div className='eventImageContainer'>
+		<Fragment>
+			<div className='eventImageContainer item6 imageItem'>
 				{!image ? (
 					<img className='eventImage' src={noImage} alt='Tickets for events' />
 				) : (
@@ -27,29 +32,41 @@ const EventCard = ({ event, showDiscription }) => {
 					</Fragment>
 				)}
 			</div>
-			<div className='eventInfo'>
-				<h3>{event.eventName}</h3>
+			{groupItems && (
+				<div className='eventInfo contentItems'>
+					<h3 className='item1'>{event.eventName}</h3>
+					<span className='block purpleText boldText mediumText item2'>{`${
+						months[date.getMonth()]
+					} ${date.getDate()}${
+						dates[date.getDate()]
+					}, ${date.getFullYear()}`}</span>
 
-				<span className='block purpleText boldText mediumText'>{`${
-					months[date.getMonth()]
-				} ${date.getDate()}${
-					dates[date.getDate()]
-				}, ${date.getFullYear()}`}</span>
-
-				{showDiscription && (
-					<p className='cardExcerpt mediumText'>
-						{event.details.substr(0, 120)}
-					</p>
-				)}
-
-				<div className='cardBottom'>
-					<span className='mediumText'>{event.location}</span>
-					{/* <Link className='btn-blackToPurple' to={`/events/about/${event._id}`}>
-						Get Tickets
-					</Link> */}
+					{showDiscription && (
+						<p className='cardExcerpt mediumText item3'>
+							{event.details.substr(0, 120)}
+						</p>
+					)}
+					<span className='mediumText item4'>{event.location}</span>
 				</div>
-			</div>
-		</div>
+			)}
+			{!groupItems && (
+				<Fragment>
+					<h3 className='item1'>{event.eventName}</h3>
+					<span className='block purpleText boldText mediumText item2'>{`${
+						months[date.getMonth()]
+					} ${date.getDate()}${
+						dates[date.getDate()]
+					}, ${date.getFullYear()}`}</span>
+
+					{showDiscription && (
+						<p className='cardExcerpt mediumText item3'>
+							{event.details.substr(0, 120)}
+						</p>
+					)}
+					<span className='mediumText item4'>{event.location}</span>
+				</Fragment>
+			)}
+		</Fragment>
 	);
 };
 

@@ -3,11 +3,7 @@ import { useAuthContext } from './useAuthContext';
 // import { useEventsContext } from './useEventsContext';
 import { useCartContext } from './useCartContext';
 
-import { SET_CART, DELETE_CART } from '../misc/actionTypes';
-
-// Логика на frontend апликацијата
-// TODO: Да ги сместам функциите за работа со база и state на апликацијата
-// во еден фајл(auth, events, cart секое засебно). React hooks да ми користат како handler-и за frontend.
+import { SET_CART, DELETE_CART, REMOVE_FROM_CART } from '../misc/actionTypes';
 
 export const useCart = () => {
 	const { user } = useAuthContext();
@@ -80,6 +76,28 @@ export const useCart = () => {
 		}
 	};
 
+	const removeFromCart = async (id) => {
+		setIsLoading(true);
+		setError(null);
+
+		let res = await fetch(`/api/v1/cart/remove/${id}`, {
+			method: 'DELETE',
+			headers: {
+				Authorization: `Bearer ${user.token}`,
+				'Content-Type': 'application/json',
+			},
+		});
+
+		console.log(res);
+		const jsonRes = await res.json();
+		console.log(jsonRes);
+
+		if (res.ok) {
+			dispatch({ type: REMOVE_FROM_CART, payload: id });
+			return true;
+		}
+	};
+
 	// TODO: Да ја избришам на крај, само за тест
 	const clearCart = async () => {
 		setIsLoading(true);
@@ -87,5 +105,13 @@ export const useCart = () => {
 		dispatch({ type: DELETE_CART });
 	};
 
-	return { addToCart, getCart, clearCart, cart, isLoading, error };
+	return {
+		addToCart,
+		getCart,
+		removeFromCart,
+		clearCart,
+		cart,
+		isLoading,
+		error,
+	};
 };

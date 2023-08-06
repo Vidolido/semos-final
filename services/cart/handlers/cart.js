@@ -83,7 +83,7 @@ const addToCart = async (req, res) => {
 		// TODO: Да поставам услов, доколку го има настанот, да прашам
 		// дали корисникот сака да докупи карти за овој настан.
 		let isInArray = cart.cartItems.some((item) => {
-			console.log(item, 'VO ISINARRAY');
+			// console.log(item, 'VO ISINARRAY');
 			return item.event.equals(req.body.event);
 		});
 		const payload = {
@@ -91,7 +91,7 @@ const addToCart = async (req, res) => {
 			numberOfTickets: req.body.numberOfTickets,
 		};
 		// console.log(cart.cartItems, req.body.itemId, req.body.numberOfTickets);
-		console.log(isInArray);
+		// console.log(isInArray);
 		// const addTicketsToCart = await Cart.updateOne( // vaka beshe
 		await Cart.updateOne(
 			{ accountId: req.auth.id },
@@ -108,8 +108,18 @@ const addToCart = async (req, res) => {
 	}
 };
 
+const removeFromCart = async (req, res) => {
+	let { id } = req.params;
+	res.status(200).send({ message: id });
+	try {
+	} catch (err) {
+		console.log(err);
+	}
+};
+
 module.exports = {
 	createCart,
 	getCart,
 	addToCart,
+	removeFromCart,
 };

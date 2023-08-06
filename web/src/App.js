@@ -42,11 +42,11 @@ function App() {
 						element={user ? <ShoppingCart /> : <Navigate to='/' />}
 					/>
 					<Route
-						path='/user/checkout'
+						path='/user/cart/checkout'
 						element={user ? <h1>Checkout</h1> : <Navigate to='/' />}
 					/>
 					<Route
-						path='/user/thank-you'
+						path='/user/cart/thank-you'
 						element={user ? <h1>Thank you</h1> : <Navigate to='/' />}
 					/>
 					<Route

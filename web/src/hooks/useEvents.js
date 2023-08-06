@@ -24,7 +24,7 @@ export const useEvents = () => {
 	const getEvents = async () => {
 		setIsLoading(true);
 		setError(null);
-		console.log(user);
+		// console.log(user);
 		const res = await fetch('/api/v1/events/user-events', {
 			method: 'POST',
 			headers: {
@@ -95,7 +95,7 @@ export const useEvents = () => {
 		const res = await fetch('/api/v1/events/get-hero');
 
 		const jsonRes = await res.json();
-		console.log(res, jsonRes);
+		// console.log(res, jsonRes);
 
 		if (!res.ok) {
 			setIsLoading(false);

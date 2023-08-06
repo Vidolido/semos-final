@@ -26,6 +26,7 @@ api.use((req, res, next) => {
 api.post('/api/v1/cart/create', cart.createCart);
 api.get('/api/v1/cart/get', cart.getCart);
 api.post('/api/v1/cart/add', cart.addToCart);
+api.delete('/api/v1/cart/remove/:id', cart.removeFromCart);
 
 // no token
 api.use((err, req, res, next) => {
