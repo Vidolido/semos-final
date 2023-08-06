@@ -16,10 +16,14 @@ const ShoppingCart = () => {
 		error: cartError,
 	} = useCart();
 
+	// useEffect(() => {
+	// 	if (isDeleted || !cart || (cartIsLoading && !cartError)) {
+	// 		getCart();
+	// 	}
+	// 	setIsDeleted(false);
+	// }, []);
 	useEffect(() => {
-		if (isDeleted || !cart || (cartIsLoading && !cartError)) {
-			getCart();
-		}
+		getCart();
 		setIsDeleted(false);
 	}, []);
 	const handleClick = async (id) => {

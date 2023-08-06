@@ -111,20 +111,18 @@ const addToCart = async (req, res) => {
 const removeFromCart = async (req, res) => {
 	try {
 		const { id } = req.params;
-		console.log(id);
-		// const rmE = await Cart.updateMany({ _id: req.params.id });
-		const rmE = await Cart.deleteOne({ cartItems: { event: { _id: id } } });
-		console.log(rmE);
-		// db.survey.updateMany({}, { $pull: { results: { score: 8, item: 'B' } } });
-		// if (!rmE.modifiedCount) {
-		// 	throw {
-		// 		code: 400,
-		// 		errorMessage: 'Event does not exist.',
-		// 		for: 'eventName',
-		// 		message: 'Custom error',
-		// 	};
-		// }
-		res.status(200).send({ message: 'Item removed from cart.' });
+		const cart = await Cart.findOne({ accountId: req.auth.id });
+
+		if (cart.cartItems) {
+			let filtered = cart.cartItems.filter((item) => !item.event.equals(id));
+			await Cart.updateOne({ accountId: req.auth.id }, { cartItems: filtered });
+			return res.status(200).send({ message: 'Item removed from cart.' });
+		}
+		if (!cart.cartItems) {
+			return res
+				.status(400)
+				.send({ message: 'You have no items in your cart.' });
+		}
 	} catch (err) {
 		console.log(err);
 		const errors = handleErrors(err);
