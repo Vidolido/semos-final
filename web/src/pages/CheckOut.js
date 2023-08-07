@@ -7,6 +7,7 @@ import EventCard from '../components/EventCard';
 
 const CheckOut = () => {
 	const navigate = useNavigate();
+	const [errors, setErrors] = useState(null);
 	const [total, setTotal] = useState(0);
 	const [formInput, setFormInput] = useState({
 		fullName: '',
@@ -14,45 +15,11 @@ const CheckOut = () => {
 		expires: '',
 		pin: '',
 	});
-	const {
-		getCart,
-		cart,
-		// isLoading: cartIsLoading,
-		// error: cartError,
-	} = useCart();
+	const { cart, getTotal } = useCart();
+
 	useEffect(() => {
-		cart &&
-			cart.cartItems.forEach((item) => {
-				console.log(item);
-				let result = item.numberOfTickets * item.event.ticketPrice;
-				setTotal((total) => {
-					console.log(total);
-					return total + result;
-				});
-			});
-	}, []);
-	// useEffect(() => {
-	// 	getCart();
-	// 	// cart &&
-	// 	// 	cart.cartItems.forEach((item) => {
-	// 	// 		console.log(item);
-	// 	// 		let result = item.numberOfTickets * item.event.ticketPrice;
-	// 	// 		setTotal(total + result);
-	// 	// 	});
-	// }, []);
-
-	// useEffect(() => {
-	// 	// if (cart) {
-
-	// 	cart &&
-	// 		cart.cartItems.forEach((item) => {
-	// 			console.log(item);
-	// 			let result = item.numberOfTickets * item.event.ticketPrice;
-	// 			setTotal(total + result);
-	// 		});
-	// 	// }
-	// }, [cart]);
-	console.log(cart);
+		getTotal().then((sum) => setTotal(sum.total));
+	});
 	const handleOnChange = (e) => {
 		setFormInput((formInput) => {
 			return {
@@ -60,13 +27,22 @@ const CheckOut = () => {
 				[e.target.name]: e.target.value,
 			};
 		});
-		console.log(formInput);
+		// console.log(formInput);
 	};
 
 	const handleClick = () => {
-		navigate('/user/cart/thank-you');
+		for (const item in formInput) {
+			if (!formInput[item]) {
+				setErrors(true);
+				return;
+			} else {
+				setErrors(null);
+				navigate('/user/cart/thank-you');
+			}
+		}
 	};
-	console.log(total);
+	// console.log(errors);
+	// console.log(total);
 	return (
 		<div>
 			<h1>Checkout</h1>
@@ -78,8 +54,6 @@ const CheckOut = () => {
 							if (!item.event) {
 								return 'The event was deleted.';
 							} else {
-								let result = item.event.ticketPrice * item.numberOfTickets;
-
 								return (
 									<div key={item.event._id} className='shoppingCartFlex'>
 										<EventCard event={item.event} groupItems={true} />
@@ -108,9 +82,6 @@ const CheckOut = () => {
 								value={formInput.fullName}
 								onChange={handleOnChange}
 							/>
-							{/* {eventError && eventError['tickets'] && (
-								<span className='error'>{eventError['tickets']}</span>
-							)} */}
 						</div>
 						<div className='inputContainer'>
 							<label>Card No.</label>
@@ -120,9 +91,6 @@ const CheckOut = () => {
 								value={formInput.cardNo}
 								onChange={handleOnChange}
 							/>
-							{/* {eventError && eventError['tickets'] && (
-								<span className='error'>{eventError['tickets']}</span>
-							)} */}
 						</div>
 						<div className='inputContainer'>
 							<label>Expires</label>
@@ -132,9 +100,6 @@ const CheckOut = () => {
 								value={formInput.expires}
 								onChange={handleOnChange}
 							/>
-							{/* {eventError && eventError['tickets'] && (
-								<span className='error'>{eventError['tickets']}</span>
-							)} */}
 						</div>
 						<div className='inputContainer'>
 							<label>PIN</label>
@@ -144,15 +109,11 @@ const CheckOut = () => {
 								value={formInput.pin}
 								onChange={handleOnChange}
 							/>
-							{/* {eventError && eventError['tickets'] && (
-								<span className='error'>{eventError['tickets']}</span>
-							)} */}
 						</div>
 					</form>
 				</div>
 			</div>
 			<div className='cartBottomButtons'>
-				{/* <Link onClick={() => navigate(-1)}>Back</Link> */}
 				<button
 					className='btn-blackToTransparent width-150'
 					onClick={() => navigate(-1)}>

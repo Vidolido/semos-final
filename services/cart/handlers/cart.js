@@ -108,6 +108,44 @@ const addToCart = async (req, res) => {
 	}
 };
 
+const getTotal = async (req, res) => {
+	try {
+		const cart = await Cart.findOne({ accountId: req.auth.id }).populate({
+			path: 'cartItems',
+			populate: {
+				path: 'event',
+				model: Event,
+				select: {
+					ticketPrice: 1,
+				},
+			},
+		});
+		console.log(cart, 'getTotal Cart');
+
+		if (cart.cartItems) {
+			let total = 0;
+			cart.cartItems.forEach((item) => {
+				// console.log(item.event.ticketPrice);
+				// console.log(item.numberOfTickets);
+				total += item.numberOfTickets * item.event.ticketPrice;
+			});
+			console.log(total);
+			// await Cart.updateOne({ accountId: req.auth.id }, { cartItems: filtered });
+			return res.status(200).send({ total });
+		}
+
+		if (!cart.cartItems) {
+			return res
+				.status(400)
+				.send({ message: 'You have no items in your cart.' });
+		}
+	} catch (err) {
+		console.log(err);
+		const errors = handleErrors(err);
+		res.status(500).json({ errors });
+	}
+};
+
 const removeFromCart = async (req, res) => {
 	try {
 		const { id } = req.params;
@@ -134,5 +172,6 @@ module.exports = {
 	createCart,
 	getCart,
 	addToCart,
+	getTotal,
 	removeFromCart,
 };

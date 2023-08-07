@@ -76,6 +76,23 @@ export const useCart = () => {
 		}
 	};
 
+	const getTotal = async () => {
+		//TODO: handle errors
+		setIsLoading(true);
+		setError(null);
+
+		const getCart = await fetch(`/api/v1/cart/getTotal`, {
+			method: 'GET',
+			headers,
+		});
+
+		const cartJson = await getCart.json();
+
+		// console.log(getCart, cartJson);
+
+		return cartJson;
+	};
+
 	const removeFromCart = async (id) => {
 		setIsLoading(true);
 		setError(null);
@@ -108,6 +125,7 @@ export const useCart = () => {
 	return {
 		addToCart,
 		getCart,
+		getTotal,
 		removeFromCart,
 		clearCart,
 		cart,

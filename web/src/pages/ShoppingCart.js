@@ -6,7 +6,7 @@ import EventCard from '../components/EventCard';
 
 const ShoppingCart = () => {
 	let navigate = useNavigate();
-	const [isDeleted, setIsDeleted] = useState(false);
+	// const [isDeleted, setIsDeleted] = useState(false);
 
 	const {
 		getCart,
@@ -24,11 +24,11 @@ const ShoppingCart = () => {
 	// }, []);
 	useEffect(() => {
 		getCart();
-		setIsDeleted(false);
+		// setIsDeleted(false);
 	}, []);
 	const handleClick = async (id) => {
 		removeFromCart(id);
-		setIsDeleted(true);
+		// setIsDeleted(true);
 		// console.log('Clicked!');
 	};
 	return (
