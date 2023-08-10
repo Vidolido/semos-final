@@ -1,5 +1,5 @@
 import { useState, useEffect, Fragment } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { useCart } from '../hooks/useCart';
 
 import EventCard from '../components/EventCard';
@@ -70,9 +70,13 @@ const ShoppingCart = () => {
 					onClick={() => navigate(-1)}>
 					Back
 				</button>
-				<Link className='btn-purpleToWhite width-150' to='/user/cart/checkout'>
-					Check Out
-				</Link>
+				{cart && cart.cartItems.length !== 0 && (
+					<button
+						className='btn-purpleToWhite width-150'
+						onClick={() => navigate('/user/cart/checkout')}>
+						Check Out
+					</button>
+				)}
 			</div>
 		</div>
 	);

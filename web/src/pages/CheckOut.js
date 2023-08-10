@@ -7,7 +7,7 @@ import EventCard from '../components/EventCard';
 
 const CheckOut = () => {
 	const navigate = useNavigate();
-	const [errors, setErrors] = useState(null);
+	const [errors, setErrors] = useState({});
 	const [total, setTotal] = useState(0);
 	const [formInput, setFormInput] = useState({
 		fullName: '',
@@ -17,9 +17,27 @@ const CheckOut = () => {
 	});
 	const { cart, getTotal } = useCart();
 
+	const errorMessages = {
+		fullName: 'Please write your full name',
+		cardNo: 'The card number is required',
+		expires: 'Please select an expiery date',
+		pin: 'Card pin is required',
+	};
+
 	useEffect(() => {
 		getTotal().then((sum) => setTotal(sum.total));
-	});
+	}, [total]);
+	useEffect(() => {
+		console.log(errors, 'VO USEEFECT');
+		const isEmpty = Object.values(errors).every(
+			(err) => err === null || err === ''
+		);
+		console.log(errors.length);
+		if (isEmpty && Object.keys(errors).length > 0) {
+			navigate('/user/cart/thank-you');
+			setErrors({});
+		}
+	}, [errors]);
 	const handleOnChange = (e) => {
 		setFormInput((formInput) => {
 			return {
@@ -31,15 +49,33 @@ const CheckOut = () => {
 	};
 
 	const handleClick = () => {
-		for (const item in formInput) {
-			if (!formInput[item]) {
-				setErrors(true);
-				return;
+		Object.entries(formInput).forEach((input) => {
+			console.log(input);
+			if (!input[1]) {
+				setErrors((errors) => {
+					return { ...errors, [input[0]]: errorMessages[input[0]] };
+				});
 			} else {
-				setErrors(null);
-				navigate('/user/cart/thank-you');
+				setErrors((errors) => {
+					return { ...errors, [input[0]]: '' };
+				});
 			}
-		}
+		});
+		// console.log(errors);
+		// for (const item in formInput) {
+		// 	console.log(formInput[item]);
+		// 	if (!formInput[item]) {
+		// 		setErrors(true);
+		// 		// return;
+		// 	} else {
+		// 		// console.log(cart.cartItems);
+		// 		cart.cartItems.map((item) =>
+		// 			console.log(item.event._id, item.numberOfTickets)
+		// 		);
+		// 		setErrors(null);
+		// 		navigate('/user/cart/thank-you');
+		// 	}
+		// }
 	};
 	// console.log(errors);
 	// console.log(total);
@@ -81,7 +117,9 @@ const CheckOut = () => {
 								name='fullName'
 								value={formInput.fullName}
 								onChange={handleOnChange}
+								required={true}
 							/>
+							{errors && errors.fullName && <span>{errors.fullName}</span>}
 						</div>
 						<div className='inputContainer'>
 							<label>Card No.</label>
@@ -90,7 +128,9 @@ const CheckOut = () => {
 								name='cardNo'
 								value={formInput.cardNo}
 								onChange={handleOnChange}
+								required={true}
 							/>
+							{errors && errors.cardNo && <span>{errors.cardNo}</span>}
 						</div>
 						<div className='inputContainer'>
 							<label>Expires</label>
@@ -99,7 +139,9 @@ const CheckOut = () => {
 								name='expires'
 								value={formInput.expires}
 								onChange={handleOnChange}
+								required={true}
 							/>
+							{errors && errors.expires && <span>{errors.expires}</span>}
 						</div>
 						<div className='inputContainer'>
 							<label>PIN</label>
@@ -109,6 +151,7 @@ const CheckOut = () => {
 								value={formInput.pin}
 								onChange={handleOnChange}
 							/>
+							{errors && errors.pin && <span>{errors.pin}</span>}
 						</div>
 					</form>
 				</div>

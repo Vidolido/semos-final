@@ -105,13 +105,9 @@ export const useCart = () => {
 			},
 		});
 
-		// console.log(res);
-		// const jsonRes = await res.json();
-		// console.log(jsonRes);
-
 		if (res.ok) {
 			dispatch({ type: REMOVE_FROM_CART, payload: id });
-			// return true;
+			setIsLoading(false);
 		}
 	};
 
