@@ -8,10 +8,10 @@ export const useTickets = () => {
 	const [error, setError] = useState(null);
 	const [isLoading, setIsLoading] = useState(null);
 
-	const buyTickets = async () => {
+	const buyTickets = async (cartItems) => {
 		setIsLoading(true);
 		setError(null);
-
+		console.log(cartItems, 'VO USETICKETS');
 		const res = await fetch('/api/v1/buy-tickets', {
 			method: 'POST',
 			headers: {

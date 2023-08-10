@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import { useCart } from '../hooks/useCart';
+import { useTickets } from '../hooks/useTickets';
 
 import EventCard from '../components/EventCard';
 
@@ -16,6 +17,7 @@ const CheckOut = () => {
 		pin: '',
 	});
 	const { cart, getTotal } = useCart();
+	const { buyTickets } = useTickets();
 
 	const errorMessages = {
 		fullName: 'Please write your full name',
@@ -29,12 +31,14 @@ const CheckOut = () => {
 	}, [total]);
 	useEffect(() => {
 		console.log(errors, 'VO USEEFECT');
+		console.log(cart, 'VO USEEFECT');
 		const isEmpty = Object.values(errors).every(
 			(err) => err === null || err === ''
 		);
-		console.log(errors.length);
+		// console.log(errors.length);
 		if (isEmpty && Object.keys(errors).length > 0) {
 			navigate('/user/cart/thank-you');
+			buyTickets(cart.cartItems);
 			setErrors({});
 		}
 	}, [errors]);
