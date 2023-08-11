@@ -28,20 +28,21 @@ const CheckOut = () => {
 
 	useEffect(() => {
 		getTotal().then((sum) => setTotal(sum.total));
-	}, [total]);
+	}, []);
 	useEffect(() => {
-		console.log(errors, 'VO USEEFECT');
-		console.log(cart, 'VO USEEFECT');
+		// console.log(errors, 'VO USEEFECT');
+		// console.log(cart, 'VO USEEFECT');
 		const isEmpty = Object.values(errors).every(
 			(err) => err === null || err === ''
 		);
 		// console.log(errors.length);
 		if (isEmpty && Object.keys(errors).length > 0) {
-			navigate('/user/cart/thank-you');
-			buyTickets(cart.cartItems);
+			buyTickets();
 			setErrors({});
+			navigate('/user/cart/thank-you');
 		}
 	}, [errors]);
+
 	const handleOnChange = (e) => {
 		setFormInput((formInput) => {
 			return {
@@ -54,7 +55,7 @@ const CheckOut = () => {
 
 	const handleClick = () => {
 		Object.entries(formInput).forEach((input) => {
-			console.log(input);
+			// console.log(input);
 			if (!input[1]) {
 				setErrors((errors) => {
 					return { ...errors, [input[0]]: errorMessages[input[0]] };

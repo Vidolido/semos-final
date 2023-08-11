@@ -15,17 +15,15 @@ api.use(
 		algorithms: ['HS256'],
 		secret: config.get('security').jwt_secret,
 	})
-	// .unless({
-	// 	path: ['/api/v1/tickets/', '/api/v1/buy-tickets'],
-	// }) // да го трнгам ова, корисникот мора да биде логиран.
 );
+
 api.use((req, res, next) => {
 	console.log(req.method, req.path);
 	next();
 });
 
-api.get('/api/v1/tickets', tickets.userTickets);
-api.post('/api/v1/buy-tickets', tickets.buyTickets);
+api.get('/api/v1/tickets/get', tickets.userTickets);
+api.post('/api/v1/tickets/buy-tickets', tickets.buyTickets);
 
 api.use((err, req, res, next) => {
 	if (err.name === 'UnauthorizedError') {

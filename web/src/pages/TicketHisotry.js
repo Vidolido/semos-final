@@ -10,7 +10,7 @@ const TicketHisotry = () => {
 
 	useEffect(() => {
 		const getTickets = async () => {
-			const res = await fetch('/api/v1/tickets', {
+			const res = await fetch('/api/v1/tickets/get', {
 				method: 'GET',
 				headers: {
 					Authorization: `Bearer ${user.token}`,

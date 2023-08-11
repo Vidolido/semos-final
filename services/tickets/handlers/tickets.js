@@ -11,14 +11,22 @@ const userTickets = async (req, res) => {
 };
 
 const buyTickets = async (req, res) => {
-	// console.log(req.auth);
-	const userTickets = await Tickets.find({
-		accountId: req.auth.id,
-		eventId: req.eventId,
-		ticketCount: req.ticketCount || 1,
-	});
-	// console.log(userTickets);
-	res.status(200).send(userTickets);
+	const payload = [];
+	try {
+		const events = req.body.map((event) => {
+			payload.push({
+				eventId: event.event._id,
+				accountId: req.auth.id,
+				ticketCount: event.numberOfTickets,
+			});
+		});
+		// console.log(payload);
+		const userTickets = await Tickets.insertMany(payload);
+
+		res.status(200).send({ message: 'Thank You' });
+	} catch (err) {
+		console.log(err);
+	}
 };
 
 module.exports = {

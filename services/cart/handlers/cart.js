@@ -120,7 +120,7 @@ const getTotal = async (req, res) => {
 				},
 			},
 		});
-		console.log(cart, 'getTotal Cart');
+		// console.log(cart, 'getTotal Cart');
 
 		if (cart.cartItems) {
 			let total = 0;
@@ -129,7 +129,7 @@ const getTotal = async (req, res) => {
 				// console.log(item.numberOfTickets);
 				total += item.numberOfTickets * item.event.ticketPrice;
 			});
-			console.log(total);
+			// console.log(total);
 			// await Cart.updateOne({ accountId: req.auth.id }, { cartItems: filtered });
 			return res.status(200).send({ total });
 		}
