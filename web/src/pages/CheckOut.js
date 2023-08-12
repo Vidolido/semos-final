@@ -16,7 +16,7 @@ const CheckOut = () => {
 		expires: '',
 		pin: '',
 	});
-	const { cart, getTotal, clearCart } = useCart();
+	const { cart, getTotal } = useCart();
 	const { buyTickets } = useTickets();
 
 	const errorMessages = {
@@ -36,7 +36,6 @@ const CheckOut = () => {
 		if (isEmpty && Object.keys(errors).length > 0) {
 			buyTickets();
 			setErrors({});
-			// clearCart();
 			navigate('/user/cart/thank-you');
 		}
 	}, [errors]);

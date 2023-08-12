@@ -1,4 +1,4 @@
-import { useState, useEffect, Fragment } from 'react';
+import { useEffect, Fragment } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useCart } from '../hooks/useCart';
 
@@ -6,30 +6,14 @@ import EventCard from '../components/EventCard';
 
 const ShoppingCart = () => {
 	let navigate = useNavigate();
-	// const [isDeleted, setIsDeleted] = useState(false);
+	const { getCart, removeFromCart, cart } = useCart();
 
-	const {
-		getCart,
-		removeFromCart,
-		cart,
-		isLoading: cartIsLoading,
-		error: cartError,
-	} = useCart();
-
-	// useEffect(() => {
-	// 	if (isDeleted || !cart || (cartIsLoading && !cartError)) {
-	// 		getCart();
-	// 	}
-	// 	setIsDeleted(false);
-	// }, []);
 	useEffect(() => {
 		getCart();
-		// setIsDeleted(false);
 	}, []);
+
 	const handleClick = async (id) => {
 		removeFromCart(id);
-		// setIsDeleted(true);
-		// console.log('Clicked!');
 	};
 	return (
 		<div>
@@ -64,7 +48,6 @@ const ShoppingCart = () => {
 					}
 				})}
 			<div className='cartBottomButtons'>
-				{/* <Link onClick={() => navigate(-1)}>Back</Link> */}
 				<button
 					className='btn-blackToTransparent width-150'
 					onClick={() => navigate(-1)}>

@@ -1,6 +1,5 @@
 import { useState } from 'react';
 import { useAuthContext } from './useAuthContext';
-// import { useEventsContext } from './useEventsContext';
 import { useCartContext } from './useCartContext';
 
 import { SET_CART, DELETE_CART, REMOVE_FROM_CART } from '../misc/actionTypes';
@@ -41,8 +40,6 @@ export const useCart = () => {
 			if (add.ok) {
 				// TODO: Овде да направам логика, доколку го има евентот во кошница
 				// да праша дали сака да додаде уште карти на веќе постоечкиот број.
-				// dispatch({ type: SET_CART, payload: cart });
-
 				setIsLoading(false);
 				setError(null);
 				getCart();
@@ -72,12 +69,10 @@ export const useCart = () => {
 			dispatch({ type: SET_CART, payload: cartJson });
 			setIsLoading(false);
 			setError(null);
-			// return;
 		}
 	};
 
 	const getTotal = async () => {
-		//TODO: handle errors
 		setIsLoading(true);
 		setError(null);
 
@@ -87,8 +82,6 @@ export const useCart = () => {
 		});
 
 		const cartJson = await getCart.json();
-
-		// console.log(getCart, cartJson);
 
 		return cartJson;
 	};
@@ -111,7 +104,6 @@ export const useCart = () => {
 		}
 	};
 
-	// TODO: Да ја избришам на крај, само за тест
 	const clearCart = async () => {
 		setIsLoading(true);
 		setError(null);

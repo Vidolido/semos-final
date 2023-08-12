@@ -62,7 +62,6 @@ const CreateEvent = () => {
 	};
 	const handleFormSubmit = async (e) => {
 		e.preventDefault();
-		// console.log(createEventOptions, 'tuka nekade');
 		let created = await createEvent(createEventOptions);
 		if (!created) {
 			setCreateEventOptions((createEventOptions) => ({

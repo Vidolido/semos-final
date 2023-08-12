@@ -1,7 +1,6 @@
 const mongoose = require('mongoose');
 const validator = require('validator');
 
-// da napravam validacija za uniqe event
 const cartItemSchema = mongoose.Schema(
 	{
 		event: {

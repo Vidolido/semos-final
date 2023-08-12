@@ -1,5 +1,4 @@
 import { useState, useEffect, Fragment } from 'react';
-// import { Link } from 'react-router-dom';
 
 import { useStorage } from '../../hooks/useStorage';
 

@@ -1,5 +1,6 @@
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
-import { useAuthContext } from './hooks/useAuthContext';
+// import { useAuthContext } from './hooks/useAuthContext';
+import { useAuth } from './hooks/useAuth';
 
 import './App.css';
 // components
@@ -21,7 +22,7 @@ import CheckOut from './pages/CheckOut';
 import ThankYou from './pages/ThankYou';
 
 function App() {
-	const { user } = useAuthContext(); // da go smenam
+	const { user } = useAuth(); // da go smenam
 
 	return (
 		<BrowserRouter>

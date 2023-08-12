@@ -2,9 +2,6 @@
 const Event = require('../../../pkg/events');
 const Cart = require('../../../pkg/cart');
 
-// config and custom
-// const config = require('../../../pkg/config');
-
 // TODO: Оваа функција да ја сместам во misc секаде ја користам
 // треба да прима параметри, err и errObject
 const handleErrors = (err) => {
@@ -36,7 +33,6 @@ const createCart = async (req, res) => {
 		const cart = await Cart.create({ accountId: req.auth.id, cartItems: [] });
 		res.status(200).send(cart);
 	} catch (err) {
-		// console.log(err);
 		const errors = handleErrors(err);
 		res.status(500).json({ errors });
 	}

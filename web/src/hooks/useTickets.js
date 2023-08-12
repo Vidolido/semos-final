@@ -30,7 +30,6 @@ export const useTickets = () => {
 		if (res.ok) {
 			setIsLoading(false);
 			setError(null);
-			// console.log(res, jsonRes);
 			return jsonRes;
 		}
 	};
@@ -38,7 +37,6 @@ export const useTickets = () => {
 	const buyTickets = async () => {
 		setIsLoading(true);
 		setError(null);
-		// console.log(cart.cartItems, 'VO USETICKETS');
 		const res = await fetch('/api/v1/tickets/buy-tickets', {
 			method: 'POST',
 			headers: {
