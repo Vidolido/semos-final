@@ -29,11 +29,11 @@ const upload = async (req, res) => {
 
 	const uploadsPath = path.join(__dirname, '/../../../uploads/');
 
-	console.log(uploadsPath, 'noviot pat');
+	// console.log(uploadsPath, 'noviot pat');
 
 	let fileLocation = `${__dirname}/../../../uploads/${newFileName}`;
 	await file.mv(fileLocation);
-	console.log(file);
+	// console.log(file);
 	res.status(201).send({ fileName: newFileName });
 };
 

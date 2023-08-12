@@ -128,6 +128,11 @@ export const useAuth = () => {
 	const updateAccount = async (updateOptions) => {
 		console.log('It Ran');
 		console.log(updateOptions);
+
+		if (updateOptions.userImage) {
+			let fileName = await uploadFile(updateOptions.userImage);
+			updateOptions.userImage = fileName;
+		}
 	};
 
 	const getAccountType = async () => {

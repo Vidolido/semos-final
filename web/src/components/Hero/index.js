@@ -3,7 +3,7 @@ import { useEvents } from '../../hooks/useEvents';
 import { useStorage } from '../../hooks/useStorage';
 
 const Hero = () => {
-	const { heroEvent, getHero } = useEvents();
+	const { heroEvent, getHero, error } = useEvents();
 	const { downloadFile } = useStorage();
 	const [image, setImage] = useState();
 
@@ -13,9 +13,10 @@ const Hero = () => {
 
 	useEffect(() => {
 		heroEvent &&
+			!heroEvent.message &&
 			downloadFile(heroEvent.eventImage).then((file) => setImage(file));
 	});
-
+	// console.log(heroEvent, error);
 	return (
 		heroEvent && (
 			<div className='hero'>

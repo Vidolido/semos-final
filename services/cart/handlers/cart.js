@@ -54,6 +54,7 @@ const getCart = async (req, res) => {
 				},
 			},
 		});
+		// console.log(cart);
 		return res.status(200).send(cart);
 	} catch (err) {
 		const errors = handleErrors(err);

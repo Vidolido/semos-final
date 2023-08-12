@@ -12,7 +12,7 @@ const UserDetails = () => {
 	const initialState = {
 		fullName: '',
 		email: '',
-		eventImage: '',
+		userImage: '',
 		password: '',
 		confirmPassword: '',
 	};
@@ -33,7 +33,7 @@ const UserDetails = () => {
 		setPreviewImage(e.target.files[0]);
 		setUpdateOptions((updateOptions) => ({
 			...updateOptions,
-			eventImage: e.target.files[0],
+			userImage: e.target.files[0],
 		}));
 	};
 	const handleSubmit = (e) => {
@@ -68,7 +68,7 @@ const UserDetails = () => {
 								<input
 									className='uploadButton'
 									type='file'
-									name='eventImage'
+									name='userImage'
 									onChange={handleUpload}
 								/>
 								<input

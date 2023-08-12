@@ -54,13 +54,14 @@ export const useEvents = () => {
 		const res = await fetch(`/api/v1/events/${cat}`);
 
 		const jsonRes = await res.json();
+		// console.log(res, jsonRes);
 
 		if (!res.ok) {
 			setIsLoading(false);
 			setError(jsonRes.errors);
 		}
 
-		if (res.ok) {
+		if (res.ok && !jsonRes.message) {
 			dispatch({ type: actionType, payload: jsonRes });
 		}
 	};

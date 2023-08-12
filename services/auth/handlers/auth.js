@@ -51,6 +51,7 @@ const signIn = async (req, res) => {
 			fullName,
 			email,
 			password,
+			accountImage: '',
 			accountType: collectionLength > 0 ? 'customer' : 'admin',
 		});
 		await Cart.create({
@@ -115,7 +116,7 @@ const login = async (req, res) => {
 const getAllAccounts = async (req, res) => {
 	try {
 		let allAccounts = await Account.find({ _id: { $ne: req.auth.id } }).select(
-			'_id email fullName'
+			'_id email fullName userImage'
 		);
 		return res.status(200).send(allAccounts);
 	} catch (err) {

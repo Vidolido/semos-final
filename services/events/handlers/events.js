@@ -51,11 +51,18 @@ const getUserEvents = async (req, res) => {
 const getHeroEvent = async (req, res) => {
 	try {
 		let events = await Event.find({}).limit(10);
-		let random = Math.floor(Math.random() * events.length);
-		const test = events[random];
-		return res.status(200).send(test);
+		if (!events.length) {
+			return res.status(200).send({ message: 'No events' });
+		} else {
+			let random = Math.floor(Math.random() * events.length);
+			const hero = events[random];
+			// console.log(events, random, test);
+			return res.status(200).send(hero);
+		}
 	} catch (err) {
 		console.log(err);
+		let errors = handleErrors(err);
+		res.status(500).json(errors);
 	}
 };
 
