@@ -1,11 +1,9 @@
-// const mongoose = require('mongoose');
-
 // models
 const Event = require('../../../pkg/events');
 const Cart = require('../../../pkg/cart');
 
 // config and custom
-const config = require('../../../pkg/config');
+// const config = require('../../../pkg/config');
 
 // TODO: Оваа функција да ја сместам во misc секаде ја користам
 // треба да прима параметри, err и errObject

@@ -1,14 +1,13 @@
+import { Link } from 'react-router-dom';
+
 //hooks
 import { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
 import { useEvents } from '../hooks/useEvents';
-
-// import { months, dates } from '../misc/dateTime';
-// import noImage from '../misc/no-event-image.jpg';
 
 // compononets
 import UserNav from '../components/UserNav';
 import EventCard from '../components/EventCard';
+
 const UserEvents = () => {
 	const [isDeleted, setIsDeleted] = useState(false);
 	const { events, getEvents, deleteEvent } = useEvents();

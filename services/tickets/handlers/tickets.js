@@ -3,11 +3,15 @@ const Tickets = require('../../../pkg/tickets');
 // TODO: Try/Catch
 
 const userTickets = async (req, res) => {
-	const userTickets = await Tickets.find({
-		accountId: req.auth.id,
-	});
-	// console.log(userTickets);
-	res.status(200).send(userTickets);
+	try {
+		const userTickets = await Tickets.find({
+			accountId: req.auth.id,
+		});
+		// console.log(userTickets);
+		res.status(200).send(userTickets);
+	} catch (err) {
+		console.log(err);
+	}
 };
 
 const buyTickets = async (req, res) => {

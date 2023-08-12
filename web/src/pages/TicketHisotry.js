@@ -1,33 +1,19 @@
 import { useState, useEffect } from 'react';
 import UserNav from '../components/UserNav';
 
-import { useAuthContext } from '../hooks/useAuthContext';
+// import { useAuthContext } from '../hooks/useAuthContext';
 
-// TODO: Да го префрлам useEffect во Ticket компонента.
+// import { useAuth } from '../hooks/useAuth';
+import { useTickets } from '../hooks/useTickets';
+
 const TicketHisotry = () => {
-	const { user } = useAuthContext();
+	// const { user } = useAuthContext();
+	// const { user } = useAuth();
+	const { getTickets } = useTickets();
 	const [tickets, setTickets] = useState(null);
 
 	useEffect(() => {
-		const getTickets = async () => {
-			const res = await fetch('/api/v1/tickets/get', {
-				method: 'GET',
-				headers: {
-					Authorization: `Bearer ${user.token}`,
-					'Content-Type': 'application/json',
-				},
-			});
-			const jsonRes = await res.json();
-			// console.log(jsonRes);
-
-			if (res.ok) {
-				setTickets(jsonRes);
-			}
-			// if (res.ok) {
-			// 	dispatch({ type: SET_EVENTS, payload: jsonRes });
-			// }
-		};
-		getTickets();
+		getTickets().then((allTickets) => setTickets(allTickets));
 	}, []);
 
 	return (

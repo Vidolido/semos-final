@@ -18,6 +18,7 @@ import UserAll from './pages/UserAll';
 import CreateEvent from './pages/CreateEvent';
 import ShoppingCart from './pages/ShoppingCart';
 import CheckOut from './pages/CheckOut';
+import ThankYou from './pages/ThankYou';
 
 function App() {
 	const { user } = useAuthContext(); // da go smenam
@@ -48,7 +49,7 @@ function App() {
 					/>
 					<Route
 						path='/user/cart/thank-you'
-						element={user ? <h1>Thank you</h1> : <Navigate to='/' />}
+						element={user ? <ThankYou /> : <Navigate to='/' />}
 					/>
 					<Route
 						path='/user/events'

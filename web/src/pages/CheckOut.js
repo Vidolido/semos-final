@@ -36,7 +36,7 @@ const CheckOut = () => {
 		if (isEmpty && Object.keys(errors).length > 0) {
 			buyTickets();
 			setErrors({});
-			clearCart();
+			// clearCart();
 			navigate('/user/cart/thank-you');
 		}
 	}, [errors]);

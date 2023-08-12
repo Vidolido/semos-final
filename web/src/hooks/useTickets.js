@@ -8,10 +8,37 @@ export const useTickets = () => {
 	const [error, setError] = useState(null);
 	const [isLoading, setIsLoading] = useState(null);
 
-	const buyTickets = async (cartItems) => {
+	const getTickets = async () => {
 		setIsLoading(true);
 		setError(null);
-		console.log(cart.cartItems, 'VO USETICKETS');
+
+		const res = await fetch('/api/v1/tickets/get', {
+			method: 'GET',
+			headers: {
+				Authorization: `Bearer ${user.token}`,
+				'Content-Type': 'application/json',
+			},
+		});
+
+		const jsonRes = await res.json();
+
+		if (!res.ok) {
+			setIsLoading(false);
+			setError(jsonRes.errors);
+		}
+
+		if (res.ok) {
+			setIsLoading(false);
+			setError(null);
+			// console.log(res, jsonRes);
+			return jsonRes;
+		}
+	};
+
+	const buyTickets = async () => {
+		setIsLoading(true);
+		setError(null);
+		// console.log(cart.cartItems, 'VO USETICKETS');
 		const res = await fetch('/api/v1/tickets/buy-tickets', {
 			method: 'POST',
 			headers: {
@@ -21,10 +48,19 @@ export const useTickets = () => {
 			body: JSON.stringify(cart.cartItems),
 		});
 
-		const resJson = await res.json();
+		const jsonRes = await res.json();
 
-		console.log(res, resJson);
+		if (!res.ok) {
+			setIsLoading(false);
+			setError(jsonRes.errors);
+		}
+
+		if (res.ok) {
+			setIsLoading(false);
+			setError(null);
+			console.log(res, jsonRes);
+		}
 	};
 
-	return { buyTickets };
+	return { getTickets, buyTickets, error, isLoading };
 };
