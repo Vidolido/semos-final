@@ -168,10 +168,26 @@ const removeFromCart = async (req, res) => {
 	}
 };
 
+const clearCart = async (req, res) => {
+	try {
+		await Cart.updateOne(
+			{ accountId: req.auth.id },
+			{ $set: { cartItems: [] } }
+		);
+
+		res.status(200).send({ message: 'Cart Cleared.' });
+	} catch (err) {
+		console.log(err);
+		const errors = handleErrors(err);
+		res.status(500).json({ errors });
+	}
+};
+
 module.exports = {
 	createCart,
 	getCart,
 	addToCart,
 	getTotal,
 	removeFromCart,
+	clearCart,
 };

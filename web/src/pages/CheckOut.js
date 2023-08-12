@@ -16,7 +16,7 @@ const CheckOut = () => {
 		expires: '',
 		pin: '',
 	});
-	const { cart, getTotal } = useCart();
+	const { cart, getTotal, clearCart } = useCart();
 	const { buyTickets } = useTickets();
 
 	const errorMessages = {
@@ -30,15 +30,13 @@ const CheckOut = () => {
 		getTotal().then((sum) => setTotal(sum.total));
 	}, []);
 	useEffect(() => {
-		// console.log(errors, 'VO USEEFECT');
-		// console.log(cart, 'VO USEEFECT');
 		const isEmpty = Object.values(errors).every(
 			(err) => err === null || err === ''
 		);
-		// console.log(errors.length);
 		if (isEmpty && Object.keys(errors).length > 0) {
 			buyTickets();
 			setErrors({});
+			clearCart();
 			navigate('/user/cart/thank-you');
 		}
 	}, [errors]);
@@ -50,12 +48,10 @@ const CheckOut = () => {
 				[e.target.name]: e.target.value,
 			};
 		});
-		// console.log(formInput);
 	};
 
 	const handleClick = () => {
 		Object.entries(formInput).forEach((input) => {
-			// console.log(input);
 			if (!input[1]) {
 				setErrors((errors) => {
 					return { ...errors, [input[0]]: errorMessages[input[0]] };
@@ -66,24 +62,7 @@ const CheckOut = () => {
 				});
 			}
 		});
-		// console.log(errors);
-		// for (const item in formInput) {
-		// 	console.log(formInput[item]);
-		// 	if (!formInput[item]) {
-		// 		setErrors(true);
-		// 		// return;
-		// 	} else {
-		// 		// console.log(cart.cartItems);
-		// 		cart.cartItems.map((item) =>
-		// 			console.log(item.event._id, item.numberOfTickets)
-		// 		);
-		// 		setErrors(null);
-		// 		navigate('/user/cart/thank-you');
-		// 	}
-		// }
 	};
-	// console.log(errors);
-	// console.log(total);
 	return (
 		<div>
 			<h1>Checkout</h1>

@@ -115,7 +115,18 @@ export const useCart = () => {
 	const clearCart = async () => {
 		setIsLoading(true);
 		setError(null);
-		dispatch({ type: DELETE_CART });
+
+		let res = await fetch('/api/v1/cart/clear', {
+			method: 'PUT',
+			headers: {
+				Authorization: `Bearer ${user.token}`,
+				'Content-Type': 'application/json',
+			},
+		});
+
+		if (res.ok) {
+			dispatch({ type: DELETE_CART });
+		}
 	};
 
 	return {
