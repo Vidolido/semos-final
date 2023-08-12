@@ -34,6 +34,12 @@ export const useEvents = () => {
 		});
 
 		const jsonRes = await res.json();
+
+		if (!res.ok) {
+			setIsLoading(false);
+			setError(jsonRes.errors);
+		}
+
 		if (res.ok) {
 			dispatch({ type: SET_EVENTS, payload: jsonRes });
 		}

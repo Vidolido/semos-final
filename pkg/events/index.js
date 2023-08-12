@@ -50,6 +50,7 @@ const eventSchema = mongoose.Schema({
 	],
 	adminId: {
 		type: String,
+		// type: mongoose.Types.ObjectId,
 		required: true,
 		validate: [mongoose.Types.ObjectId.isValid, 'Something went wrong.'],
 	},

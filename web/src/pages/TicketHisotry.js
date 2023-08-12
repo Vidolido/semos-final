@@ -17,7 +17,10 @@ const TicketHisotry = () => {
 		<div className='ticketHistory'>
 			<UserNav title='Ticket Hisotry' />
 			<h2>Ticket Hisotry</h2>
-			{tickets && tickets.map((ticket) => <EventCard event={ticket.event} />)}
+			{tickets &&
+				tickets.map((ticket) => (
+					<EventCard key={ticket.event._id} event={ticket.event} />
+				))}
 		</div>
 	);
 };

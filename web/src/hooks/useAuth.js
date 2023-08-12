@@ -1,10 +1,13 @@
 import { useState } from 'react';
 import { useAuthContext } from './useAuthContext';
+import { useStorage } from './useStorage';
+
 import { DELETE_USER, LOGIN, LOGOUT, SET_ALL_USERS } from '../misc/actionTypes';
 export const useAuth = () => {
 	const [error, setError] = useState(null);
 	const [isLoading, setIsLoading] = useState(null);
 	const { user, allUsers, dispatch } = useAuthContext();
+	const { uploadFile } = useStorage();
 
 	const signIn = async (fullName, email, password, confirmPassword) => {
 		setIsLoading(true);
@@ -87,6 +90,9 @@ export const useAuth = () => {
 		}
 	};
 
+	// DA JA PISHAM
+	const getCurentUser = async () => {};
+
 	const logout = () => {
 		localStorage.removeItem('TicketBlasterUser');
 		// го бришеме корисникот од AuthContext
@@ -119,6 +125,11 @@ export const useAuth = () => {
 		}
 	};
 
+	const updateAccount = async (updateOptions) => {
+		console.log('It Ran');
+		console.log(updateOptions);
+	};
+
 	const getAccountType = async () => {
 		const res = await fetch('/api/v1/auth/getAccountType', {
 			method: 'GET',
@@ -137,7 +148,9 @@ export const useAuth = () => {
 		login,
 		logout,
 		getAllAccounts,
+		getCurentUser,
 		deleteAccount,
+		updateAccount,
 		getAccountType,
 		user,
 		allUsers,

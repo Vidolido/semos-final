@@ -24,6 +24,9 @@ const accountSchema = mongoose.Schema({
 	accountType: {
 		type: String,
 	},
+	accountImage: {
+		type: String,
+	},
 });
 
 accountSchema.pre('save', async function (next) {
