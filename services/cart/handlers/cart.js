@@ -81,23 +81,18 @@ const addToCart = async (req, res) => {
 		// TODO: Да поставам услов, доколку го има настанот, да прашам
 		// дали корисникот сака да докупи карти за овој настан.
 		let isInArray = cart.cartItems.some((item) => {
-			// console.log(item, 'VO ISINARRAY');
 			return item.event.equals(req.body.event);
 		});
 		const payload = {
 			event: req.body.event,
 			numberOfTickets: req.body.numberOfTickets,
 		};
-		// console.log(cart.cartItems, req.body.itemId, req.body.numberOfTickets);
-		// console.log(isInArray);
-		// const addTicketsToCart = await Cart.updateOne( // vaka beshe
 		await Cart.updateOne(
 			{ accountId: req.auth.id },
 			{
 				cartItems: !isInArray ? [...cart.cartItems, payload] : cart.cartItems,
 			}
 		);
-		// return res.status(200).send(addTicketsToCart);
 		res.status(200).send({ message: 'Event added to cart' });
 	} catch (err) {
 		console.log(err, 'epa ovoa');
@@ -118,17 +113,12 @@ const getTotal = async (req, res) => {
 				},
 			},
 		});
-		// console.log(cart, 'getTotal Cart');
 
 		if (cart.cartItems) {
 			let total = 0;
 			cart.cartItems.forEach((item) => {
-				// console.log(item.event.ticketPrice);
-				// console.log(item.numberOfTickets);
 				total += item.numberOfTickets * item.event.ticketPrice;
 			});
-			// console.log(total);
-			// await Cart.updateOne({ accountId: req.auth.id }, { cartItems: filtered });
 			return res.status(200).send({ total });
 		}
 

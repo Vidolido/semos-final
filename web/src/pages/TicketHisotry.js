@@ -6,6 +6,8 @@ import UserNav from '../components/UserNav';
 // import { useAuth } from '../hooks/useAuth';
 import { useTickets } from '../hooks/useTickets';
 
+import EventCard from '../components/EventCard';
+
 const TicketHisotry = () => {
 	// const { user } = useAuthContext();
 	// const { user } = useAuth();
@@ -15,14 +17,13 @@ const TicketHisotry = () => {
 	useEffect(() => {
 		getTickets().then((allTickets) => setTickets(allTickets));
 	}, []);
-
+	console.log(tickets);
 	return (
 		<div className='ticketHistory'>
 			{/* {console.log(tickets)} */}
 			<UserNav title='Ticket Hisotry' />
 			<h2>Ticket Hisotry</h2>
-			{tickets &&
-				tickets.map((ticket) => <div key={ticket._id}>{ticket.eventId}</div>)}
+			{tickets && tickets.map((ticket) => <EventCard event={ticket.event} />)}
 		</div>
 	);
 };

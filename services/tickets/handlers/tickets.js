@@ -1,4 +1,5 @@
 const Tickets = require('../../../pkg/tickets');
+const Event = require('../../../pkg/events');
 
 // TODO: Try/Catch
 
@@ -6,8 +7,18 @@ const userTickets = async (req, res) => {
 	try {
 		const userTickets = await Tickets.find({
 			accountId: req.auth.id,
+		}).populate({
+			path: 'event',
+			model: Event,
+			select: {
+				eventName: 1,
+				eventDate: 1,
+				location: 1,
+				eventImage: 1,
+				// ticketPrice: 1,
+			},
 		});
-		// console.log(userTickets);
+		console.log(userTickets);
 		res.status(200).send(userTickets);
 	} catch (err) {
 		console.log(err);
@@ -19,7 +30,7 @@ const buyTickets = async (req, res) => {
 	try {
 		const events = req.body.map((event) => {
 			payload.push({
-				eventId: event.event._id,
+				event: event.event._id,
 				accountId: req.auth.id,
 				ticketCount: event.numberOfTickets,
 			});
