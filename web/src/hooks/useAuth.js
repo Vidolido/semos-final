@@ -91,7 +91,24 @@ export const useAuth = () => {
 	};
 
 	// DA JA PISHAM
-	const getCurentUser = async () => {};
+	// const getCurentUser = async () => {};
+
+	const getUserDetails = async () => {
+		setIsLoading(true);
+		setError(null);
+
+		const res = await fetch('/api/v1/auth/get-user-details', {
+			method: 'GET',
+			headers: {
+				Authorization: `Bearer ${user.token}`,
+			},
+		});
+
+		const jsonRes = await res.json();
+
+		// console.log(res, jsonRes);
+		if (res.ok) return jsonRes;
+	};
 
 	const logout = () => {
 		localStorage.removeItem('TicketBlasterUser');
@@ -127,16 +144,33 @@ export const useAuth = () => {
 
 	const updateAccount = async (updateOptions) => {
 		console.log('It Ran');
+
+		if (updateOptions.accountImage) {
+			let fileName = await uploadFile(updateOptions.accountImage);
+			updateOptions.accountImage = fileName;
+		}
 		console.log(updateOptions);
 
-		if (updateOptions.userImage) {
-			let fileName = await uploadFile(updateOptions.userImage);
-			updateOptions.userImage = fileName;
-		}
+		let filteredOptions = Object.fromEntries(
+			Object.entries(updateOptions).filter(([_, v]) => v !== '')
+		);
+		console.log(filteredOptions);
+		const res = await fetch('/api/v1/auth/updateAccount', {
+			method: 'PUT',
+			headers: {
+				Authorization: `Bearer ${user.token}`,
+				'Content-Type': 'application/json',
+			},
+			body: JSON.stringify(filteredOptions),
+		});
+		console.log(updateOptions);
+
+		const jsonRes = await res.json();
+		console.log(res);
 	};
 
 	const getAccountType = async () => {
-		const res = await fetch('/api/v1/auth/getAccountType', {
+		const res = await fetch('/api/v1/auth/get-account-type', {
 			method: 'GET',
 			headers: {
 				Authorization: `Bearer ${user.token}`,
@@ -144,8 +178,8 @@ export const useAuth = () => {
 			},
 		});
 
-		const jsonRes = res.json();
-		console.log(jsonRes);
+		const jsonRes = await res.json();
+		return jsonRes.accountType;
 	};
 
 	return {
@@ -153,10 +187,10 @@ export const useAuth = () => {
 		login,
 		logout,
 		getAllAccounts,
-		getCurentUser,
 		deleteAccount,
 		updateAccount,
 		getAccountType,
+		getUserDetails,
 		user,
 		allUsers,
 		isLoading,

@@ -1,49 +1,57 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useAuth } from '../hooks/useAuth';
-import jwt_decode from 'jwt-decode';
+import { useStorage } from '../hooks/useStorage';
+
 import noImage from '../misc/no-event-image.jpg';
 import UserNav from '../components/UserNav';
 
 const UserDetails = () => {
-	const { user, updateAccount } = useAuth();
+	const { getUserDetails, updateAccount } = useAuth();
+	const { downloadFile } = useStorage();
+	const [currentUserDetails, setCurrentUserDetails] = useState(null);
 	const [previewImage, setPreviewImage] = useState(null);
 	const [isHidden, setIsHidden] = useState(true);
 
 	const initialState = {
 		fullName: '',
 		email: '',
-		userImage: '',
+		accountImage: '',
 		password: '',
 		confirmPassword: '',
 	};
 
 	const [updateOptions, setUpdateOptions] = useState(initialState);
 
+	useEffect(() => {
+		getUserDetails().then((userDetails) => setCurrentUserDetails(userDetails));
+	}, []);
+
+	useEffect(() => {
+		currentUserDetails &&
+			currentUserDetails.accountImage &&
+			downloadFile(currentUserDetails.accountImage).then((file) =>
+				setPreviewImage(file)
+			);
+	}, [currentUserDetails]);
+
 	const handleOnChange = (e) => {
-		console.log(e.target);
 		setUpdateOptions((updateOptions) => ({
 			...updateOptions,
 			[e.target.name]: e.target.value,
 		}));
-
-		// if (e.target.files) setPreviewImage(URL.createObjectURL(e.target.files[0]));
 	};
 
 	const handleUpload = async (e) => {
 		setPreviewImage(e.target.files[0]);
 		setUpdateOptions((updateOptions) => ({
 			...updateOptions,
-			userImage: e.target.files[0],
+			accountImage: e.target.files[0],
 		}));
 	};
 	const handleSubmit = (e) => {
 		e.preventDefault();
 		updateAccount(updateOptions);
-		// console.log(e);
 	};
-	let decoded = jwt_decode(user.token);
-	// console.log(decoded);
-	// console.log(updateOptions);
 	return (
 		<div className='userDetails'>
 			<UserNav title='User Details' />
@@ -57,7 +65,7 @@ const UserDetails = () => {
 							<div className='inputContainer'>
 								<div className='imageContainer'>
 									{previewImage ? (
-										<img src={URL.createObjectURL(previewImage)} alt='Avatar' />
+										<img src={previewImage} alt='Avatar' />
 									) : (
 										<img src={noImage} alt='User Avatar' />
 									)}
@@ -68,7 +76,7 @@ const UserDetails = () => {
 								<input
 									className='uploadButton'
 									type='file'
-									name='userImage'
+									name='accountImage'
 									onChange={handleUpload}
 								/>
 								<input
@@ -84,7 +92,12 @@ const UserDetails = () => {
 					<div className='info'>
 						<div className='fullName'>
 							<label>Full Name</label>
-							<input type='text' name='fullName' onChange={handleOnChange} />
+							<input
+								type='text'
+								name='fullName'
+								onChange={handleOnChange}
+								placeholder={currentUserDetails && currentUserDetails.fullName}
+							/>
 						</div>
 						<div className='email'>
 							<label>Email</label>
@@ -92,7 +105,7 @@ const UserDetails = () => {
 								type='email'
 								name='email'
 								onChange={handleOnChange}
-								placeholder={decoded.email}
+								placeholder={currentUserDetails && currentUserDetails.email}
 							/>
 						</div>
 					</div>

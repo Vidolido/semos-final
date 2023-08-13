@@ -1,19 +1,20 @@
+import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import jwt_decode from 'jwt-decode';
 
-import { useAuthContext } from '../../hooks/useAuthContext';
 import { useAuth } from '../../hooks/useAuth';
-// import { useLogout } from '../../hooks/useLogout';
 import { Fragment } from 'react';
 
 const UserNav = ({ title }) => {
-	const { user } = useAuthContext();
-	const { logout } = useAuth();
+	const [accountType, setAccountType] = useState();
+	const { getAccountType, logout } = useAuth();
+
+	useEffect(() => {
+		getAccountType().then((type) => setAccountType(type));
+	}, []);
 
 	const handleClick = () => {
 		logout();
 	};
-	let decodedUser = jwt_decode(user.token);
 	return (
 		<div className='userNav'>
 			<div className='headings'>
@@ -27,7 +28,7 @@ const UserNav = ({ title }) => {
 				)}
 			</div>
 			<nav>
-				{decodedUser.accountType === 'admin' ? (
+				{accountType === 'admin' ? (
 					<Fragment>
 						<Link to='/user/events'>Events</Link>
 						<Link to='/user/all-users'>Users</Link>

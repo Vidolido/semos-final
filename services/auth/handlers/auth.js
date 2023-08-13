@@ -116,7 +116,7 @@ const login = async (req, res) => {
 const getAllAccounts = async (req, res) => {
 	try {
 		let allAccounts = await Account.find({ _id: { $ne: req.auth.id } }).select(
-			'_id email fullName userImage'
+			'_id email fullName accountImage'
 		);
 		return res.status(200).send(allAccounts);
 	} catch (err) {
@@ -129,7 +129,47 @@ const getAllAccounts = async (req, res) => {
 
 const getAccountType = async (req, res) => {
 	try {
-	} catch (err) {}
+		// TODO: Ако не е логиран.
+		return res.status(200).send({ accountType: req.auth.accountType });
+	} catch (err) {
+		console.log(err);
+		const errors = handleErrors(err);
+
+		return res.status(500).json({ errors });
+	}
+};
+
+const getUserDetails = async (req, res) => {
+	try {
+		let userDetails = await Account.findOne({ _id: req.auth.id }).select(
+			'_id email fullName accountImage'
+		);
+		return res.status(200).send(userDetails);
+	} catch (error) {
+		console.log(error);
+		const errors = handleErrors(error);
+
+		return res.status(500).json({ errors });
+	}
+};
+
+const updateAccount = async (req, res) => {
+	try {
+		const upA = await Account.updateOne(
+			{
+				_id: req.auth.id,
+			},
+			req.body
+		);
+		return res
+			.status(200)
+			.send({ message: 'Account updated successfully.', upA });
+	} catch (error) {
+		console.log(error);
+		const errors = handleErrors(error);
+
+		return res.status(500).json({ errors });
+	}
 };
 
 const deleteAccount = async (req, res) => {
@@ -163,6 +203,8 @@ module.exports = {
 	login,
 	getAllAccounts,
 	getAccountType,
+	getUserDetails,
+	updateAccount,
 	deleteAccount,
 	validate,
 };

@@ -9,7 +9,7 @@ import UserNav from '../components/UserNav';
 const UserAll = () => {
 	// TODO: да поставам услов, само доколку е админ да може да ги листа сите корисници
 	const [isDeleted, setIsDeleted] = useState();
-	const [image, setImage] = useState(null);
+	const [accountImages, setAccountImages] = useState({});
 
 	const { allUsers, getAllAccounts, deleteAccount } = useAuth();
 	const { downloadFile } = useStorage();
@@ -20,8 +20,16 @@ const UserAll = () => {
 	}, [isDeleted]);
 
 	useEffect(() => {
-		// downloadFile(event.eventImage).then((file) => setImage(file));
-	}, []);
+		allUsers &&
+			allUsers.forEach((user) => {
+				downloadFile(user.accountImage).then((image) => {
+					setAccountImages((accounts) => ({
+						...accounts,
+						[user._id]: image,
+					}));
+				});
+			});
+	}, [allUsers]);
 
 	const handleUpdate = async (id) => {
 		console.log(id, 'OVA');
@@ -32,22 +40,17 @@ const UserAll = () => {
 			setIsDeleted(true);
 		}
 	};
-	console.log(allUsers);
+	// console.log(accountImages);
 	return (
 		<div>
 			<UserNav title='Users' />
 			{allUsers &&
 				allUsers.map((singleUser) => {
-					{
-						/* let image = '';
-					downloadFile(singleUser.userImage).then((file) => (image = file)); */
-					}
-
 					return (
 						<div key={singleUser._id} className='singleUserEvents'>
 							<div className='info'>
 								<div className='imageContainer'>
-									{!image ? (
+									{!singleUser.accountImage ? (
 										<img
 											className='eventImage'
 											src={noImage}
@@ -57,15 +60,12 @@ const UserAll = () => {
 										<Fragment>
 											<img
 												className='eventImage'
-												src={image}
+												src={accountImages[singleUser._id]}
 												alt='Tickets for events'
 											/>
 										</Fragment>
 									)}
 								</div>
-								{/* <div className='imageContainer'>
-									<img src={noImage} alt='' />
-								</div> */}
 								<div className='basic'>
 									<h2 className='mb-10'>{singleUser.fullName}</h2>
 									<div className='dateLocation'>
