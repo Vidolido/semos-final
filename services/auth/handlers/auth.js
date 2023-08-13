@@ -203,12 +203,10 @@ const updateAccount = async (req, res) => {
 			)
 		);
 
-		console.log(filteredOptions);
 		const upA = await Account.updateOne(
 			{
 				_id: req.auth.id,
 			},
-			// {}
 			filteredOptions
 		);
 		return res

@@ -42,7 +42,6 @@ const UserDetails = () => {
 	};
 
 	const handleUpload = async (e) => {
-		// {URL.createObjectURL(previewImage)}
 		setPreviewImage(URL.createObjectURL(e.target.files[0]));
 		setUpdateOptions((updateOptions) => ({
 			...updateOptions,
@@ -54,7 +53,6 @@ const UserDetails = () => {
 		updateAccount(updateOptions);
 	};
 
-	// console.log(authError);
 	return (
 		<div className='userDetails'>
 			<UserNav title='User Details' />
