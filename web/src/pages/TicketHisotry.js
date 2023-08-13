@@ -12,7 +12,6 @@ const TicketHisotry = () => {
 	useEffect(() => {
 		getTickets().then((allTickets) => setTickets(allTickets));
 	}, []);
-	console.log(tickets);
 	return (
 		<div className='ticketHistory'>
 			<UserNav title='Ticket Hisotry' />

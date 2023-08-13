@@ -40,7 +40,7 @@ const signIn = async (req, res) => {
 	let collectionLength = await Account.count();
 	try {
 		if (password !== confirmPassword) {
-			console.log(password, confirmPassword);
+			// console.log(password, confirmPassword);
 			throw {
 				code: 400,
 				errorMessage: 'Passwords do not match',

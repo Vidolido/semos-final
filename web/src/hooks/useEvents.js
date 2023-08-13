@@ -162,8 +162,8 @@ export const useEvents = () => {
 			setError(jsonRes.errors);
 		}
 
-		console.log(searchTerm, 'searchterm');
-		console.log(res, 'res');
+		// console.log(searchTerm, 'searchterm');
+		// console.log(res, 'res');
 	};
 
 	const createEvent = async (createEventOptions) => {

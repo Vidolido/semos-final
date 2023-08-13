@@ -65,7 +65,7 @@ export const useCart = () => {
 
 		const cartJson = await setCart.json();
 
-		console.log(setCart, cartJson);
+		// console.log(setCart, cartJson);
 
 		if (setCart.ok) {
 			dispatch({ type: SET_CART, payload: cartJson });

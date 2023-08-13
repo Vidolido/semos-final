@@ -14,7 +14,6 @@ const Search = () => {
 		searchEvents(searchTerm).then((events) => setEvents(events));
 	}, [searchTerm]);
 
-	console.log(searchTerm, events);
 	return (
 		<div>
 			<h1>Search Results for: {searchTerm}</h1>

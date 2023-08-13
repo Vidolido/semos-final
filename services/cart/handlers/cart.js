@@ -23,7 +23,7 @@ const handleErrors = (err) => {
 	} else if (err.message.includes('Custom error')) {
 		errors[err.for] = err.errorMessage;
 	}
-	console.log(errors);
+	// console.log(errors);
 
 	return errors;
 };
@@ -92,7 +92,7 @@ const addToCart = async (req, res) => {
 		);
 		res.status(200).send({ message: 'Event added to cart' });
 	} catch (err) {
-		console.log(err, 'epa ovoa');
+		console.log(err);
 		const errors = handleErrors(err);
 		return res.status(500).json({ errors });
 	}

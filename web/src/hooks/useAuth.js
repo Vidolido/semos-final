@@ -76,7 +76,7 @@ export const useAuth = () => {
 
 		const jsonRes = await res.json();
 
-		console.log(jsonRes);
+		// console.log(jsonRes);
 		if (res.ok) {
 			setIsLoading(false);
 			setError(null);
@@ -147,7 +147,7 @@ export const useAuth = () => {
 			let fileName = await uploadFile(updateOptions.accountImage);
 			updateOptions.accountImage = fileName;
 		}
-		console.log(updateOptions);
+		// console.log(updateOptions);
 
 		// let filteredOptions = Object.fromEntries(
 		// 	Object.entries(updateOptions).filter(([_, v]) => v !== '')
@@ -161,7 +161,7 @@ export const useAuth = () => {
 			},
 			body: JSON.stringify(updateOptions),
 		});
-		console.log(updateOptions);
+		// console.log(updateOptions);
 		const jsonRes = await res.json();
 
 		if (res.ok) {

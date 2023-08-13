@@ -33,7 +33,7 @@ const buyTickets = async (req, res) => {
 				ticketCount: event.numberOfTickets,
 			});
 		});
-		const userTickets = await Tickets.insertMany(payload);
+		await Tickets.insertMany(payload);
 
 		res.status(200).send({ message: 'Thank You' });
 	} catch (err) {
