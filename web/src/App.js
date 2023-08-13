@@ -10,6 +10,7 @@ import Navbar from './components/Navbar';
 import Home from './pages/Home';
 import Login from './pages/Login';
 import Signin from './pages/Signin';
+import Search from './pages/Search';
 import TicketHisotry from './pages/TicketHisotry';
 import UserDetails from './pages/UserDetails';
 import Category from './pages/Category';
@@ -30,6 +31,12 @@ function App() {
 			<div className='pages'>
 				<Routes>
 					<Route path='/' element={<Home />} />
+
+					<Route
+						path='/search/'
+						element={<Search /> /** ova da go popravam */}
+					/>
+					<Route path='/search/:searchTerm' element={<Search />} />
 					<Route path='/events/about/:id' element={<About />} />
 					<Route path='/category/:cat' element={<Category />} />
 					<Route

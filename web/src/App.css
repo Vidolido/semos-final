@@ -13,6 +13,8 @@
 @import url('./misc/styles/userEvents.css');
 @import url('./misc/styles/categoryGrid.css');
 @import url('./misc/styles/shoppingCart.css');
+@import url('./misc/styles/eventCard.css');
+@import url('./misc/styles/gridContent.css');
 @import url('./misc//styles/checkout.css');
 
 .pages {

@@ -1,12 +1,21 @@
-import { Link } from 'react-router-dom';
-import { Fragment } from 'react';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
+import { Fragment, useState } from 'react';
 // import { useAuthContext } from '../../hooks/useAuthContext';
 import { useAuth } from '../../hooks/useAuth';
 import { ReactComponent as Logo } from './logo.svg';
 
 const Navbar = () => {
+	// const [searchOptions, setSearchOptions] = useState(null);
 	const { user } = useAuth();
 
+	const navigate = useNavigate();
+	// const location = useLocation();
+
+	const handleSubmit = (e) => {
+		if (e.key === 'Enter') {
+			navigate(`/search/${e.target.value}`);
+		}
+	};
 	return (
 		<nav className='navbar'>
 			<div className='navbarLeft'>
@@ -22,18 +31,15 @@ const Navbar = () => {
 			</div>
 			<div className='navbarRight'>
 				<div className='searchBar'>
-					<input type='text' placeholder='Search' />
+					<input type='text' placeholder='Search' onKeyUp={handleSubmit} />
 				</div>
 				<div className='userMenu'>
-					{/* TODO: Тука да направам услов, корисникот е логиран или не */}
-					{/* Не логиран корисник */}
 					{!user && (
 						<Fragment>
 							<Link to='/login'>Log in</Link>
 							<Link to='/signin'>Create Account</Link>
 						</Fragment>
 					)}
-					{/* Логиран корисник */}
 					{user && (
 						<Fragment>
 							<Link to='/user/cart'>Cart</Link>

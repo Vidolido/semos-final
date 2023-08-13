@@ -1,4 +1,5 @@
 import { Fragment, useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 // hooks
 import { useCart } from '../../hooks/useCart';
 import { useStorage } from '../../hooks/useStorage';
@@ -20,11 +21,6 @@ const SingleEvent = ({ event }) => {
 	useEffect(() => {
 		downloadFile(event.eventImage).then((res) => setImage(res));
 	});
-	// kako shto e dole beshe
-	// useEffect(() => {
-	// 	downloadFile(event.eventImage).then((res) => setImage(res));
-	// }, [event]);
-
 	const handleChange = (e) => {
 		setNumberOfTickets(e.target.value);
 	};
@@ -95,9 +91,20 @@ const SingleEvent = ({ event }) => {
 			</div>
 			<div className='relatedEvents mt-50'>
 				<h2>Related Events</h2>
+
 				<div className='flex gap-20'>
+					{/* {console.log(event.relatedEvents)} */}
 					{event.relatedEvents.map((rE) => (
-						<EventCard event={rE} />
+						<div key={rE._id} className='categoryEvents eventGrid'>
+							<EventCard event={rE} showDiscription={true} />
+							<div className='buttons buttonItems item5'>
+								<Link
+									className='btn-blackToPurple'
+									to={`/events/about/${rE._id}`}>
+									Get Tickets
+								</Link>
+							</div>
+						</div>
 					))}
 				</div>
 				{/* {event.relatedEvents.map((rE) => (

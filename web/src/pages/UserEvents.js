@@ -29,8 +29,12 @@ const UserEvents = () => {
 			<div className='userEvents'>
 				{events &&
 					events.map((event) => (
-						<div key={event._id} className='singleUserEvents'>
-							<EventCard event={event} showDiscription={false} />
+						<div key={event._id} className='eventCardFlex'>
+							<EventCard
+								event={event}
+								showDiscription={false}
+								groupItems={true}
+							/>
 							<div className='buttons flex gap-20'>
 								<Link
 									to={`/user/events/update/${event._id}`}

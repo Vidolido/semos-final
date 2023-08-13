@@ -118,10 +118,25 @@ const getEventsByCategory = async (req, res) => {
 	}
 };
 
-const createEvent = async (req, res) => {
-	// console.log(req.auth);
+const searchEvents = async (req, res) => {
+	// console.log(req.body, 'ovoj body');
+	let { searchTerm } = req.body;
+	// Person.find({ "name": { "$regex": "Alex", "$options": "i" } },
 	try {
-		// TODO: id(admin) ...
+		const search = await Event.find({
+			eventName: { $regex: `${searchTerm}`, $options: 'i' },
+		});
+
+		return res.status(200).send(search);
+	} catch (err) {
+		console.log(err);
+		let errors = handleErrors(err);
+		res.status(500).json(errors);
+	}
+};
+
+const createEvent = async (req, res) => {
+	try {
 		if (!req.auth) {
 			throw {
 				code: 400,
@@ -191,6 +206,7 @@ module.exports = {
 	getSingleEvent,
 	getRelatedEvents,
 	getEventsByCategory,
+	searchEvents,
 	createEvent,
 	updateEvent,
 	removeEvent,

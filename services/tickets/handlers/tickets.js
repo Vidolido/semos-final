@@ -11,11 +11,12 @@ const userTickets = async (req, res) => {
 			select: {
 				eventName: 1,
 				eventDate: 1,
+				details: 1,
 				location: 1,
 				eventImage: 1,
 			},
 		});
-		console.log(userTickets);
+		// console.log(userTickets);
 		res.status(200).send(userTickets);
 	} catch (err) {
 		console.log(err);

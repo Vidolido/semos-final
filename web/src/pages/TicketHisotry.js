@@ -16,11 +16,17 @@ const TicketHisotry = () => {
 	return (
 		<div className='ticketHistory'>
 			<UserNav title='Ticket Hisotry' />
-			<h2>Ticket Hisotry</h2>
-			{tickets &&
-				tickets.map((ticket) => (
-					<EventCard key={ticket.event._id} event={ticket.event} />
-				))}
+			<div className='twoColumnGrid'>
+				{tickets &&
+					tickets.map((ticket) => (
+						<div key={ticket.event._id} className='categoryEvents eventGrid'>
+							<EventCard event={ticket.event} showDiscription={true} />
+							<div className='buttons buttonItems item5'>
+								<button className='btn-blackToPurple'>Print Ticket</button>
+							</div>
+						</div>
+					))}
+			</div>
 		</div>
 	);
 };

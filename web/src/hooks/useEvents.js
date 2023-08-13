@@ -137,6 +137,35 @@ export const useEvents = () => {
 		return jsonRes;
 	};
 
+	const searchEvents = async (searchTerm) => {
+		setIsLoading(true);
+		setError(null);
+
+		const res = await fetch('/api/v1/events/search', {
+			method: 'POST',
+			headers: {
+				'Content-Type': 'application/json',
+			},
+			body: JSON.stringify({
+				searchTerm,
+			}),
+		});
+
+		const jsonRes = await res.json();
+		if (res.ok) {
+			setIsLoading(false);
+			setError(null);
+			return jsonRes;
+		}
+		if (!res.ok) {
+			setIsLoading(false);
+			setError(jsonRes.errors);
+		}
+
+		console.log(searchTerm, 'searchterm');
+		console.log(res, 'res');
+	};
+
 	const createEvent = async (createEventOptions) => {
 		setIsLoading(true);
 		setError(null);
@@ -198,6 +227,7 @@ export const useEvents = () => {
 		getEventsByCategory,
 		getHero,
 		getSingleEvent,
+		searchEvents,
 		createEvent,
 		getRelatedEvents,
 		deleteEvent,

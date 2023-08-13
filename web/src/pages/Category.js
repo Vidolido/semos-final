@@ -3,7 +3,7 @@ import Events from '../components/Events';
 
 const Category = () => {
 	let { cat } = useParams();
-	return <div className='category'>{cat && <Events cat={cat} />}</div>;
+	return <div className='twoColumnGrid'>{cat && <Events cat={cat} />}</div>;
 };
 
 export default Category;
