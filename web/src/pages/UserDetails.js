@@ -6,7 +6,7 @@ import noImage from '../misc/no-event-image.jpg';
 import UserNav from '../components/UserNav';
 
 const UserDetails = () => {
-	const { getUserDetails, updateAccount } = useAuth();
+	const { getUserDetails, updateAccount, error: authError } = useAuth();
 	const { downloadFile } = useStorage();
 	const [currentUserDetails, setCurrentUserDetails] = useState(null);
 	const [previewImage, setPreviewImage] = useState(null);
@@ -42,7 +42,8 @@ const UserDetails = () => {
 	};
 
 	const handleUpload = async (e) => {
-		setPreviewImage(e.target.files[0]);
+		// {URL.createObjectURL(previewImage)}
+		setPreviewImage(URL.createObjectURL(e.target.files[0]));
 		setUpdateOptions((updateOptions) => ({
 			...updateOptions,
 			accountImage: e.target.files[0],
@@ -52,6 +53,8 @@ const UserDetails = () => {
 		e.preventDefault();
 		updateAccount(updateOptions);
 	};
+
+	// console.log(authError);
 	return (
 		<div className='userDetails'>
 			<UserNav title='User Details' />
@@ -136,6 +139,9 @@ const UserDetails = () => {
 										name='password'
 										onChange={handleOnChange}
 									/>
+									{authError && authError.password && (
+										<span>{authError.password}</span>
+									)}
 								</div>
 								<div>
 									<label>Re-type Password</label>

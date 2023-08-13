@@ -143,30 +143,35 @@ export const useAuth = () => {
 	};
 
 	const updateAccount = async (updateOptions) => {
-		console.log('It Ran');
-
 		if (updateOptions.accountImage) {
 			let fileName = await uploadFile(updateOptions.accountImage);
 			updateOptions.accountImage = fileName;
 		}
 		console.log(updateOptions);
 
-		let filteredOptions = Object.fromEntries(
-			Object.entries(updateOptions).filter(([_, v]) => v !== '')
-		);
-		console.log(filteredOptions);
+		// let filteredOptions = Object.fromEntries(
+		// 	Object.entries(updateOptions).filter(([_, v]) => v !== '')
+		// );
+		// console.log(filteredOptions);
 		const res = await fetch('/api/v1/auth/updateAccount', {
 			method: 'PUT',
 			headers: {
 				Authorization: `Bearer ${user.token}`,
 				'Content-Type': 'application/json',
 			},
-			body: JSON.stringify(filteredOptions),
+			body: JSON.stringify(updateOptions),
 		});
 		console.log(updateOptions);
-
 		const jsonRes = await res.json();
-		console.log(res);
+
+		if (res.ok) {
+			setError(null);
+		}
+		if (!res.ok) {
+			// console.log(res, jsonRes.errors);
+			setError(jsonRes.errors);
+			// console.log();
+		}
 	};
 
 	const getAccountType = async () => {

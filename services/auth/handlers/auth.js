@@ -1,6 +1,7 @@
 // 3rd party
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
+const validator = require('validator');
 
 // moddels
 const Account = require('../../../pkg/account');
@@ -154,12 +155,61 @@ const getUserDetails = async (req, res) => {
 };
 
 const updateAccount = async (req, res) => {
+	const { password, confirmPassword } = req.body;
 	try {
+		const acc = await Account.findOne({ _id: req.auth.id });
+		if (password !== confirmPassword) {
+			throw {
+				code: 400,
+				errorMessage: 'Passwords do not match.',
+				for: 'password',
+				message: 'Custom error',
+			};
+		}
+
+		if (password && bcrypt.compareSync(password, acc.password)) {
+			throw {
+				code: 400,
+				errorMessage: "New password can't be same as the old password.",
+				for: 'password',
+				message: 'Custom error',
+			};
+		}
+
+		if (password && !validator.isStrongPassword(password)) {
+			throw {
+				code: 400,
+				errorMessage: 'Password not strong enough.',
+				for: 'password',
+				message: 'Custom error',
+			};
+		}
+
+		let payload = {
+			...req.body,
+		};
+		if (password) {
+			const salt = await bcrypt.genSalt();
+			let hashed = await bcrypt.hash(password, salt);
+			payload = {
+				...req.body,
+				password: hashed,
+			};
+		}
+
+		let filteredOptions = Object.fromEntries(
+			Object.entries(payload).filter(
+				([k, v]) => v !== '' && v !== undefined && k !== 'confirmPassword'
+			)
+		);
+
+		console.log(filteredOptions);
 		const upA = await Account.updateOne(
 			{
 				_id: req.auth.id,
 			},
-			req.body
+			// {}
+			filteredOptions
 		);
 		return res
 			.status(200)
