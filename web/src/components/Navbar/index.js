@@ -3,6 +3,8 @@ import { Fragment, useState } from 'react';
 // import { useAuthContext } from '../../hooks/useAuthContext';
 import { useAuth } from '../../hooks/useAuth';
 import { ReactComponent as Logo } from './logo.svg';
+import { ReactComponent as AccountIcon } from '../../misc/account.svg';
+import { ReactComponent as CartIcon } from '../../misc/cart.svg';
 
 const Navbar = () => {
 	// const [searchOptions, setSearchOptions] = useState(null);
@@ -36,14 +38,22 @@ const Navbar = () => {
 				<div className='userMenu'>
 					{!user && (
 						<Fragment>
-							<Link to='/login'>Log in</Link>
-							<Link to='/signin'>Create Account</Link>
+							<Link className='navLinks' to='/login'>
+								Log in
+							</Link>
+							<Link className='navLinks' to='/signin'>
+								Create Account
+							</Link>
 						</Fragment>
 					)}
 					{user && (
 						<Fragment>
-							<Link to='/user/cart'>Cart</Link>
-							<Link to='/user/ticket-history'>Account</Link>
+							<Link className='iconLinks' to='/user/cart'>
+								<CartIcon />
+							</Link>
+							<Link className='iconLinks' to='/user/ticket-history'>
+								<AccountIcon />
+							</Link>
 						</Fragment>
 					)}
 				</div>
