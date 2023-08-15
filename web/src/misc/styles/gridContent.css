@@ -7,3 +7,8 @@
 .twoColumnGrid h1:first-child {
 	grid-column: 1 / -1;
 }
+
+.threeColumGrid {
+	display: grid;
+	grid-template-columns: repeat(3, 1fr);
+}

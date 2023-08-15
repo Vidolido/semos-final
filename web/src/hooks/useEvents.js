@@ -127,6 +127,7 @@ export const useEvents = () => {
 			body: JSON.stringify(rE),
 		});
 		const jsonRes = await res.json();
+
 		if (!res.ok) {
 			setIsLoading(false);
 			setError(jsonRes.errors);

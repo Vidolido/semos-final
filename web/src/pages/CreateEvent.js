@@ -61,6 +61,18 @@ const CreateEvent = () => {
 		let getRelated = await getRelatedEvents(relatedEvents);
 		setRelated(getRelated);
 	};
+
+	const hanldeRemove = async (e, id) => {
+		e.preventDefault();
+
+		let removed = related.filter((event) => event._id !== id);
+		setCreateEventOptions((createEventOptions) => ({
+			...createEventOptions,
+			relatedEvents: [...removed],
+		}));
+		setRelated(removed);
+	};
+
 	const handleFormSubmit = async (e) => {
 		e.preventDefault();
 		let created = await createEvent(createEventOptions);
@@ -218,15 +230,20 @@ const CreateEvent = () => {
 							</div>
 						)}
 					</div>
-					<div className='container'>
-						{related && related.map((event) => <EventCard event={event} />)}
-						{/* related.map((event) => (
-								<div key={event._id} className='related'>
-									<p>{event.eventName}</p>
-									<p>{event.eventDate}</p>
-									<p>{event.location}</p>
+					<div className='threeColumGrid'>
+						{related &&
+							related.map((event) => (
+								<div key={event._id} className='relatedEventsGrid'>
+									<EventCard event={event} groupItems={true} />
+									<div className='button buttonItems item5'>
+										<button
+											onClick={(e) => hanldeRemove(e, event._id)}
+											className='btn-blackToPurple'>
+											Remove
+										</button>
+									</div>
 								</div>
-							))} */}
+							))}
 					</div>
 
 					<button

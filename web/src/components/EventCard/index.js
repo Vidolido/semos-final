@@ -27,7 +27,7 @@ const EventCard = ({ event, showDiscription, groupItems }) => {
 				)}
 			</div>
 			{groupItems && (
-				<div className='eventInfo contentItems'>
+				<div className='eventInfo contentItems item1'>
 					<h3 className='item1'>{event.eventName}</h3>
 					<span className='block purpleText boldText mediumText item2'>{`${
 						months[date.getMonth()]

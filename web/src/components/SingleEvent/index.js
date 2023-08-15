@@ -92,7 +92,7 @@ const SingleEvent = ({ event }) => {
 			<div className='relatedEvents mt-50'>
 				<h2>Related Events</h2>
 
-				<div className='flex gap-20'>
+				<div className='twoColumnGrid'>
 					{/* {console.log(event.relatedEvents)} */}
 					{event.relatedEvents.map((rE) => (
 						<div key={rE._id} className='categoryEvents eventGrid'>
@@ -107,11 +107,6 @@ const SingleEvent = ({ event }) => {
 						</div>
 					))}
 				</div>
-				{/* {event.relatedEvents.map((rE) => (
-					<div>
-						<p>{rE.eventName}</p>
-					</div>
-				))} */}
 			</div>
 		</Fragment>
 	);
