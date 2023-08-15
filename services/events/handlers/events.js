@@ -92,7 +92,7 @@ const getSingleEvent = async (req, res) => {
 const getRelatedEvents = async (req, res) => {
 	try {
 		let relatedEvents = await Event.find({ _id: { $in: req.body } }).select(
-			'eventName eventDate location imageUrl'
+			'eventName eventDate location eventImage'
 		);
 		res.status(200).send(relatedEvents);
 	} catch (err) {
@@ -119,9 +119,7 @@ const getEventsByCategory = async (req, res) => {
 };
 
 const searchEvents = async (req, res) => {
-	// console.log(req.body, 'ovoj body');
 	let { searchTerm } = req.body;
-	// Person.find({ "name": { "$regex": "Alex", "$options": "i" } },
 	try {
 		const search = await Event.find({
 			eventName: { $regex: `${searchTerm}`, $options: 'i' },

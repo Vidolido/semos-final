@@ -6,7 +6,7 @@ import { useEvents } from '../../hooks/useEvents';
 import EventCard from '../EventCard';
 
 const Events = ({ cat }) => {
-	const { getEventsByCategory, category, error } = useEvents();
+	const { getEventsByCategory, category } = useEvents();
 
 	useEffect(() => {
 		getEventsByCategory(cat);

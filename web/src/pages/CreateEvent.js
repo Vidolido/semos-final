@@ -3,6 +3,7 @@ import { useEvents } from '../hooks/useEvents';
 
 import UserNav from '../components/UserNav';
 import RelatedEvents from '../components/RelatedEvents';
+import EventCard from '../components/EventCard';
 import noImage from '../misc/no-event-image.jpg';
 
 //TODO: ticketPrice да го направам да прима децимали
@@ -218,14 +219,14 @@ const CreateEvent = () => {
 						)}
 					</div>
 					<div className='container'>
-						{related &&
-							related.map((event) => (
+						{related && related.map((event) => <EventCard event={event} />)}
+						{/* related.map((event) => (
 								<div key={event._id} className='related'>
 									<p>{event.eventName}</p>
 									<p>{event.eventDate}</p>
 									<p>{event.location}</p>
 								</div>
-							))}
+							))} */}
 					</div>
 
 					<button

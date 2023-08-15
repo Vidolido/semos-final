@@ -29,7 +29,7 @@ const UserAll = () => {
 					}));
 				});
 			});
-	}, [allUsers]);
+	}, []);
 
 	const handleUpdate = async (id) => {
 		console.log(id, 'OVA');
