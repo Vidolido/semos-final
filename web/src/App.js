@@ -18,6 +18,7 @@ import About from './pages/About';
 import UserEvents from './pages/UserEvents';
 import UserAll from './pages/UserAll';
 import CreateEvent from './pages/CreateEvent';
+import UpdateEvent from './pages/UpdateEvent';
 import ShoppingCart from './pages/ShoppingCart';
 import CheckOut from './pages/CheckOut';
 import ThankYou from './pages/ThankYou';
@@ -70,6 +71,10 @@ function App() {
 					<Route
 						path='/user/create-event'
 						element={user ? <CreateEvent /> : <Navigate to='/' />}
+					/>
+					<Route
+						path='/user/update-event/:id'
+						element={user ? <UpdateEvent /> : <Navigate to='/' />}
 					/>
 
 					<Route

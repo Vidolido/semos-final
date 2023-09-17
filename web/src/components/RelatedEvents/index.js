@@ -1,25 +1,20 @@
 import { useEffect, Fragment } from 'react';
-import { useEventsContext } from '../../hooks/useEventsContext';
+import { useEvents } from '../../hooks/useEvents';
 
-import { SET_COMEDY_EVENTS, SET_MUSIC_EVENTS } from '../../misc/actionTypes';
 import { months, dates } from '../../misc/dateTime';
 
-// TODO: Оваа компонента и Events компонентата да ги спојам во една
-const RelatedEvents = ({ cat, handleOnChange, handleAdd, isLoading }) => {
-	const { category, dispatch } = useEventsContext();
-
-	let actionType = cat === 'comedy' ? SET_COMEDY_EVENTS : SET_MUSIC_EVENTS;
+const RelatedEvents = ({
+	cat,
+	eventId,
+	handleOnChange,
+	handleAdd,
+	isLoading,
+}) => {
+	const { getEventsByCategory, category } = useEvents();
 
 	useEffect(() => {
-		const getEvents = async () => {
-			const res = await fetch(`/api/v1/events/${cat}`);
-			const jsonRes = await res.json();
-			if (res.ok) {
-				dispatch({ type: actionType, payload: jsonRes });
-			}
-		};
-		getEvents();
-	}, [cat, actionType, dispatch]);
+		getEventsByCategory(cat);
+	}, [cat]);
 
 	return (
 		<Fragment>
@@ -36,6 +31,8 @@ const RelatedEvents = ({ cat, handleOnChange, handleAdd, isLoading }) => {
 						category[cat] &&
 						category[cat].map((event) => {
 							let date = new Date(event.eventDate);
+
+							if (event._id === eventId) return;
 
 							return (
 								<option key={event._id} value={event._id}>{`${

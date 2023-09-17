@@ -24,6 +24,8 @@ export const useEvents = () => {
 	const getEvents = async () => {
 		setIsLoading(true);
 		setError(null);
+		dispatch({ type: CLEAR_STATE });
+
 		// console.log(user);
 		const res = await fetch('/api/v1/events/user-events', {
 			method: 'POST',
@@ -69,7 +71,8 @@ export const useEvents = () => {
 	const getSingleEvent = async (id) => {
 		setIsLoading(true);
 		setError(null);
-		dispatch({ type: CLEAR_STATE });
+		// OVA GO SMENIV
+		// dispatch({ type: CLEAR_STATE });
 
 		const res = await fetch(`/api/v1/events/single-event`, {
 			method: 'POST',
@@ -205,6 +208,13 @@ export const useEvents = () => {
 		}
 	};
 
+	const updateEvent = async (updateEventOptions) => {
+		setIsLoading(true);
+		setError(null);
+
+		const res = await fetch('api/v1/events/');
+	};
+
 	const deleteEvent = async (id) => {
 		setIsLoading(true);
 		setError(null);
@@ -230,6 +240,7 @@ export const useEvents = () => {
 		getSingleEvent,
 		searchEvents,
 		createEvent,
+		updateEvent,
 		getRelatedEvents,
 		deleteEvent,
 		event,

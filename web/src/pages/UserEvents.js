@@ -37,8 +37,7 @@ const UserEvents = () => {
 							/>
 							<div className='buttons flex gap-20'>
 								<Link
-									to={`/user/events/update/${event._id}`}
-									onClick={() => handleClick(event._id)}
+									to={`/user/update-event/${event._id}`}
 									className='btn-purpleToWhite width-150'>
 									Edit Event
 								</Link>
