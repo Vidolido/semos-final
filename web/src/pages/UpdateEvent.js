@@ -30,6 +30,7 @@ const UpdateEvent = () => {
 
 	const {
 		createEvent,
+		updateEvent,
 		getSingleEvent,
 		getRelatedEvents,
 		event,
@@ -65,14 +66,33 @@ const UpdateEvent = () => {
 	useEffect(() => {
 		event &&
 			event.eventImage &&
-			downloadFile(event.eventImage).then((file) => setPreviewImage(file));
-	});
+			downloadFile(event.eventImage).then((file) => {
+				const fileName = file.split('/').reverse()[0];
+				setPreviewImage(file);
+				setUpdateEventOptions((updateEventOptions) => ({
+					...updateEventOptions,
+					eventImage: fileName,
+				}));
+			});
+	}, [event]);
 
 	const handleOnChange = (e) => {
+		console.log(e.target.name, e.target.value);
+		if (e.target.name === 'eventDate') {
+			console.log(e.target.name, e.target.value);
+			let date = new Date(e.target.value);
+			setDate(date);
+			// setUpdateEventOptions((updateEventOptions) => ({
+			// 	...updateEventOptions,
+			// 	eventDate: e.target.value,
+			// }));
+			return;
+		}
 		if (e.target.name === 'relatedEvents') {
 			setSelectedEvent(e.target.value);
 			return;
 		}
+
 		setUpdateEventOptions((updateEventOptions) => ({
 			...updateEventOptions,
 			[e.target.name]: e.target.value,
@@ -113,25 +133,28 @@ const UpdateEvent = () => {
 
 	const handleFormSubmit = async (e) => {
 		e.preventDefault();
-		let created = await createEvent(updateEventOptions);
-		if (!created) {
-			setUpdateEventOptions((updateEventOptions) => ({
-				...updateEventOptions,
-				eventImage: previewImage,
-			}));
-		}
-		if (created) {
-			setUpdateEventOptions(initialState);
-			setRelated([]);
-			setPreviewImage(null);
+		let updated = await updateEvent(updateEventOptions, id);
+		console.log(updated);
+		// if (!updated) {
+		// 	setUpdateEventOptions((updateEventOptions) => ({
+		// 		...updateEventOptions,
+		// 		eventImage: previewImage,
+		// 	}));
+		// }
+		if (updated) {
+			console.log(updated);
+			// setUpdateEventOptions(initialState);
+			// setRelated([]);
+			// setPreviewImage(null);
 		}
 		//TODO: Да вратам порака за успешно креиран event
 		// можеби во модал и онака ќе го правам
 	};
 	// event && event.relatedEvents && console.log(event, updateEventOptions);
+	// console.log(updateEventOptions);
 	return (
 		<div className='createEvent'>
-			<UserNav title='Create Events' />
+			<UserNav title='Edit Event' />
 			<div className='container'>
 				<form className='form full-width' onSubmit={handleFormSubmit}>
 					<div className='eventInputs'>
@@ -236,11 +259,14 @@ const UpdateEvent = () => {
 							<div className='imageContainer'>
 								{previewImage ? (
 									<Fragment>
-										{/* <img
-										src={URL.createObjectURL(previewImage)}
-										alt='Art about the event'
-									/> */}
-										<img src={previewImage} alt='Art about the event' />
+										{previewImage instanceof File ? (
+											<img
+												src={URL.createObjectURL(previewImage)}
+												alt='Art about the event'
+											/>
+										) : (
+											<img src={previewImage} alt='Art about the event' />
+										)}
 									</Fragment>
 								) : (
 									<img src={noImage} alt='Art about the event' />

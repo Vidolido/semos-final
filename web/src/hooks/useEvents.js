@@ -208,11 +208,33 @@ export const useEvents = () => {
 		}
 	};
 
-	const updateEvent = async (updateEventOptions) => {
+	const updateEvent = async (updateEventOptions, id) => {
 		setIsLoading(true);
 		setError(null);
+		console.log(updateEventOptions);
+		const res = await fetch(`/api/v1/events/${id}`, {
+			method: 'PUT',
+			headers: {
+				Authorization: `Bearer ${user.token}`,
+				'Content-Type': 'application/json',
+			},
+			body: JSON.stringify(updateEventOptions),
+		});
 
-		const res = await fetch('api/v1/events/');
+		const jsonRes = await res.json();
+
+		if (!res.ok) {
+			setIsLoading(false);
+			setError(jsonRes.errors);
+			return false;
+		}
+
+		if (res.ok) {
+			setIsLoading(false);
+			setError(null);
+			console.log(jsonRes);
+			return true;
+		}
 	};
 
 	const deleteEvent = async (id) => {

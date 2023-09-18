@@ -156,12 +156,14 @@ const createEvent = async (req, res) => {
 };
 
 const updateEvent = async (req, res) => {
+	console.log(req);
 	try {
 		// На овој начин само Account-от што го креирал Event-от, може да прави промени.
 		// Да направам по accountType: admin, за да може само админ да прави промени.
 		const upE = await Event.updateOne(
-			{ _id: req.params.id, adminId: req.auth.id },
-			req.body
+			// { _id: req.params.id, adminId: req.auth.id },
+			{ _id: req.params.id },
+			...req.body
 		);
 		if (!upE.matchedCount)
 			return res.status(404).send({ message: 'No such event was found.' });
