@@ -1,10 +1,11 @@
+import { useState } from 'react';
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
-// import { useAuthContext } from './hooks/useAuthContext';
 import { useAuth } from './hooks/useAuth';
 
 import './App.css';
 // components
 import Navbar from './components/Navbar';
+import Modal from './components/Modal';
 
 // pages
 import Home from './pages/Home';
@@ -24,7 +25,13 @@ import CheckOut from './pages/CheckOut';
 import ThankYou from './pages/ThankYou';
 
 function App() {
-	const { user } = useAuth(); // da go smenam
+	const initialModalState = {
+		show: true,
+		message: '',
+	};
+
+	const { user } = useAuth();
+	const [modalOptions, setModalOptions] = useState(initialModalState);
 
 	return (
 		<BrowserRouter>
@@ -62,7 +69,16 @@ function App() {
 					/>
 					<Route
 						path='/user/events'
-						element={user ? <UserEvents /> : <Navigate to='/' />}
+						element={
+							user ? (
+								<UserEvents
+									modalOptions={modalOptions}
+									setModalOptions={setModalOptions}
+								/>
+							) : (
+								<Navigate to='/' />
+							)
+						}
 					/>
 					<Route
 						path='/user/all-users'
@@ -88,6 +104,9 @@ function App() {
 					{/* Да направам 404 рута */}
 				</Routes>
 			</div>
+			{modalOptions.show && (
+				<Modal modalOptions={modalOptions} setModalOptions={setModalOptions} />
+			)}
 		</BrowserRouter>
 	);
 }

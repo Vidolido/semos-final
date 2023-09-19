@@ -7,8 +7,7 @@ import { useEvents } from '../hooks/useEvents';
 // compononets
 import UserNav from '../components/UserNav';
 import EventCard from '../components/EventCard';
-
-const UserEvents = () => {
+const UserEvents = ({ modalOptions, setModalOptions }) => {
 	const [isDeleted, setIsDeleted] = useState(false);
 	const { events, getEvents, deleteEvent } = useEvents();
 
@@ -18,11 +17,17 @@ const UserEvents = () => {
 	}, [isDeleted]);
 
 	const handleClick = async (id) => {
-		const deleted = deleteEvent(id);
-		if (deleted) {
-			setIsDeleted(true);
-		}
+		console.log('Clicked in userEvents');
+		setModalOptions((prevState) => ({
+			...prevState,
+			show: true,
+		}));
+		// const deleted = deleteEvent(id);
+		// if (deleted) {
+		// 	setIsDeleted(true);
+		// }
 	};
+	console.log(modalOptions, 'SOMETHING');
 	return (
 		<div>
 			<UserNav title='Events' />

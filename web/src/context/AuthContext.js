@@ -27,7 +27,7 @@ export const AuthContextProvider = ({ children }) => {
 
 	useEffect(() => {
 		const user = JSON.parse(localStorage.getItem('TicketBlasterUser')); // Проверуваме дали корисникот е веќе логиран.
-
+		// Тука треба верификација на токен
 		if (user) {
 			dispatch({ type: LOGIN, payload: user });
 		}

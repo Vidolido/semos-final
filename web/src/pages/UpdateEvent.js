@@ -29,7 +29,6 @@ const UpdateEvent = () => {
 	const [date, setDate] = useState();
 
 	const {
-		createEvent,
 		updateEvent,
 		getSingleEvent,
 		getRelatedEvents,
