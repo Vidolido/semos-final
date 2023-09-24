@@ -66,7 +66,9 @@ export const eventsReducer = (state, action) => {
 			};
 		case DELETE_EVENT:
 			return {
-				events: state.events.filter((event) => event._id !== action.payload.id),
+				events:
+					state.events &&
+					state.events.filter((event) => event._id !== action.payload.id),
 			};
 		case CLEAR_STATE:
 			//TODO: Да чистам од state само тоа што треба.

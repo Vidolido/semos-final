@@ -63,6 +63,8 @@ export const useAuth = () => {
 		}
 	};
 
+	// const forgothPassword = async ()
+
 	const getAllAccounts = async () => {
 		setIsLoading(true);
 		setError(null);
@@ -174,6 +176,36 @@ export const useAuth = () => {
 		}
 	};
 
+	const changeAccountType = async (id) => {
+		setIsLoading(true);
+
+		console.log(id);
+		const res = await fetch('/api/v1/auth/changeAccountType', {
+			method: 'PUT',
+			headers: {
+				Authorization: `Bearer ${user.token}`,
+				'Content-Type': 'application/json',
+			},
+			body: JSON.stringify({ id }),
+		});
+
+		const jsonRes = await res.json();
+
+		// console.log(res, jsonRes, 'OVIE');
+		if (!res.ok) {
+			// console.log(res, jsonRes.errors);
+			setIsLoading(false);
+			setError(jsonRes.errors);
+			// console.log();
+			return false;
+		}
+		if (res.ok) {
+			setError(null);
+			setIsLoading(false);
+			return true;
+		}
+	};
+
 	const getAccountType = async () => {
 		const res = await fetch('/api/v1/auth/get-account-type', {
 			method: 'GET',
@@ -193,6 +225,7 @@ export const useAuth = () => {
 		logout,
 		getAllAccounts,
 		deleteAccount,
+		changeAccountType,
 		updateAccount,
 		getAccountType,
 		getUserDetails,

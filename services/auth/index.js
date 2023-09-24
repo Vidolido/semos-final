@@ -32,10 +32,13 @@ api.get('/api/v1/auth/', auth.getAllAccounts);
 api.get('/api/v1/auth/', auth.getAccountType);
 api.get('/api/v1/auth/get-user-details', auth.getUserDetails);
 api.get('/api/v1/auth/get-account-type', auth.getAccountType);
+
 api.post('/api/v1/auth/sign-in', auth.signIn);
 api.post('/api/v1/auth/login', auth.login);
+api.post('/api/v1/auth/forgoth-password', auth.forgothPassword);
 
 api.put('/api/v1/auth/updateAccount', auth.updateAccount);
+api.put('/api/v1/auth/changeAccountType', auth.changeAccountType);
 
 api.delete('/api/v1/auth/:id', auth.deleteAccount);
 

@@ -25,13 +25,15 @@ import CheckOut from './pages/CheckOut';
 import ThankYou from './pages/ThankYou';
 
 function App() {
-	const initialModalState = {
-		show: true,
-		message: '',
-	};
+	// const initialModalState = {
+	// 	show: false,
+	// 	message: '',
+	// 	action: '',
+	// 	id: '',
+	// };
 
 	const { user } = useAuth();
-	const [modalOptions, setModalOptions] = useState(initialModalState);
+	// const [modalOptions, setModalOptions] = useState(initialModalState);
 
 	return (
 		<BrowserRouter>
@@ -69,16 +71,7 @@ function App() {
 					/>
 					<Route
 						path='/user/events'
-						element={
-							user ? (
-								<UserEvents
-									modalOptions={modalOptions}
-									setModalOptions={setModalOptions}
-								/>
-							) : (
-								<Navigate to='/' />
-							)
-						}
+						element={user ? <UserEvents /> : <Navigate to='/' />}
 					/>
 					<Route
 						path='/user/all-users'
@@ -104,9 +97,9 @@ function App() {
 					{/* Да направам 404 рута */}
 				</Routes>
 			</div>
-			{modalOptions.show && (
+			{/* {modalOptions.show && (
 				<Modal modalOptions={modalOptions} setModalOptions={setModalOptions} />
-			)}
+			)} */}
 		</BrowserRouter>
 	);
 }

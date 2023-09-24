@@ -7,9 +7,20 @@ import { useEvents } from '../hooks/useEvents';
 // compononets
 import UserNav from '../components/UserNav';
 import EventCard from '../components/EventCard';
-const UserEvents = ({ modalOptions, setModalOptions }) => {
+import Modal from '../components/Modal';
+
+const UserEvents = () => {
+	const initialModalState = {
+		show: false,
+		message: '',
+		action: '',
+		id: '',
+	};
+
 	const [isDeleted, setIsDeleted] = useState(false);
-	const { events, getEvents, deleteEvent } = useEvents();
+	const [modalOptions, setModalOptions] = useState(initialModalState);
+
+	const { events, getEvents } = useEvents();
 
 	useEffect(() => {
 		setIsDeleted(false);
@@ -18,13 +29,18 @@ const UserEvents = ({ modalOptions, setModalOptions }) => {
 
 	const handleClick = async (id) => {
 		console.log('Clicked in userEvents');
-		setModalOptions((prevState) => ({
-			...prevState,
+		setModalOptions(() => ({
 			show: true,
+			message: 'You are about to delete an event from the system.',
+			action: 'deleteEvent',
+			button: 'Delete Event',
+			id,
 		}));
+		// if (isDeleted) {
+		// 	setReset(true);
+		// }
 		// const deleted = deleteEvent(id);
 		// if (deleted) {
-		// 	setIsDeleted(true);
 		// }
 	};
 	console.log(modalOptions, 'SOMETHING');
@@ -55,6 +71,13 @@ const UserEvents = ({ modalOptions, setModalOptions }) => {
 						</div>
 					))}
 			</div>
+			{modalOptions.show && (
+				<Modal
+					modalOptions={modalOptions}
+					setModalOptions={setModalOptions}
+					setIsDeleted={setIsDeleted}
+				/>
+			)}
 		</div>
 	);
 };

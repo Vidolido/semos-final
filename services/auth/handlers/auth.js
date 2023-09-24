@@ -114,10 +114,14 @@ const login = async (req, res) => {
 	}
 };
 
+const forgothPassword = async (req, res) => {
+	res.status(200).json({ message: 'it ran' });
+};
+
 const getAllAccounts = async (req, res) => {
 	try {
 		let allAccounts = await Account.find({ _id: { $ne: req.auth.id } }).select(
-			'_id email fullName accountImage'
+			'_id email fullName accountType accountImage'
 		);
 		return res.status(200).send(allAccounts);
 	} catch (err) {
@@ -146,6 +150,30 @@ const getUserDetails = async (req, res) => {
 			'_id email fullName accountImage'
 		);
 		return res.status(200).send(userDetails);
+	} catch (error) {
+		console.log(error);
+		const errors = handleErrors(error);
+
+		return res.status(500).json({ errors });
+	}
+};
+
+const changeAccountType = async (req, res) => {
+	try {
+		const { id } = req.body;
+		const account = await Account.findOne({ _id: id }).select('accountType');
+		console.log(account);
+		const upA = await Account.updateOne(
+			{
+				_id: id,
+			},
+			{ accountType: account.accountType === 'customer' ? 'admin' : 'customer' }
+		);
+		return res
+			.status(200)
+			.send({ message: 'Account updated successfully.', upA });
+		// console.log(account);
+		// return res.status(200).send({ message: account });
 	} catch (error) {
 		console.log(error);
 		const errors = handleErrors(error);
@@ -249,9 +277,11 @@ const validate = async (req, res) => {
 module.exports = {
 	signIn,
 	login,
+	forgothPassword,
 	getAllAccounts,
 	getAccountType,
 	getUserDetails,
+	changeAccountType,
 	updateAccount,
 	deleteAccount,
 	validate,

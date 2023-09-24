@@ -1,44 +1,56 @@
-import { useEffect, useState, Fragment } from 'react';
+import { useEffect, useState } from 'react';
 import { useAuth } from '../hooks/useAuth';
-import { useStorage } from '../hooks/useStorage';
+// import { useStorage } from '../hooks/useStorage';
 
-import noImage from '../misc/no-event-image.jpg';
+// import noImage from '../misc/no-event-image.jpg';
 // components
 import UserNav from '../components/UserNav';
+import UserCard from '../components/UserCard';
+import Modal from '../components/Modal';
 
 const UserAll = () => {
+	const initialModalState = {
+		show: false,
+		message: '',
+		action: '',
+		id: '',
+	};
 	// TODO: да поставам услов, само доколку е админ да може да ги листа сите корисници
 	const [isDeleted, setIsDeleted] = useState();
-	const [accountImages, setAccountImages] = useState({});
+	const [modalOptions, setModalOptions] = useState(initialModalState);
 
-	const { allUsers, getAllAccounts, deleteAccount } = useAuth();
-	const { downloadFile } = useStorage();
+	const { allUsers, getAllAccounts } = useAuth();
 
 	useEffect(() => {
 		setIsDeleted(false);
 		getAllAccounts();
 	}, [isDeleted]);
 
-	useEffect(() => {
-		allUsers &&
-			allUsers.forEach((user) => {
-				downloadFile(user.accountImage).then((image) => {
-					setAccountImages((accounts) => ({
-						...accounts,
-						[user._id]: image,
-					}));
-				});
-			});
-	}, []);
-
-	const handleUpdate = async (id) => {
-		console.log(id, 'OVA');
+	const handleUpdate = async (id, accountType) => {
+		const message =
+			accountType === 'admin'
+				? 'You are about to downgrade a user from administrator.'
+				: 'You are about to make a user administrator of the system.';
+		setModalOptions(() => ({
+			show: true,
+			message,
+			action: 'updateUser',
+			button: 'Update User',
+			id,
+		}));
 	};
 	const handleDelete = (id) => {
-		let isDeleted = deleteAccount(id);
-		if (isDeleted) {
-			setIsDeleted(true);
-		}
+		setModalOptions(() => ({
+			show: true,
+			message: 'You are about to delete a user from the system.',
+			action: 'deleteUser',
+			button: 'Delete User',
+			id,
+		}));
+		// let isDeleted = deleteAccount(id);
+		// if (isDeleted) {
+		// 	setIsDeleted(true);
+		// }
 	};
 	// console.log(accountImages);
 	return (
@@ -48,34 +60,12 @@ const UserAll = () => {
 				allUsers.map((singleUser) => {
 					return (
 						<div key={singleUser._id} className='singleUserEvents'>
-							<div className='info'>
-								<div className='imageContainer'>
-									{!singleUser.accountImage ? (
-										<img
-											className='eventImage'
-											src={noImage}
-											alt='Tickets for events'
-										/>
-									) : (
-										<Fragment>
-											<img
-												className='eventImage'
-												src={accountImages[singleUser._id]}
-												alt='Tickets for events'
-											/>
-										</Fragment>
-									)}
-								</div>
-								<div className='basic'>
-									<h2 className='mb-10'>{singleUser.fullName}</h2>
-									<div className='dateLocation'>
-										<h3 className='ml-10'>{singleUser.email}</h3>
-									</div>
-								</div>
-							</div>
+							<UserCard singleUser={singleUser} />
 							<div className='buttons flex gap-20'>
 								<button
-									onClick={() => handleUpdate(singleUser._id)}
+									onClick={() =>
+										handleUpdate(singleUser._id, singleUser.accountType)
+									}
 									className='btn-purpleToWhite width-150'>
 									{singleUser.accountType === 'customer'
 										? 'Make Admin'
@@ -90,6 +80,13 @@ const UserAll = () => {
 						</div>
 					);
 				})}
+			{modalOptions.show && (
+				<Modal
+					modalOptions={modalOptions}
+					setModalOptions={setModalOptions}
+					setIsDeleted={setIsDeleted}
+				/>
+			)}
 		</div>
 	);
 };

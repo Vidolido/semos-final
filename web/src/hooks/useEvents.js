@@ -17,6 +17,7 @@ import {
 export const useEvents = () => {
 	const [error, setError] = useState(null);
 	const [isLoading, setIsLoading] = useState(null);
+	const [isDeleted, setIsDeleted] = useState(null);
 	const { user } = useAuthContext();
 	const { event, heroEvent, events, category, dispatch } = useEventsContext();
 	const { uploadFile } = useStorage();
@@ -24,7 +25,7 @@ export const useEvents = () => {
 	const getEvents = async () => {
 		setIsLoading(true);
 		setError(null);
-		dispatch({ type: CLEAR_STATE });
+		// dispatch({ type: CLEAR_STATE }); // OVA MOZE DA BIDE BITNO
 
 		// console.log(user);
 		const res = await fetch('/api/v1/events/user-events', {
@@ -43,6 +44,7 @@ export const useEvents = () => {
 		}
 
 		if (res.ok) {
+			setIsLoading(false);
 			dispatch({ type: SET_EVENTS, payload: jsonRes });
 		}
 	};
@@ -249,9 +251,22 @@ export const useEvents = () => {
 			},
 		});
 
+		const jsonRes = await res.json();
+
+		if (!res.ok) {
+			console.log('!res.ok');
+			setError(jsonRes.errors);
+			setIsLoading(false);
+
+			return false;
+		}
+
 		if (res.ok) {
+			console.log('res.ok');
+			setIsLoading(false);
+
 			dispatch({ type: DELETE_EVENT, payload: id });
-			return true;
+			// return true;
 		}
 	};
 
@@ -265,12 +280,14 @@ export const useEvents = () => {
 		updateEvent,
 		getRelatedEvents,
 		deleteEvent,
+		setIsDeleted,
 		event,
 		heroEvent,
 		events,
 		category,
 		dispatch,
 		isLoading,
+		isDeleted,
 		error,
 	};
 };
