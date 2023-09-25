@@ -63,7 +63,9 @@ export const useAuth = () => {
 		}
 	};
 
-	// const forgothPassword = async ()
+	const forgotPassword = async () => {
+		console.log('itRan');
+	};
 
 	const getAllAccounts = async () => {
 		setIsLoading(true);
@@ -223,6 +225,7 @@ export const useAuth = () => {
 		signIn,
 		login,
 		logout,
+		forgotPassword,
 		getAllAccounts,
 		deleteAccount,
 		changeAccountType,

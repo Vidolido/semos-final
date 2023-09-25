@@ -19,10 +19,14 @@ api.use(
 		secret: config.get('security').jwt_secret,
 	}).unless({
 		// path: ['/api/v1/auth/', '/api/v1/auth/login', '/api/v1/auth/sign-in'],
-		path: ['/api/v1/auth/login', '/api/v1/auth/sign-in'],
+		path: [
+			'/api/v1/auth/login',
+			'/api/v1/auth/sign-in',
+			'/api/v1/auth/forgoth-password',
+		],
 	})
 );
-
+// \/api\/v1\/auth\/reset-password\/[A-Za-z0-9]+
 api.use((req, res, next) => {
 	console.log(req.method, req.path);
 	next();
@@ -35,7 +39,8 @@ api.get('/api/v1/auth/get-account-type', auth.getAccountType);
 
 api.post('/api/v1/auth/sign-in', auth.signIn);
 api.post('/api/v1/auth/login', auth.login);
-api.post('/api/v1/auth/forgoth-password', auth.forgothPassword);
+api.post('/api/v1/auth/forgoth-password', auth.forgotPassword);
+api.post('/api/v1/auth/reset-password/:token', auth.resetPassword);
 
 api.put('/api/v1/auth/updateAccount', auth.updateAccount);
 api.put('/api/v1/auth/changeAccountType', auth.changeAccountType);

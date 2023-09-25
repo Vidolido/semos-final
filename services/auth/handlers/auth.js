@@ -2,6 +2,9 @@
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const validator = require('validator');
+const mg = require('nodemailer-mailgun-transport');
+const nodemailer = require('nodemailer');
+const crypto = require('crypto');
 
 // moddels
 const Account = require('../../../pkg/account');
@@ -108,14 +111,94 @@ const login = async (req, res) => {
 			expiresIn: '2d',
 		});
 		res.status(201).send({ token });
-	} catch (err) {
-		const errors = handleErrors(err);
+	} catch (error) {
+		const errors = handleErrors(error);
 		res.status(400).json({ errors });
 	}
 };
 
-const forgothPassword = async (req, res) => {
-	res.status(200).json({ message: 'it ran' });
+const forgotPassword = async (req, res) => {
+	// console.log(req);
+	const user = await Account.findOne({ email: req.body.email });
+	// const resetUrl = `${req.protocol}://${req.get('host')}/reset-password/token`;
+
+	if (!user) {
+		return res.status(400).send('There is no user with that email.');
+	}
+	const resetToken = crypto.randomBytes(32).toString('hex');
+	let passwordResetToken = crypto
+		.createHash('sha256')
+		.update(resetToken)
+		.digest('hex');
+	let passwordResetExpires = Date.now() + 10 * 60 * 1000;
+	// console.log(resetToken, passwordResetToken, passwordResetExpires);
+	const resetUrl = `${req.protocol}://localhost:3000/reset-password/${resetToken}`;
+	// console.log(resetUrl, user);
+	let payload = {
+		passwordResetToken,
+		passwordResetExpires,
+	};
+	// TODO: Да направам токен за ресетирање на лозинка.
+	try {
+		await Account.updateOne(
+			{
+				_id: user._id,
+			},
+			payload
+		);
+
+		// console.log(upA);
+		const message = `Forgoth your password? Submit this link: <a href=${resetUrl}>${resetUrl}</a>.\n If you did not request this, please ignore this email and your password will remain unchanged.`;
+
+		const auth = {
+			auth: {
+				api_key: config.get('mailgun').api_key,
+				domain: config.get('mailgun').domain,
+			},
+		};
+		// b17bba7208d9ba66b3391ecf745af6be-4b98b89f-c9e1fd0d
+		let transporter = nodemailer.createTransport(mg(auth));
+
+		let mailOptions = {
+			from: 'test@mailgun.org',
+			to: 'imamdesetvidovi@gmail.com',
+			subject: 'Ticket Blaster Password Reset',
+			html: message,
+		};
+
+		// const mail = await transporter.sendMail(mailOptions, (err, info) => {
+		// 	if (err) {
+		// 		console.log(`Error: ${err}`);
+		// 		res.status(400).send({ error: err });
+		// 	} else {
+		// 		console.log(`Response: ${info}`);
+		// 		res.status(200).send({ response: info });
+		// 	}
+		// });
+
+		// OVA PRAKJA MAIL
+		const mail = await transporter.sendMail(mailOptions);
+		console.log(mail);
+
+		if (!mail) {
+			return console.log('There is an error.');
+		}
+
+		res.status(200).json({
+			status: 'success',
+			message: 'Message sent to mail.',
+		});
+	} catch (error) {
+		console.log(error);
+		const errors = handleErrors(error);
+		res.status(400).json({ errors });
+	}
+
+	// res.status(200).json({ message: 'it ran' });
+};
+
+const resetPassword = async (req, res) => {
+	return 'it ran';
 };
 
 const getAllAccounts = async (req, res) => {
@@ -277,7 +360,8 @@ const validate = async (req, res) => {
 module.exports = {
 	signIn,
 	login,
-	forgothPassword,
+	forgotPassword,
+	resetPassword,
 	getAllAccounts,
 	getAccountType,
 	getUserDetails,

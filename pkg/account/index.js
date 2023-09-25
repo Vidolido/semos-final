@@ -27,6 +27,8 @@ const accountSchema = mongoose.Schema({
 	accountImage: {
 		type: String,
 	},
+	passwordResetToken: String,
+	passwordResetExpires: Date,
 });
 
 // accountSchema.path('password').validate(function (value) {

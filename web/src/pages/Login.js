@@ -41,7 +41,7 @@ const Login = () => {
 					/>
 				</div>
 				<div className='formBottom'>
-					<Link className='forgotPass' to='/'>
+					<Link className='forgotPass' to='/forgot-password'>
 						Forgot Password?
 					</Link>
 					<input
