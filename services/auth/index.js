@@ -18,14 +18,27 @@ api.use(
 		algorithms: ['HS256'],
 		secret: config.get('security').jwt_secret,
 	}).unless({
-		// path: ['/api/v1/auth/', '/api/v1/auth/login', '/api/v1/auth/sign-in'],
 		path: [
-			'/api/v1/auth/login',
-			'/api/v1/auth/sign-in',
-			'/api/v1/auth/forgoth-password',
+			/\/api\/v1\/auth\/login/,
+			/\/api\/v1\/auth\/sign-in/,
+			/\/api\/v1\/auth\/forgoth-password/,
+			/^\/api\/v1\/auth\/reset-password\/[0-9a-zA-Z]{64}$/,
 		],
 	})
 );
+// path: ['/api/v1/auth/', '/api/v1/auth/login', '/api/v1/auth/sign-in'],
+// path: [
+// 	'/api/v1/auth/login',
+// 	'/api/v1/auth/sign-in',
+// 	'/api/v1/auth/forgoth-password',
+// ],
+
+// path: [
+// 	/\/api\/v1\/auth\/login/,
+// 	/\/api\/v1\/auth\/sign-in/,
+// 	/\/api\/v1\/auth\/forgoth-password/,
+// 	/\/api\/v1\/auth\/reset-password\/[A-Za-z0-9]+/,
+// ]
 // \/api\/v1\/auth\/reset-password\/[A-Za-z0-9]+
 api.use((req, res, next) => {
 	console.log(req.method, req.path);

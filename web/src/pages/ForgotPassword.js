@@ -1,21 +1,28 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 
+import validator from 'validator';
+
 import { useAuth } from '../hooks/useAuth';
 
 const ForgotPassword = () => {
 	const [email, setEmail] = useState('');
+	const [message, setMessage] = useState(null);
 	const { forgotPassword } = useAuth();
 
 	const hanldeOnChange = (e) => {
 		setEmail(e.target.value);
+		setMessage(null);
 	};
 
 	const handleSubmit = (e) => {
 		e.preventDefault();
-		forgotPassword(email);
+		validator.isEmail(email) &&
+			forgotPassword(email).then((res) => {
+				setMessage(res);
+				setEmail('');
+			});
 	};
-	// console.log(email)
 	return (
 		<div>
 			<h1>Forgot Password</h1>
@@ -34,6 +41,8 @@ const ForgotPassword = () => {
 				/>
 				<Link to='/login'>Back to login</Link>
 			</form>
+			{message && console.log(message)}
+			{message && <span>{message.message}</span>}
 		</div>
 	);
 };

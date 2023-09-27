@@ -63,8 +63,57 @@ export const useAuth = () => {
 		}
 	};
 
-	const forgotPassword = async () => {
-		console.log('itRan');
+	const forgotPassword = async (email) => {
+		setIsLoading(true);
+		setError(null);
+
+		const res = await fetch('/api/v1/auth/forgoth-password', {
+			method: 'POST',
+			headers: {
+				'Content-Type': 'application/json',
+			},
+			body: JSON.stringify({ email }),
+		});
+
+		const jsonRes = await res.json();
+		console.log('itRan', jsonRes);
+
+		if (!res.ok) {
+			setIsLoading(false);
+			setError(jsonRes.errors);
+		}
+		if (res.ok) {
+			setIsLoading(false);
+			setError(null);
+
+			return jsonRes;
+		}
+	};
+
+	const resetPassword = async (token, password, confirmPassword) => {
+		setIsLoading(true);
+		setError(null);
+
+		const res = await fetch(`/api/v1/auth/reset-password/${token}`, {
+			method: 'POST',
+			headers: {
+				'Content-Type': 'application/json',
+			},
+			body: JSON.stringify({ password, confirmPassword }),
+		});
+
+		const jsonRes = await res.json();
+		console.log(jsonRes);
+		if (!res.ok) {
+			setIsLoading(false);
+			setError(jsonRes.errors);
+		}
+		if (res.ok) {
+			setIsLoading(false);
+			setError(null);
+
+			return jsonRes;
+		}
 	};
 
 	const getAllAccounts = async () => {
@@ -226,6 +275,7 @@ export const useAuth = () => {
 		login,
 		logout,
 		forgotPassword,
+		resetPassword,
 		getAllAccounts,
 		deleteAccount,
 		changeAccountType,

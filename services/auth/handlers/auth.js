@@ -130,7 +130,7 @@ const forgotPassword = async (req, res) => {
 		.createHash('sha256')
 		.update(resetToken)
 		.digest('hex');
-	let passwordResetExpires = Date.now() + 10 * 60 * 1000;
+	let passwordResetExpires = Date.now() + 30 * 60 * 1000;
 	// console.log(resetToken, passwordResetToken, passwordResetExpires);
 	const resetUrl = `${req.protocol}://localhost:3000/reset-password/${resetToken}`;
 	// console.log(resetUrl, user);
@@ -161,20 +161,10 @@ const forgotPassword = async (req, res) => {
 
 		let mailOptions = {
 			from: 'test@mailgun.org',
-			to: 'imamdesetvidovi@gmail.com',
+			to: 'levkovskigoce04@gmail.com',
 			subject: 'Ticket Blaster Password Reset',
 			html: message,
 		};
-
-		// const mail = await transporter.sendMail(mailOptions, (err, info) => {
-		// 	if (err) {
-		// 		console.log(`Error: ${err}`);
-		// 		res.status(400).send({ error: err });
-		// 	} else {
-		// 		console.log(`Response: ${info}`);
-		// 		res.status(200).send({ response: info });
-		// 	}
-		// });
 
 		// OVA PRAKJA MAIL
 		const mail = await transporter.sendMail(mailOptions);
@@ -198,7 +188,88 @@ const forgotPassword = async (req, res) => {
 };
 
 const resetPassword = async (req, res) => {
-	return 'it ran';
+	// console.log(req.body, req.params);
+	const { token } = req.params;
+	const { password, confirmPassword } = req.body;
+	try {
+		const hashedToken = crypto.createHash('sha256').update(token).digest('hex');
+
+		const user = await Account.findOne({
+			passwordResetToken: hashedToken,
+			passwordResetExpires: { $gt: Date.now() },
+		});
+
+		if (!user) {
+			throw {
+				code: 400,
+				errorMessage: 'Token is invalid or has expired.',
+				for: 'user',
+				message: 'Custom error',
+			};
+		}
+
+		if (password !== confirmPassword) {
+			throw {
+				code: 400,
+				errorMessage: 'Passwords do not match.',
+				for: 'password',
+				message: 'Custom error',
+			};
+		}
+
+		if (password && bcrypt.compareSync(password, user.password)) {
+			throw {
+				code: 400,
+				errorMessage: "New password can't be same as the old password.",
+				for: 'password',
+				message: 'Custom error',
+			};
+		}
+
+		if (password && !validator.isStrongPassword(password)) {
+			throw {
+				code: 400,
+				errorMessage: 'Password not strong enough.',
+				for: 'password',
+				message: 'Custom error',
+			};
+		}
+
+		let payload = {};
+		if (password) {
+			const salt = await bcrypt.genSalt();
+			let hashed = await bcrypt.hash(password, salt);
+			payload = {
+				password: hashed,
+				passwordResetToken: '',
+				passwordResetExpires: '',
+			};
+		}
+
+		console.log(payload, user);
+		const upA = await Account.updateOne(
+			{
+				_id: user._id,
+			},
+			payload
+		);
+		if (upA.acknowledged) {
+			return res
+				.status(200)
+				.send({ message: 'Account updated successfully.', upA });
+		}
+		if (!upA.acknowledged) {
+			return res
+				.status(400)
+				.send({ message: 'Something went wrong.Please try again.' });
+		}
+		// console.log(user);
+		// res.status(200).json({ message: 'it ran' });
+	} catch (error) {
+		console.log(error);
+		const errors = handleErrors(error);
+		res.status(400).json({ errors });
+	}
 };
 
 const getAllAccounts = async (req, res) => {

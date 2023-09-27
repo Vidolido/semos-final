@@ -12,6 +12,7 @@ import Home from './pages/Home';
 import Login from './pages/Login';
 import Signin from './pages/Signin';
 import ForgotPassword from './pages/ForgotPassword';
+import ResetPassword from './pages/ResetPassword';
 import Search from './pages/Search';
 import TicketHisotry from './pages/TicketHisotry';
 import UserDetails from './pages/UserDetails';
@@ -58,10 +59,8 @@ function App() {
 						path='/signin'
 						element={!user ? <Signin /> : <Navigate to='/' />}
 					/>
-					<Route
-						path='/forgot-password'
-						element={!user ? <ForgotPassword /> : <Navigate to='/' />}
-					/>
+					<Route path='/forgot-password' element={<ForgotPassword />} />
+					<Route path='/reset-password/:token' element={<ResetPassword />} />
 					<Route
 						path='/user/cart'
 						element={user ? <ShoppingCart /> : <Navigate to='/' />}
