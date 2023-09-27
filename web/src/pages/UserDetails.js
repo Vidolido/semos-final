@@ -117,7 +117,7 @@ const UserDetails = () => {
 			</form>
 			<div className='changePassword'>
 				<div className='top flex space-between width-35per'>
-					<h3 className='ml-35'>Password</h3>
+					<h3>Password</h3>
 					<button
 						className='btn-purpleToWhite'
 						onClick={() => setIsHidden(!isHidden)}>

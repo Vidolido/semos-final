@@ -1,0 +1,212 @@
+.inputField {
+	width: 100%;
+	min-width: 70px;
+	border: 1px solid black;
+	padding: 6px 20px;
+	border-radius: 40px;
+	font-size: 0.9em;
+	font-family: 'Lato', sans-serif;
+	font-weight: 400;
+	letter-spacing: -1px;
+	color: black;
+}
+
+/* uploadButton */
+.inputContainer {
+	position: relative;
+}
+
+.imageLabel {
+	color: white;
+	position: absolute;
+	text-align: center;
+
+	width: 85px;
+	left: 50%;
+	bottom: 5%;
+	transform: translate(-50%, 5%);
+	z-index: 8;
+	cursor: pointer;
+}
+.uploadButton {
+	margin-top: 25px;
+	opacity: 0;
+	cursor: pointer;
+	position: relative;
+	z-index: 9;
+	background-color: transparent;
+}
+
+.maskButton {
+	position: absolute;
+
+	left: 0;
+	bottom: 0px;
+	cursor: pointer;
+
+	background-color: black;
+	color: white;
+	z-index: 1;
+}
+.inputContainer .imageContainer {
+	width: 100%;
+	height: 200px;
+}
+.form {
+	width: 260px;
+}
+
+.form div {
+	width: 100%;
+}
+
+.form label {
+	display: block;
+	width: 100%;
+	font-size: 0.8em;
+	letter-spacing: -1px;
+	font-weight: 700;
+	margin: 10px 0 5px 0;
+}
+
+.form input,
+.form select {
+	width: 100%;
+	border: 1px solid black;
+	padding: 6px 20px;
+	border-radius: 40px;
+	font-size: 0.9em;
+	font-family: 'Lato', sans-serif;
+	font-weight: 400;
+	letter-spacing: -1px;
+	color: black;
+}
+.form select {
+	background-color: transparent;
+}
+
+.form textarea {
+	width: 100%;
+	height: 50%;
+	border: 1px solid black;
+	padding: 6px 20px;
+	border-radius: 10px;
+	font-size: 0.9em;
+	font-family: 'Lato', sans-serif;
+	font-weight: 400;
+	letter-spacing: -1px;
+	color: black;
+}
+
+.form input[type='submit'] {
+	border: 1px solid #ff48ab;
+	background-color: #ff48ab;
+	margin: 15px 0;
+	color: white;
+	cursor: pointer;
+	transition: all 0.2s ease;
+}
+
+.form input[type='submit']:hover {
+	color: black;
+	background-color: white;
+}
+
+.form a {
+	display: block;
+	text-align: center;
+	text-decoration: none;
+	border: 1px solid #ff48ab;
+	border-radius: 40px;
+	background-color: white;
+	margin: 15px 0;
+	padding: 6px 20px;
+
+	font-size: 0.9em;
+	font-family: 'Lato', sans-serif;
+	font-weight: 400;
+	letter-spacing: -1px;
+
+	color: black;
+	cursor: pointer;
+	transition: all 0.2s ease;
+}
+
+.form a:hover {
+	text-decoration: underline;
+}
+.formBottom {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+}
+
+.formBottom .forgotPass {
+	display: inline-block;
+	border: none;
+	text-decoration: underline;
+	padding: 0;
+}
+
+.formBottom .login {
+	width: 100px !important;
+}
+.form .error {
+	display: inline-block;
+	margin-left: 10px;
+	font-size: 0.7em;
+	color: red;
+}
+
+/* Events form */
+
+.form .eventInputs {
+	display: flex;
+	gap: 20px;
+	max-height: 255px;
+}
+
+.form .userDetails {
+	display: flex;
+}
+
+.form .userDetails .avatar {
+	flex: 0;
+	/* margin-left: 30px; */
+}
+
+.form .userInputs .inputContainer .imageContainer {
+	width: 100px;
+	height: 100px;
+	border-radius: 50px;
+	margin: 0 auto;
+}
+
+.form .userInputs .inputContainer .uploadButton,
+.form .userInputs .inputContainer .maskButton {
+	margin-top: 10px;
+}
+
+.form .userDetails .info .fullName label {
+	margin: 0px 0 18px 0;
+	font-size: 1em;
+	font-weight: 400;
+}
+
+.form .userDetails .info .email label {
+	margin: 18px 0 10px 0;
+	font-size: 1em;
+	font-weight: 400;
+}
+
+.form .userSubmit input[type='submit'] {
+	width: 100px;
+	/* margin-left: 30px; */
+	border: 1px solid black;
+	background-color: black;
+	color: white;
+}
+.form .userSubmit input:hover {
+	background-color: white;
+	color: black;
+}

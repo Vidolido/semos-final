@@ -1,11 +1,9 @@
-import { useState } from 'react';
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import { useAuth } from './hooks/useAuth';
 
 import './App.css';
 // components
 import Navbar from './components/Navbar';
-import Modal from './components/Modal';
 
 // pages
 import Home from './pages/Home';
@@ -27,27 +25,18 @@ import CheckOut from './pages/CheckOut';
 import ThankYou from './pages/ThankYou';
 
 function App() {
-	// const initialModalState = {
-	// 	show: false,
-	// 	message: '',
-	// 	action: '',
-	// 	id: '',
-	// };
-
 	const { user } = useAuth();
-	// const [modalOptions, setModalOptions] = useState(initialModalState);
 
 	return (
 		<BrowserRouter>
-			<Navbar />
+			<div className='navbarContainer'>
+				<Navbar />
+			</div>
 			<div className='pages'>
 				<Routes>
 					<Route path='/' element={<Home />} />
 
-					<Route
-						path='/search/'
-						element={<Search /> /** ova da go popravam */}
-					/>
+					<Route path='/search/' element={<Search />} />
 					<Route path='/search/:searchTerm' element={<Search />} />
 					<Route path='/events/about/:id' element={<About />} />
 					<Route path='/category/:cat' element={<Category />} />

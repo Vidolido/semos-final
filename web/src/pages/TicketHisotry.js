@@ -17,14 +17,21 @@ const TicketHisotry = () => {
 			<UserNav title='Ticket Hisotry' />
 			<div className='twoColumnGrid'>
 				{tickets &&
-					tickets.map((ticket) => (
-						<div key={ticket.event._id} className='categoryEvents eventGrid'>
-							<EventCard event={ticket.event} showDiscription={true} />
-							<div className='buttons buttonItems item5'>
-								<button className='btn-blackToPurple'>Print Ticket</button>
+					tickets.map((ticket) => {
+						let opacity = Date.now() > new Date(ticket.event.eventDate);
+						return (
+							<div
+								key={ticket.event._id}
+								className={`categoryEvents eventGrid ${
+									opacity && 'opacity5'
+								} `}>
+								<EventCard event={ticket.event} showDiscription={true} />
+								<div className='buttons buttonItems item5'>
+									<button className='btn-blackToPurple'>Print Ticket</button>
+								</div>
 							</div>
-						</div>
-					))}
+						);
+					})}
 			</div>
 		</div>
 	);

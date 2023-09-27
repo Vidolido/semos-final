@@ -1,0 +1,154 @@
+/* single classes */
+.text-white {
+	color: white;
+}
+
+.text-center {
+	text-align: center;
+}
+
+.tD-none {
+	text-decoration: none;
+}
+
+.block {
+	display: block;
+}
+.inlineBlock {
+	display: inline-block;
+}
+
+.black-border {
+	border: 1px solid black;
+}
+
+.black-background {
+	background-color: black;
+}
+
+.black-background:hover {
+	background-color: white;
+}
+
+.white-background {
+	background-color: white;
+}
+
+.white-background:hover {
+	background-color: black;
+}
+
+.border-radius-50 {
+	border-radius: 50px;
+}
+
+.button-padding {
+	padding: 6px 15px;
+}
+
+.whiteText {
+	color: white;
+}
+
+.whiteText:hover {
+	color: black;
+}
+
+.blackText {
+	color: black;
+}
+
+.blackText:hover {
+	color: white;
+}
+
+.purpleText {
+	color: #ff48ab;
+}
+
+.boldText {
+	font-weight: 600;
+}
+
+.smallText {
+	font-size: 0.7em;
+}
+.mediumText {
+	font-size: 0.9em;
+}
+.bigText {
+	font-size: 1.2em;
+}
+
+.full-width {
+	width: 100%;
+}
+.half-width {
+	width: 50%;
+}
+
+.width-35per {
+	width: 35%;
+}
+
+.width-150 {
+	width: 150px;
+}
+
+.m-0 {
+	margin: 0;
+}
+.ml-10 {
+	margin-left: 10px;
+}
+.ml-35 {
+	margin-left: 35px;
+}
+.mt-5 {
+	margin-top: 5px;
+}
+.mt-10 {
+	margin-top: 10px;
+}
+.mt-20 {
+	margin-top: 20px;
+}
+.mt-50 {
+	margin-top: 50px;
+}
+.mb-10 {
+	margin-bottom: 10px;
+}
+.mb-20 {
+	margin-bottom: 20px;
+}
+.mb-50 {
+	margin-bottom: 50px;
+}
+.mb-15 {
+	margin-bottom: 15px;
+}
+.flex {
+	display: flex;
+}
+
+.flex-shrink {
+	flex: 1 0;
+}
+.flex-grow {
+	flex: 2 0;
+}
+
+.space-between {
+	justify-content: space-between;
+}
+.align-center {
+	align-items: center;
+}
+
+.gap-30 {
+	gap: 30px;
+}
+.gap-20 {
+	gap: 20px;
+}
