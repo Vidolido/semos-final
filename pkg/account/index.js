@@ -31,35 +31,10 @@ const accountSchema = mongoose.Schema({
 	passwordResetExpires: Date,
 });
 
-// accountSchema.path('password').validate(function (value) {
-// 	console.log(validator.isStrongPassword(value));
-// 	// When running in `validate()` or `validateSync()`, the
-// 	// validator can access the document using `this`.
-// 	// When running with update validators, `this` is the Query,
-// 	// **not** the document being updated!
-// 	// Queries have a `get()` method that lets you get the
-// 	// updated value.
-// 	console.log(this._update);
-// 	console.log(value, 'VALUE');
-// 	// if (this.get('name') && this.get('name').toLowerCase().indexOf('red') !== -1) {
-// 	//   return value === 'red';
-// 	// }
-// 	return validator.isStrongPassword(value);
-// });
-
 accountSchema.pre('save', async function (next) {
 	const salt = await bcrypt.genSalt();
 	this.password = await bcrypt.hash(this.password, salt);
 	next();
 });
-
-// accountSchema.pre('updateOne', async function (next) {
-// 	console.log('query criteria', this.getQuery()); // { _id: 5bc8d61f28c8fc16a7ce9338 }
-// 	console.log(this._update); // { '$set': { name: 'I was updated!' } }
-// 	console.log(this._conditions);
-// 	console.log(this.options);
-// 	this.options.runValidators = true;
-// 	next();
-// });
 
 module.exports = mongoose.model('Account', accountSchema);

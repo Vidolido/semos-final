@@ -21,14 +21,7 @@
 
 .singleUserEvents .info .basic h3 {
 	display: inline;
-	/* display: flex; */
-	/* align-items: baseline; */
 }
-
-/* .singleUserEvents .info .imageContainer {
-	width: 200px;
-	height: 100px;
-} */
 
 .singleUserEvents .info .imageContainer {
 	width: 90px;

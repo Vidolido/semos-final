@@ -59,7 +59,7 @@ export const useAuth = () => {
 			dispatch({ type: LOGIN, payload: jsonRes });
 
 			setIsLoading(false);
-			setError(null); // ova go dodadov posledno
+			setError(null);
 		}
 	};
 
@@ -76,7 +76,6 @@ export const useAuth = () => {
 		});
 
 		const jsonRes = await res.json();
-		console.log('itRan', jsonRes);
 
 		if (!res.ok) {
 			setIsLoading(false);
@@ -103,7 +102,6 @@ export const useAuth = () => {
 		});
 
 		const jsonRes = await res.json();
-		console.log(jsonRes);
 		if (!res.ok) {
 			setIsLoading(false);
 			setError(jsonRes.errors);
@@ -129,7 +127,6 @@ export const useAuth = () => {
 
 		const jsonRes = await res.json();
 
-		// console.log(jsonRes);
 		if (res.ok) {
 			setIsLoading(false);
 			setError(null);
@@ -142,9 +139,6 @@ export const useAuth = () => {
 			setError(jsonRes.erros);
 		}
 	};
-
-	// DA JA PISHAM
-	// const getCurentUser = async () => {};
 
 	const getUserDetails = async () => {
 		setIsLoading(true);
@@ -159,14 +153,11 @@ export const useAuth = () => {
 
 		const jsonRes = await res.json();
 
-		// console.log(res, jsonRes);
 		if (res.ok) return jsonRes;
 	};
 
 	const logout = () => {
 		localStorage.removeItem('TicketBlasterUser');
-		// го бришеме корисникот од AuthContext
-		// TODO: да проверам дали треба уште нешто да исчистам од state-от после logout
 		dispatch({ type: LOGOUT });
 	};
 
@@ -190,7 +181,6 @@ export const useAuth = () => {
 		}
 		if (!res.ok) {
 			setIsLoading(false);
-			// setError(null); // kakvi errori?
 			return false;
 		}
 	};
@@ -200,12 +190,6 @@ export const useAuth = () => {
 			let fileName = await uploadFile(updateOptions.accountImage);
 			updateOptions.accountImage = fileName;
 		}
-		// console.log(updateOptions);
-
-		// let filteredOptions = Object.fromEntries(
-		// 	Object.entries(updateOptions).filter(([_, v]) => v !== '')
-		// );
-		// console.log(filteredOptions);
 		const res = await fetch('/api/v1/auth/updateAccount', {
 			method: 'PUT',
 			headers: {
@@ -214,23 +198,19 @@ export const useAuth = () => {
 			},
 			body: JSON.stringify(updateOptions),
 		});
-		// console.log(updateOptions);
 		const jsonRes = await res.json();
 
 		if (res.ok) {
 			setError(null);
 		}
 		if (!res.ok) {
-			// console.log(res, jsonRes.errors);
 			setError(jsonRes.errors);
-			// console.log();
 		}
 	};
 
 	const changeAccountType = async (id) => {
 		setIsLoading(true);
 
-		console.log(id);
 		const res = await fetch('/api/v1/auth/changeAccountType', {
 			method: 'PUT',
 			headers: {
@@ -242,12 +222,9 @@ export const useAuth = () => {
 
 		const jsonRes = await res.json();
 
-		// console.log(res, jsonRes, 'OVIE');
 		if (!res.ok) {
-			// console.log(res, jsonRes.errors);
 			setIsLoading(false);
 			setError(jsonRes.errors);
-			// console.log();
 			return false;
 		}
 		if (res.ok) {

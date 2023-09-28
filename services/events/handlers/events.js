@@ -1,9 +1,6 @@
 const Event = require('../../../pkg/events');
 
-//TODO: Да ставам соодветни статуси.
-
 const handleErrors = (err) => {
-	// console.log(err, 'TUKA SHTAMPAM NEKOJ ERROR');
 	let errors = {
 		eventName: '',
 		category: '',
@@ -15,12 +12,10 @@ const handleErrors = (err) => {
 	};
 	if (err.message.includes('Event validation failed')) {
 		Object.values(err.errors).forEach(({ properties }) => {
-			// console.log(err);
 			errors[properties.path] = properties.message;
 		});
 	} else if (err.message.includes('Custom error')) {
 		errors[err.for] = err.errorMessage;
-		//TODO: да проверам што ќе се случи во случај на повеќе custom errors -- проверив, не ги фаќа.
 	}
 
 	return errors;
@@ -38,7 +33,6 @@ const getAllEvents = async (req, res) => {
 
 const getUserEvents = async (req, res) => {
 	try {
-		// TODO: Да исхендлам грешки
 		let userEvents = await Event.find({ adminId: req.auth.id });
 
 		return res.status(200).json(userEvents);
@@ -56,7 +50,6 @@ const getHeroEvent = async (req, res) => {
 		} else {
 			let random = Math.floor(Math.random() * events.length);
 			const hero = events[random];
-			// console.log(events, random, test);
 			return res.status(200).send(hero);
 		}
 	} catch (err) {
@@ -68,7 +61,6 @@ const getHeroEvent = async (req, res) => {
 
 const getSingleEvent = async (req, res) => {
 	try {
-		// TODO: Да исхендлам грешки
 		let singleEvent = await Event.findOne({ _id: req.body.id }).populate({
 			path: 'relatedEvents',
 			model: Event,
@@ -105,7 +97,6 @@ const getRelatedEvents = async (req, res) => {
 const getEventsByCategory = async (req, res) => {
 	try {
 		let evetnsByCat = await Event.find({ category: req.params.category });
-		// console.log(evetnsByCat);
 		if (!evetnsByCat.length) {
 			return res
 				.status(200)
@@ -156,15 +147,15 @@ const createEvent = async (req, res) => {
 };
 
 const updateEvent = async (req, res) => {
-	console.log(req);
+	console.log(req.body, 'ova sakame');
+	let filteredOptions = Object.fromEntries(
+		Object.entries(req.body).filter(
+			([k, v]) => k !== '0' && k !== '_id' && k !== '__v'
+		)
+	);
+	console.log(filteredOptions);
 	try {
-		// На овој начин само Account-от што го креирал Event-от, може да прави промени.
-		// Да направам по accountType: admin, за да може само админ да прави промени.
-		const upE = await Event.updateOne(
-			// { _id: req.params.id, adminId: req.auth.id },
-			{ _id: req.params.id },
-			...req.body
-		);
+		const upE = await Event.updateOne({ _id: req.params.id }, filteredOptions);
 		if (!upE.matchedCount)
 			return res.status(404).send({ message: 'No such event was found.' });
 

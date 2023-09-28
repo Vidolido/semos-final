@@ -14,7 +14,6 @@ const ResetPassword = () => {
 			...prevState,
 			[e.target.name]: e.target.value,
 		}));
-		// setMessage(null);
 	};
 
 	const handleSubmit = (e) => {
@@ -22,7 +21,6 @@ const ResetPassword = () => {
 		resetPassword(token, state.password, state.confirmPassword);
 		<Navigate to='/login' />;
 	};
-	// console.log(state);
 	return (
 		<div>
 			<h1>Reset Password</h1>

@@ -16,7 +16,6 @@ const userTickets = async (req, res) => {
 				eventImage: 1,
 			},
 		});
-		// console.log(userTickets);
 		res.status(200).send(userTickets);
 	} catch (err) {
 		console.log(err);

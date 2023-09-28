@@ -12,7 +12,6 @@ const UserCard = ({ singleUser }) => {
 		downloadFile(singleUser.accountImage).then((file) => setImage(file));
 	}, []);
 
-	// console.log(singleUser);
 	return (
 		<Fragment>
 			<div className='info'>

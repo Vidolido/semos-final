@@ -36,14 +36,7 @@ const UserEvents = () => {
 			button: 'Delete Event',
 			id,
 		}));
-		// if (isDeleted) {
-		// 	setReset(true);
-		// }
-		// const deleted = deleteEvent(id);
-		// if (deleted) {
-		// }
 	};
-	console.log(modalOptions, 'SOMETHING');
 	return (
 		<div>
 			<UserNav title='Events' />

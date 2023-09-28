@@ -35,18 +35,14 @@
 	display: block;
 	text-align: center;
 	text-decoration: none;
-	/* min-width: 200px;
-	width: 260px; */
 	border: none;
 	border-radius: 40px;
-	/* background-color: #ff48ab; */
 	background-color: white;
 	padding: 10px 25px;
 
 	font-size: 1.1rem;
 	font-family: 'Lato', sans-serif;
 	font-weight: 700;
-	/* letter-spacing: x; */
 
 	color: black;
 	cursor: pointer;

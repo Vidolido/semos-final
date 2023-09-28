@@ -1,8 +1,5 @@
 import { useEffect, useState } from 'react';
 import { useAuth } from '../hooks/useAuth';
-// import { useStorage } from '../hooks/useStorage';
-
-// import noImage from '../misc/no-event-image.jpg';
 // components
 import UserNav from '../components/UserNav';
 import UserCard from '../components/UserCard';
@@ -15,7 +12,6 @@ const UserAll = () => {
 		action: '',
 		id: '',
 	};
-	// TODO: да поставам услов, само доколку е админ да може да ги листа сите корисници
 	const [isDeleted, setIsDeleted] = useState();
 	const [modalOptions, setModalOptions] = useState(initialModalState);
 
@@ -47,12 +43,7 @@ const UserAll = () => {
 			button: 'Delete User',
 			id,
 		}));
-		// let isDeleted = deleteAccount(id);
-		// if (isDeleted) {
-		// 	setIsDeleted(true);
-		// }
 	};
-	// console.log(accountImages);
 	return (
 		<div>
 			<UserNav title='Users' />

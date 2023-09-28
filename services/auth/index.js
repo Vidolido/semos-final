@@ -26,20 +26,7 @@ api.use(
 		],
 	})
 );
-// path: ['/api/v1/auth/', '/api/v1/auth/login', '/api/v1/auth/sign-in'],
-// path: [
-// 	'/api/v1/auth/login',
-// 	'/api/v1/auth/sign-in',
-// 	'/api/v1/auth/forgoth-password',
-// ],
 
-// path: [
-// 	/\/api\/v1\/auth\/login/,
-// 	/\/api\/v1\/auth\/sign-in/,
-// 	/\/api\/v1\/auth\/forgoth-password/,
-// 	/\/api\/v1\/auth\/reset-password\/[A-Za-z0-9]+/,
-// ]
-// \/api\/v1\/auth\/reset-password\/[A-Za-z0-9]+
 api.use((req, res, next) => {
 	console.log(req.method, req.path);
 	next();

@@ -2,11 +2,7 @@
 const Event = require('../../../pkg/events');
 const Cart = require('../../../pkg/cart');
 
-// TODO: Оваа функција да ја сместам во misc секаде ја користам
-// треба да прима параметри, err и errObject
 const handleErrors = (err) => {
-	console.log(err);
-
 	let errors = {
 		accountId: '',
 	};
@@ -23,7 +19,6 @@ const handleErrors = (err) => {
 	} else if (err.message.includes('Custom error')) {
 		errors[err.for] = err.errorMessage;
 	}
-	// console.log(errors);
 
 	return errors;
 };
@@ -54,7 +49,6 @@ const getCart = async (req, res) => {
 				},
 			},
 		});
-		// console.log(cart);
 		return res.status(200).send(cart);
 	} catch (err) {
 		const errors = handleErrors(err);
@@ -75,8 +69,6 @@ const addToCart = async (req, res) => {
 			};
 		}
 
-		// TODO: Да поставам услов, доколку го има настанот, да прашам
-		// дали корисникот сака да докупи карти за овој настан.
 		let isInArray = cart.cartItems.some((item) => {
 			return item.event.equals(req.body.event);
 		});

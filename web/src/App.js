@@ -87,12 +87,8 @@ function App() {
 						path='/user/ticket-history'
 						element={user ? <TicketHisotry /> : <Navigate to='/login' />}
 					/>
-					{/* Да направам 404 рута */}
 				</Routes>
 			</div>
-			{/* {modalOptions.show && (
-				<Modal modalOptions={modalOptions} setModalOptions={setModalOptions} />
-			)} */}
 		</BrowserRouter>
 	);
 }

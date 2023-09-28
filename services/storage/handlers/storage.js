@@ -1,11 +1,7 @@
 const path = require('path');
 const strings = require('../../../pkg/strings');
 
-// во request-от да праќам некакво ID за да ја разликува сликата доколку има повеќе event-и со исто име.
-// ако не постои патека /uploads не ја креира, треба со fs на windows
 const upload = async (req, res) => {
-	// console.log(req.auth, 'vo handler');
-	// console.log(req.body, 'vo handler');
 	const { file } = req.files;
 	let fileTypes = [
 		'image/png',
@@ -16,7 +12,6 @@ const upload = async (req, res) => {
 	];
 	let maxFileSize = 1024 * 1024;
 
-	// TODO: Да вратам errors како на секаде.
 	if (!fileTypes.includes(file.mimetype)) {
 		return res.status(400).send('Not supported file type');
 	}
@@ -27,13 +22,10 @@ const upload = async (req, res) => {
 
 	let newFileName = `${strings.rng(10)}_${file.name}`;
 
-	const uploadsPath = path.join(__dirname, '/../../../uploads/');
-
-	// console.log(uploadsPath, 'noviot pat');
+	// const uploadsPath = path.join(__dirname, '/../../../uploads/');
 
 	let fileLocation = `${__dirname}/../../../uploads/${newFileName}`;
 	await file.mv(fileLocation);
-	// console.log(file);
 	res.status(201).send({ fileName: newFileName });
 };
 

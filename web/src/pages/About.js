@@ -5,7 +5,11 @@ import { useEvents } from '../hooks/useEvents';
 import SingleEvent from '../components/SingleEvent';
 const About = () => {
 	const { id } = useParams();
-	const { getSingleEvent, event } = useEvents();
+	const { getSingleEvent, clearState, event } = useEvents();
+
+	useEffect(() => {
+		clearState();
+	}, []);
 
 	useEffect(() => {
 		getSingleEvent(id);

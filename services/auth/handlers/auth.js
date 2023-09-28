@@ -32,7 +32,6 @@ const handleErrors = (err) => {
 		});
 	} else if (err.message.includes('Custom error')) {
 		errors[err.for] = err.errorMessage;
-		//TODO: да проверам што ќе се случи во случај на повеќе custom errors -- проверив, не ги фаќа.
 	}
 
 	return errors;
@@ -43,7 +42,6 @@ const signIn = async (req, res) => {
 	let collectionLength = await Account.count();
 	try {
 		if (password !== confirmPassword) {
-			// console.log(password, confirmPassword);
 			throw {
 				code: 400,
 				errorMessage: 'Passwords do not match',
@@ -73,7 +71,6 @@ const signIn = async (req, res) => {
 		});
 		res.status(201).send({ token });
 	} catch (err) {
-		console.log(err);
 		const errors = handleErrors(err);
 		res.status(400).json({ errors });
 	}
@@ -81,7 +78,7 @@ const signIn = async (req, res) => {
 
 const login = async (req, res) => {
 	try {
-		const { email, password } = req.body; // tuka napraviv promena ^
+		const { email, password } = req.body;
 		const acc = await Account.findOne({ email });
 		if (!acc) {
 			throw {
@@ -118,9 +115,7 @@ const login = async (req, res) => {
 };
 
 const forgotPassword = async (req, res) => {
-	// console.log(req);
 	const user = await Account.findOne({ email: req.body.email });
-	// const resetUrl = `${req.protocol}://${req.get('host')}/reset-password/token`;
 
 	if (!user) {
 		return res.status(400).send('There is no user with that email.');
@@ -131,14 +126,11 @@ const forgotPassword = async (req, res) => {
 		.update(resetToken)
 		.digest('hex');
 	let passwordResetExpires = Date.now() + 30 * 60 * 1000;
-	// console.log(resetToken, passwordResetToken, passwordResetExpires);
 	const resetUrl = `${req.protocol}://localhost:3000/reset-password/${resetToken}`;
-	// console.log(resetUrl, user);
 	let payload = {
 		passwordResetToken,
 		passwordResetExpires,
 	};
-	// TODO: Да направам токен за ресетирање на лозинка.
 	try {
 		await Account.updateOne(
 			{
@@ -147,7 +139,6 @@ const forgotPassword = async (req, res) => {
 			payload
 		);
 
-		// console.log(upA);
 		const message = `Forgoth your password? Submit this link: <a href=${resetUrl}>${resetUrl}</a>.\n If you did not request this, please ignore this email and your password will remain unchanged.`;
 
 		const auth = {
@@ -156,7 +147,6 @@ const forgotPassword = async (req, res) => {
 				domain: config.get('mailgun').domain,
 			},
 		};
-		// b17bba7208d9ba66b3391ecf745af6be-4b98b89f-c9e1fd0d
 		let transporter = nodemailer.createTransport(mg(auth));
 
 		let mailOptions = {
@@ -166,9 +156,7 @@ const forgotPassword = async (req, res) => {
 			html: message,
 		};
 
-		// OVA PRAKJA MAIL
 		const mail = await transporter.sendMail(mailOptions);
-		console.log(mail);
 
 		if (!mail) {
 			return console.log('There is an error.');
@@ -183,12 +171,9 @@ const forgotPassword = async (req, res) => {
 		const errors = handleErrors(error);
 		res.status(400).json({ errors });
 	}
-
-	// res.status(200).json({ message: 'it ran' });
 };
 
 const resetPassword = async (req, res) => {
-	// console.log(req.body, req.params);
 	const { token } = req.params;
 	const { password, confirmPassword } = req.body;
 	try {
@@ -246,7 +231,6 @@ const resetPassword = async (req, res) => {
 			};
 		}
 
-		console.log(payload, user);
 		const upA = await Account.updateOne(
 			{
 				_id: user._id,
@@ -263,8 +247,6 @@ const resetPassword = async (req, res) => {
 				.status(400)
 				.send({ message: 'Something went wrong.Please try again.' });
 		}
-		// console.log(user);
-		// res.status(200).json({ message: 'it ran' });
 	} catch (error) {
 		console.log(error);
 		const errors = handleErrors(error);
@@ -288,7 +270,6 @@ const getAllAccounts = async (req, res) => {
 
 const getAccountType = async (req, res) => {
 	try {
-		// TODO: Ако не е логиран.
 		return res.status(200).send({ accountType: req.auth.accountType });
 	} catch (err) {
 		console.log(err);
@@ -316,7 +297,6 @@ const changeAccountType = async (req, res) => {
 	try {
 		const { id } = req.body;
 		const account = await Account.findOne({ _id: id }).select('accountType');
-		console.log(account);
 		const upA = await Account.updateOne(
 			{
 				_id: id,
@@ -326,8 +306,6 @@ const changeAccountType = async (req, res) => {
 		return res
 			.status(200)
 			.send({ message: 'Account updated successfully.', upA });
-		// console.log(account);
-		// return res.status(200).send({ message: account });
 	} catch (error) {
 		console.log(error);
 		const errors = handleErrors(error);
@@ -423,9 +401,7 @@ const deleteAccount = async (req, res) => {
 };
 
 const validate = async (req, res) => {
-	// TODO: да проверам за грешки.
-	console.log(req.auth);
-	return res.status(200).send(req.auth); // return the token payload
+	return res.status(200).send(req.auth);
 };
 
 module.exports = {

@@ -1,0 +1,62 @@
+/* Modal */
+
+.ticketModal {
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+
+	padding: 2.5%;
+	background-color: white;
+	border-radius: 20px;
+	box-shadow: 2px 3px 40px rgba(0, 0, 0, 0.3);
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+}
+
+.ticketModal h1 {
+	margin-bottom: 20px;
+	font-weight: 900;
+	text-align: center;
+	font-size: 3em;
+	letter-spacing: -4px;
+}
+
+.ticketModal .logoContainer {
+	margin: 0 auto 20px auto;
+}
+
+.ticketModal .ticketImageContainer {
+	width: 100%;
+	height: 250px;
+	border-radius: 25px;
+	overflow: hidden;
+}
+
+.ticketModal .ticketImageContainer img {
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+}
+
+.ticketModal .ticketInfo {
+	display: flex;
+	justify-content: space-between;
+}
+
+.ticketModal .ticketInfo .info h2 {
+	margin-top: 10px;
+	font-size: 2em;
+	letter-spacing: -2px;
+}
+
+.ticketModal .ticketInfo .info span {
+	color: #ff48ab;
+	text-shadow: none;
+	font-size: 1em;
+}
+.ticketModal .ticketInfo .info span:nth-of-type(2) {
+	color: black;
+	font-size: 0.9rem;
+}

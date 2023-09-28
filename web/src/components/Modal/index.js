@@ -27,29 +27,22 @@ const Modal = ({ modalOptions, setModalOptions, setIsDeleted }) => {
 				break;
 			case 'deleteUser':
 				const deletedUser = deleteAccount(modalOptions.id);
-				console.log(deletedUser);
 				setModalOptions(resetModal);
 				if (deletedUser) {
 					setIsDeleted(true);
 				}
 				break;
 			case 'updateUser':
-				// const updatedUser = changeAccountType(modalOptions.id);
 				changeAccountType(modalOptions.id).then((res) => {
 					res === true && setIsDeleted(true);
 				});
-				// console.log(updatedUser);
 
 				setModalOptions(resetModal);
-				// if (updatedUser) {
-				// 	setIsDeleted(true);
-				// }
 				break;
 			default:
 				return;
 		}
 	};
-	// console.log(modalOptions);
 	return (
 		<div className='modal'>
 			<div>

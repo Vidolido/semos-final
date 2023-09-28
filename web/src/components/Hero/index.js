@@ -5,7 +5,6 @@ import { useEvents } from '../../hooks/useEvents';
 import { useStorage } from '../../hooks/useStorage';
 
 import { months, dates } from '../../misc/dateTime';
-// import noImage from '../../misc/no-event-image.jpg';
 
 const Hero = () => {
 	const { heroEvent, getHero, error } = useEvents();
@@ -26,7 +25,6 @@ const Hero = () => {
 	useEffect(() => {
 		heroEvent && heroEvent.eventDate && setDate(new Date(heroEvent.eventDate));
 	}, [heroEvent]);
-	// console.log(heroEvent, error);
 	return (
 		heroEvent && (
 			<div

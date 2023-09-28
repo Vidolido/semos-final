@@ -56,7 +56,6 @@ export const useTickets = () => {
 		if (res.ok) {
 			setIsLoading(false);
 			setError(null);
-			// console.log(res, jsonRes);
 		}
 	};
 

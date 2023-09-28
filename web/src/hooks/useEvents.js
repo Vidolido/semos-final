@@ -25,9 +25,6 @@ export const useEvents = () => {
 	const getEvents = async () => {
 		setIsLoading(true);
 		setError(null);
-		// dispatch({ type: CLEAR_STATE }); // OVA MOZE DA BIDE BITNO
-
-		// console.log(user);
 		const res = await fetch('/api/v1/events/user-events', {
 			method: 'POST',
 			headers: {
@@ -58,7 +55,6 @@ export const useEvents = () => {
 		const res = await fetch(`/api/v1/events/${cat}`);
 
 		const jsonRes = await res.json();
-		// console.log(res, jsonRes);
 
 		if (!res.ok) {
 			setIsLoading(false);
@@ -73,8 +69,6 @@ export const useEvents = () => {
 	const getSingleEvent = async (id) => {
 		setIsLoading(true);
 		setError(null);
-		// OVA GO SMENIV
-		// dispatch({ type: CLEAR_STATE });
 
 		const res = await fetch(`/api/v1/events/single-event`, {
 			method: 'POST',
@@ -95,7 +89,6 @@ export const useEvents = () => {
 			dispatch({ type: SET_SINGLE_EVENT, payload: jsonRes });
 			setIsLoading(false);
 			setError(null);
-			// return jsonRes;
 		}
 	};
 
@@ -107,8 +100,6 @@ export const useEvents = () => {
 		const res = await fetch('/api/v1/events/get-hero');
 
 		const jsonRes = await res.json();
-		// console.log(res, jsonRes);
-
 		if (!res.ok) {
 			setIsLoading(false);
 			setError(jsonRes.errors);
@@ -167,9 +158,6 @@ export const useEvents = () => {
 			setIsLoading(false);
 			setError(jsonRes.errors);
 		}
-
-		// console.log(searchTerm, 'searchterm');
-		// console.log(res, 'res');
 	};
 
 	const createEvent = async (createEventOptions) => {
@@ -196,7 +184,6 @@ export const useEvents = () => {
 			body: JSON.stringify(createEventOptions),
 		});
 		const jsonRes = await res.json();
-		// console.log(jsonRes, 'ova li');
 		if (!res.ok) {
 			setIsLoading(false);
 			setError(jsonRes.errors);
@@ -213,7 +200,6 @@ export const useEvents = () => {
 	const updateEvent = async (updateEventOptions, id) => {
 		setIsLoading(true);
 		setError(null);
-		console.log(updateEventOptions);
 		const res = await fetch(`/api/v1/events/${id}`, {
 			method: 'PUT',
 			headers: {
@@ -234,7 +220,6 @@ export const useEvents = () => {
 		if (res.ok) {
 			setIsLoading(false);
 			setError(null);
-			console.log(jsonRes);
 			return true;
 		}
 	};
@@ -254,7 +239,6 @@ export const useEvents = () => {
 		const jsonRes = await res.json();
 
 		if (!res.ok) {
-			console.log('!res.ok');
 			setError(jsonRes.errors);
 			setIsLoading(false);
 
@@ -262,12 +246,15 @@ export const useEvents = () => {
 		}
 
 		if (res.ok) {
-			console.log('res.ok');
 			setIsLoading(false);
 
 			dispatch({ type: DELETE_EVENT, payload: id });
 			// return true;
 		}
+	};
+
+	const clearState = async () => {
+		dispatch({ type: CLEAR_STATE });
 	};
 
 	return {
@@ -281,6 +268,7 @@ export const useEvents = () => {
 		getRelatedEvents,
 		deleteEvent,
 		setIsDeleted,
+		clearState,
 		event,
 		heroEvent,
 		events,

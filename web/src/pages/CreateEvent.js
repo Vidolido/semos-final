@@ -6,7 +6,6 @@ import RelatedEvents from '../components/RelatedEvents';
 import EventCard from '../components/EventCard';
 import noImage from '../misc/no-event-image.jpg';
 
-//TODO: ticketPrice да го направам да прима децимали
 const CreateEvent = () => {
 	const initialState = {
 		eventName: '',
@@ -87,8 +86,6 @@ const CreateEvent = () => {
 			setRelated([]);
 			setPreviewImage(null);
 		}
-		//TODO: Да вратам порака за успешно креиран event
-		// можеби во модал и онака ќе го правам
 	};
 
 	return (
@@ -215,7 +212,6 @@ const CreateEvent = () => {
 						</div>
 					</div>
 					<div className='container'>
-						{/* Тука треба логика, доколку нема други евенти, да каже дека категоријата е празна. */}
 						{createEventOptions.category === 'empty' && (
 							<h1>Please select a category</h1>
 						)}

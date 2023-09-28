@@ -7,7 +7,7 @@ import { SET_CART, DELETE_CART, REMOVE_FROM_CART } from '../misc/actionTypes';
 export const useCart = () => {
 	const { user } = useAuthContext();
 	const { cart, dispatch } = useCartContext();
-	const [error, setError] = useState(null); // Ерор објект со клучеви за сите функции
+	const [error, setError] = useState(null);
 	const [isLoading, setIsLoading] = useState(null);
 
 	const headers = {
@@ -38,8 +38,6 @@ export const useCart = () => {
 			}
 
 			if (add.ok) {
-				// TODO: Овде да направам логика, доколку го има евентот во кошница
-				// да праша дали сака да додаде уште карти на веќе постоечкиот број.
 				setIsLoading(false);
 				setError(null);
 				getCart();
@@ -64,8 +62,6 @@ export const useCart = () => {
 		});
 
 		const cartJson = await setCart.json();
-
-		// console.log(setCart, cartJson);
 
 		if (setCart.ok) {
 			dispatch({ type: SET_CART, payload: cartJson });

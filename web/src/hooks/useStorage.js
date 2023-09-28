@@ -9,7 +9,6 @@ export const useStorage = () => {
 	const uploadFile = async (image) => {
 		setIsLoading(true);
 		setError(null);
-		// console.log(image, 'uploadFile: gore');
 		const formData = new FormData();
 		formData.append('file', image);
 		try {
@@ -25,13 +24,9 @@ export const useStorage = () => {
 				setIsLoading(false);
 				setError(null);
 				const jsonRes = await res.json();
-				// console.log(jsonRes);
 				return jsonRes.fileName;
 			}
-			// console.log(res, 'OVAJ');
-			// console.log(res, jsonRes.fileName);
 		} catch (err) {
-			console.log(err);
 			setError(err);
 		}
 	};
@@ -44,7 +39,6 @@ export const useStorage = () => {
 			setError({ message: 'Something went wrong.' });
 		}
 		if (res.ok) {
-			// console.log(res.url);
 			return res.url;
 		}
 	};

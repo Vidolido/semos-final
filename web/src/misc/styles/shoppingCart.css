@@ -1,3 +1,14 @@
+.cartPage {
+	padding-top: 20px;
+}
+
+.cartPage > h1 {
+	margin-bottom: 10px;
+}
+.cartPage > h2 {
+	margin-bottom: 10px;
+}
+
 .shoppingCartFlex {
 	display: flex;
 	margin: 10px 0;

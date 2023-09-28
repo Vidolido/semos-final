@@ -41,7 +41,6 @@ const ForgotPassword = () => {
 				/>
 				<Link to='/login'>Back to login</Link>
 			</form>
-			{message && console.log(message)}
 			{message && <span>{message.message}</span>}
 		</div>
 	);

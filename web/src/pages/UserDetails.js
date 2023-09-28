@@ -60,8 +60,6 @@ const UserDetails = () => {
 			<form className='form width-35per mt-20' onSubmit={handleSubmit}>
 				<div className='userDetails gap-30'>
 					<div className='avatar'>
-						{/* TODO: Да направам иста шема за формите */}
-
 						<div className='userInputs'>
 							<div className='inputContainer'>
 								<div className='imageContainer'>

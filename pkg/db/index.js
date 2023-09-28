@@ -7,12 +7,7 @@ const init = () => {
 	const password = config.get('db').password;
 	const dbname = config.get('db').dbname;
 	const dsn = `mongodb+srv://${username}:${password}@${url}/${dbname}?retryWrites=true&w=majority`;
-	// mongoose.connect(dsn, (err) => {
-	// 	if (err) {
-	// 		return console.log('Could not connect to db', err);
-	// 	}
-	// 	console.log('Successfully connected to db');
-	// });
+
 	mongoose
 		.connect(dsn)
 		.then(() => console.log('Connected to DB'))

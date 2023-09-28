@@ -20,10 +20,12 @@
 @import url('./misc/styles/forms.css');
 @import url('./misc/styles/singleClasses.css');
 @import url('./misc/styles/buttons.css');
+@import url('./misc/styles/ticketModal.css');
 
 .pages {
 	width: 75vw;
 	margin: 0 auto;
+	margin-top: 20px;
 }
 
 .heading {

@@ -59,7 +59,6 @@ const SingleEvent = ({ event }) => {
 					<p className='mediumText'>{event.details}</p>
 					<div className='tickets'>
 						<div className='price mt-20'>
-							{/* Можеби треба да направам посебна логика за ова */}
 							<h3>
 								Tickets:{' '}
 								<b className='purpleText'>
@@ -93,7 +92,6 @@ const SingleEvent = ({ event }) => {
 				<h2>Related Events</h2>
 
 				<div className='twoColumnGrid'>
-					{/* {console.log(event.relatedEvents)} */}
 					{event.relatedEvents.map((rE) => (
 						<div key={rE._id} className='categoryEvents eventGrid'>
 							<EventCard event={rE} showDiscription={true} />

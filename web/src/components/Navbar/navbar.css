@@ -10,9 +10,7 @@
 
 .navbar {
 	color: white;
-	/* background-color: black; */
 	justify-content: space-between;
-	/* padding: 0 20%; */
 	width: 75vw;
 	height: 70px;
 	margin: 0 auto;
@@ -102,26 +100,8 @@
 	text-decoration: none;
 	transition: all 0.2s ease;
 }
-/* .userMenu a {
-	font-size: 0.9em;
-	font-family: 'Lato', sans-serif;
-	font-weight: 700;
-	letter-spacing: -1px;
-	padding: 6px 20px;
-	margin-left: 10px;
-	color: black;
-	background-color: #ff48ab;
-	border: 1px solid #ff48ab;
-	border-radius: 40px;
-	text-decoration: none;
-	transition: all 0.2s ease;
-} */
 
 .navLinks:hover {
 	color: white;
 	background-color: transparent;
 }
-/* .userMenu a:hover {
-	color: white;
-	background-color: transparent;
-} */

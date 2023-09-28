@@ -1,3 +1,10 @@
 .checkoutContainer {
 	display: flex;
+	gap: 10%;
+	margin-bottom: 50px;
+}
+
+.itemsContainer hr {
+	color: rgba(0, 0, 0, 0.5);
+	margin: 20px 0;
 }

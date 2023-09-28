@@ -8,12 +8,10 @@ import RelatedEvents from '../components/RelatedEvents';
 import EventCard from '../components/EventCard';
 import noImage from '../misc/no-event-image.jpg';
 
-//TODO: ticketPrice да го направам да прима децимали
 const UpdateEvent = () => {
 	const initialState = {
 		eventName: '',
 		category: '',
-		// category: 'empty',
 		eventDate: '',
 		location: '',
 		details: '',
@@ -50,7 +48,6 @@ const UpdateEvent = () => {
 				...event,
 				relatedEvents: [...event.relatedEvents],
 			}));
-			// console.log(event.relatedEvents);
 
 			getRelatedEvents(event.relatedEvents).then((relatedEvents) =>
 				setRelated(relatedEvents)
@@ -81,10 +78,7 @@ const UpdateEvent = () => {
 			console.log(e.target.name, e.target.value);
 			let date = new Date(e.target.value);
 			setDate(date);
-			// setUpdateEventOptions((updateEventOptions) => ({
-			// 	...updateEventOptions,
-			// 	eventDate: e.target.value,
-			// }));
+
 			return;
 		}
 		if (e.target.name === 'relatedEvents') {
@@ -133,24 +127,11 @@ const UpdateEvent = () => {
 	const handleFormSubmit = async (e) => {
 		e.preventDefault();
 		let updated = await updateEvent(updateEventOptions, id);
-		console.log(updated);
-		// if (!updated) {
-		// 	setUpdateEventOptions((updateEventOptions) => ({
-		// 		...updateEventOptions,
-		// 		eventImage: previewImage,
-		// 	}));
-		// }
+
 		if (updated) {
 			console.log(updated);
-			// setUpdateEventOptions(initialState);
-			// setRelated([]);
-			// setPreviewImage(null);
 		}
-		//TODO: Да вратам порака за успешно креиран event
-		// можеби во модал и онака ќе го правам
 	};
-	// event && event.relatedEvents && console.log(event, updateEventOptions);
-	// console.log(updateEventOptions);
 	return (
 		<div className='createEvent'>
 			<UserNav title='Edit Event' />
@@ -287,7 +268,6 @@ const UpdateEvent = () => {
 						</div>
 					</div>
 					<div className='container'>
-						{/* Тука треба логика, доколку нема други евенти, да каже дека категоријата е празна. */}
 						{updateEventOptions.category === 'empty' && (
 							<h1>Please select a category</h1>
 						)}

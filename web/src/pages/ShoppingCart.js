@@ -16,7 +16,7 @@ const ShoppingCart = () => {
 		removeFromCart(id);
 	};
 	return (
-		<div>
+		<div className='cartPage'>
 			<h1>Shopping Cart</h1>
 			{cart && !cart.cartItems.length && (
 				<h2>You have no items in your cart. </h2>

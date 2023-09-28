@@ -3,7 +3,6 @@ import { useState } from 'react';
 import { useAuth } from '../hooks/useAuth';
 
 const Login = () => {
-	// TODO: CSS, да проверам за додатни грешки.
 	const [email, setEmail] = useState('');
 	const [password, setPassword] = useState('');
 	const { login, isLoading, error } = useAuth();
